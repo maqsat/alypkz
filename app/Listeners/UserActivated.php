@@ -208,7 +208,7 @@ class UserActivated
                         if(!is_null($next_status)){
                             //$prev_statuses_pv = Status::where('order','<=',$next_status->order)->sum('pv');
                             $prev_statuses_pv = $next_status->pv;
-                            if($prev_statuses_pv <= $pv){
+                            if($prev_statuses_pv <= $pv && Hierarchy::followersList($item) <= $next_status->condition){ //;
 
                                 if($item_user_program->is_binary == 1){
 
@@ -216,6 +216,8 @@ class UserActivated
                                     $item_user_program = UserProgram::where('user_id',$item)->first();
                                     $item_status = Status::find($item_user_program->status_id);
                                     Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
+                                    Balance::changeBalance($item,$item_status->status_bonus*0.1,'revitalization',$id,$program->id,$item_user_program->package_id,$item_status->id);
+
 
                                     Notification::create([
                                         'user_id'   => $item,
@@ -257,6 +259,7 @@ class UserActivated
                             $sum = $to_enrollment_pv*$item_status->turnover_bonus/100*env('COURSE');//удалить
 
                             Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
+                            Balance::changeBalance($item,$sum*0.1,'revitalization',$id,$program->id,$item_user_program->package_id,$item_status->id);
 
 
                             /*start set  matching_bonus  */
@@ -301,9 +304,14 @@ class UserActivated
             if(!is_null($inviter_program) && $inviter_program->package_id != 0){
                 $inviter_status = Status::find($inviter_program->status_id);
                 Balance::changeBalance($inviter->id,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,$inviter_status->id,$package->pv);
+                Balance::changeBalance($item,$package->cost*$package->invite_bonus/100*0.1,'revitalization',$id,$program->id,$item_user_program->package_id,$item_status->id);
+
+
 
                 if(!is_null($this_user->sponsor_id))
                     Balance::changeBalance($this_user->sponsor_id,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,$inviter_status->id,$package->pv);
+                    Balance::changeBalance($item,$package->cost*$package->invite_bonus/100*0.1,'revitalization',$id,$program->id,$item_user_program->package_id,$item_status->id);
+
             }
             /*end set  invite_bonus  */
         }

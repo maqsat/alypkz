@@ -24,7 +24,7 @@
                                     </div>
                                     <!-- Card -->
                                 </div>
-                                <div class="col-lg-2 col-md-6  img-responsive">
+                                {{--<div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
                                         <img class="card-img-top img-responsive" src="/nrg/paypost.png" alt="Card image cap">
@@ -35,7 +35,7 @@
                                         </div>
                                     </div>
                                     <!-- Card -->
-                                </div>
+                                </div>--}}
                                 {{--<div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
@@ -48,7 +48,7 @@
                                     </div>
                                     <!-- Card -->
                                 </div>--}}
-                                <div class="col-lg-2 col-md-6  img-responsive">
+                                {{--<div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
                                         <img class="card-img-top img-responsive" src="https://makoli.com/wp-content/uploads/payeer-logo.png" alt="Card image cap">
@@ -59,7 +59,7 @@
                                         </div>
                                     </div>
                                     <!-- Card -->
-                                </div>
+                                </div>--}}
                                 {{--<div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">

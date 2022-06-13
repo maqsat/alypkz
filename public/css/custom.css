@@ -218,6 +218,28 @@ input.error {
     margin-bottom: 0px;
     color: #90a4ae;
 }
+
+.sidebar-nav>ul>li.active>a {
+    color: #8bc826;
+}
+
+.sidebar-nav>ul>li.active>a i {
+    color: #8bc826;
+}
+
+.text-themecolor {
+    color: #8bc826;
+}
+
+.profile-tab li a.nav-link.active, .customtab li a.nav-link.active {
+    border-bottom: 2px solid #8bc826;
+    color: #8bc826;
+}
+
+.profile-tab li a.nav-link:hover, .customtab li a.nav-link:hover {
+    color: #8bc826;
+}
+
 @media (max-width: 767px)
 {
     .dark-logo {

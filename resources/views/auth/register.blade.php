@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-block wizard-content">
                         <a href="javascript:void(0)" class="text-center db">
-                            <img src="unilife/logo.svg" alt="Home" class="login_logo" style="width: 250px;"  /><br/>
+                            <img src="unilife/logo.png" alt="Home" class="login_logo" style="width: 250px;"  /><br/>
                         </a>
 
                         <div class="row">

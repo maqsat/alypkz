@@ -38,24 +38,24 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-md-12">
                     <h4 class="card-title">Реквизиты и счета</h4>
                     <div class="ribbon-wrapper card">
                         <div class="ribbon ribbon-bookmark  ribbon-warning"> Реквизиты</div>
-                        <p class="ribbon-content"> ТОО «UniLife Group»</p>
-                        <p class="ribbon-content"> БИН 210440010778</p>
-                        <p class="ribbon-content"> Адрес: РК, г.Алматы, проспект Жибке Жолы 106, офис 1</p>
+                        <p class="ribbon-content"> ТОО «ALYP»</p>
+                        <p class="ribbon-content"> БИН 0000000000000</p>
+                        <p class="ribbon-content"> Адрес: РК, г.Алматы</p>
                     </div>
                 </div>
-                <div class="col-md-6">
+                {{--<div class="col-md-6">
                     <div class="ribbon-wrapper card">
                         <div class="ribbon ribbon-bookmark  ribbon-danger">Расчетный счет в АО «Альфа-Банк»</div>
                         <p class="ribbon-content"> БИК: ALFAKZKA</p>
                         <p class="ribbon-content"> Счет ТГ: KZ369470398993479303</p>
                     </div>
-                </div>
+                </div>--}}
                 {{--<div class="col-md-6">
                     <div class="ribbon-wrapper card">
                         <div class="ribbon ribbon-bookmark  ribbon-danger"> Расчетный счет в «ForteBank»</div>

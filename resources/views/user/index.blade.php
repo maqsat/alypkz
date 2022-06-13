@@ -99,8 +99,8 @@
                                                 <td class="actions">
                                                     @if(Gate::allows('admin_activation_user'))
                                                     <a href="/activation/{{ $item->id }}" target="_blank" class="btn btn-xs btn-success"><i class="mdi mdi-account-plus"></i></a>
-                                                    <a href="{{ route('activation_without_bonus', [ 'user_id' => $item->id ]) }}" target="_blank" title="Без бонусов" class="btn btn-xs btn-warning"><i class="mdi mdi-account-plus"></i></a>
-                                                    @if(!is_null($order) && $order->status == 11)
+                                                    {{--<a href="{{ route('activation_without_bonus', [ 'user_id' => $item->id ]) }}" target="_blank" title="Без бонусов" class="btn btn-xs btn-warning"><i class="mdi mdi-account-plus"></i></a>
+                                                    --}}@if(!is_null($order) && $order->status == 11)
                                                         <a href="{{asset($order->scan)}}" target="_blank" class="btn btn-xs btn-primary"><i class="mdi mdi-account-search"></i></a>
                                                         <a href="/deactivation/{{ $item->id }}" target="_blank" class="btn btn-xs btn-danger"><i class="mdi mdi-account-remove"></i></a>
                                                     @endif

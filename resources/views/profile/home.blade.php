@@ -51,7 +51,7 @@
                         </div>
                         <div class="card-block not-margin">
                             <small class="text-muted">Ваш ID </small>
-                            <h6>{{Auth::user()->id_number}}</h6>
+                            <h6>{{Auth::user()->id}}</h6>
                             <small class="text-muted">Товарооборот </small>
                             <h6>{{ number_format($pv_counter_all, 0, '', ' ') }} PV</h6>
                             <small class="text-muted">Баланс </small>
@@ -102,6 +102,20 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <hr>
+                        </div>
+                        <div class="p-1">
+                        @if(Auth::user()->is_verification == 1)
+                            <div class="alert alert-success">
+                                <h3 class="text-success"><i class="fa fa-check-circle"></i> Ваш аккаунт верифицирован</h3>
+                            </div>
+                        @else
+                                <div class="alert alert-danger">
+                                    <h3 class="text-danger"><i class="fa fa-check-circle"></i> Ваш аккаунт не верифицирован,  <a href="">верифицировать</a> </h3>
+                                </div>
+                        @endif
                         </div>
                         <div>
                             <hr>

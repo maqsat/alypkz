@@ -29,7 +29,7 @@
                             <li><a href="/tree/{{ Auth::user()->id }}">Мое дерево</a></li>
                             <li><a href="/hierarchy" target="_blank">Иерархия</a></li>
                             <li><a href="/team">Моя команда</a></li>
-                            <li><a href="/team?upgrade=1">Апгрейд команды</a></li>
+                            {{--<li><a href="/team?upgrade=1">Апгрейд команды</a></li>--}}
                             <li><a href="/team?move=1">Прогресс команды</a></li>
                             <li><a href="/team?own=1">Моя команда(без перелива)</a></li>
                             @if(Gate::allows('admin_user_create'))
@@ -61,12 +61,12 @@
                             <li><a href="/activation-store">История Активации</a></li>
                         </ul>
                     </li>
-                    <li>
+                   {{-- <li>
                         <a href="/programs" aria-expanded="false">
                             <i class="mdi mdi-package"></i>
                             <span class="hide-menu">Апгрейд</span>
                         </a>
-                    </li>
+                    </li>--}}
                     {{--<li>
                         <a class="has-arrow" href="#" aria-expanded="false">
                             <i class="mdi mdi-account-plus"></i>
@@ -82,6 +82,7 @@
                             <li><a href="/profile">{{ __('app.profile') }}</a></li>
                             <li><a href="/notifications">Уведомления</a></li>
                             <li><a href="/faq-profile">База знаний</a></li>
+                            <li><a href="/">Наследник</a></li>
                         </ul>
                     </li>
                     {{--<li>

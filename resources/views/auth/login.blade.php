@@ -7,7 +7,7 @@
             <div class="card-block">
                     <form method="POST" action="{{ route('login') }}" class="form-horizontal form-material"  id="loginform" >
                         @csrf
-                        <a href="javascript:void(0)" class="text-center db"><img src="unilife/logo.svg" alt="Home" style="width: 250px;" /></a>
+                        <a href="javascript:void(0)" class="text-center db"><img src="unilife/logo.png" alt="Home" style="width: 250px;" /></a>
 
                         <div class="form-group m-t-40">
                             <div class="col-xs-12">
