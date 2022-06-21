@@ -60,9 +60,8 @@ class UserActivated
         if($check_this_user_sponsor_id_program == 0) dd("Спонсор не активирован -> $this_user->sponsor_id");
         /*end sponsor check*/
 
+
         /*start init and activate*/
-
-
         /*set sponsor if sponsor not found*/
         if(is_null($this_user->sponsor_id)){
             $sponsor_data = Hierarchy::getSponsorId($inviter->id);
@@ -208,7 +207,7 @@ class UserActivated
                         if(!is_null($next_status)){
                             //$prev_statuses_pv = Status::where('order','<=',$next_status->order)->sum('pv');
                             $prev_statuses_pv = $next_status->pv;
-                            if($prev_statuses_pv <= $pv && Hierarchy::followersList($item) <= $next_status->condition){ //;
+                            if($prev_statuses_pv <= $pv){ // && count(Hierarchy::followersList($item)) <= $next_status->condition
 
                                 if($item_user_program->is_binary == 1){
 
@@ -231,9 +230,9 @@ class UserActivated
                     }
                     //end check next status conditions and move
 
-
+                    /*start set  turnover_bonus  */
                     if($item_user_program->is_binary == 1){
-                        /*start set  turnover_bonus  */
+
                         $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
                         $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
 
@@ -254,18 +253,17 @@ class UserActivated
                             }*/
 
 
-                        if(true){
+                        if(true){// если $sum возвращает минусовую сумму
                             $temp_sum = 0;
-                            $sum = $to_enrollment_pv*$item_status->turnover_bonus/100*env('COURSE');//удалить
 
                             Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
-                            Balance::changeBalance($item,$sum*0.1,'revitalization',$id,$program->id,$item_user_program->package_id,$item_status->id);
+                            Balance::changeBalance($item,$sum*0.1,'revitalization',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
 
 
                             /*start set  matching_bonus  */
-                            $inviter_list = $item_user_program->inviter_list;
+                            /*$inviter_list = $item_user_program->inviter_list;
                             $inviter_list = explode(',',trim($inviter_list,','));
-                            $inviter_list = array_slice($inviter_list, 0, 3);
+                            $inviter_list = array_slice($inviter_list, 0, 3);*/
 
                             /*foreach ($inviter_list as $inviter_key => $inviter_item){
                                 if($inviter_item != ''){
@@ -300,18 +298,21 @@ class UserActivated
             }
 
             /*start set  invite_bonus  */
-            $inviter_program = UserProgram::where('user_id',$inviter->id)->first();
-            if(!is_null($inviter_program) && $inviter_program->package_id != 0){
-                $inviter_status = Status::find($inviter_program->status_id);
-                Balance::changeBalance($inviter->id,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,$inviter_status->id,$package->pv);
-                Balance::changeBalance($item,$package->cost*$package->invite_bonus/100*0.1,'revitalization',$id,$program->id,$item_user_program->package_id,$item_status->id);
 
+            $inviter_list_for_referral = explode(',',trim($inviter_list,','));
+            $inviter_list_for_referral = array_slice($inviter_list_for_referral, 0, 2);
 
+            foreach ($inviter_list_for_referral as $key_referral => $item_referral){
+                if($key_referral == 0){
+                    Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100*0.1,'revitalization',$id,$program->id,$package->id,'',$package->pv);
+                }
 
-                if(!is_null($this_user->sponsor_id))
-                    Balance::changeBalance($this_user->sponsor_id,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,$inviter_status->id,$package->pv);
-                    Balance::changeBalance($item,$package->cost*$package->invite_bonus/100*0.1,'revitalization',$id,$program->id,$item_user_program->package_id,$item_status->id);
+                if($key_referral == 1){
+                    Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100*0.1,'revitalization',$id,$program->id,$package->id,'',$package->pv);
 
+                }
             }
             /*end set  invite_bonus  */
         }

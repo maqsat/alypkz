@@ -26,7 +26,7 @@ class TestController extends Controller
 
     public function setBots()
     {
-        for ($i = 0; $i < 10; $i++){
+        for ($i = 0; $i < 1000; $i++){
 
             $all_users = User::whereNull('is_office_lider')->get();
 
@@ -73,7 +73,7 @@ class TestController extends Controller
                     ]);
 
 
-                    if($item->id == 50) dd($item->id);
+                    if($item->id == 25000) dd($item->id);
 
                     $item->is_office_lider = 1;
                     $item->save();
@@ -91,10 +91,8 @@ class TestController extends Controller
     public function tester()
     {
 
-        $check_this_user_sponsor_id_program = UserProgram::where('program_id', 1)
-            ->where('user_id',36)
-            ->count();
-        dd($check_this_user_sponsor_id_program);
+
+
     }
 
     public function tester2()
