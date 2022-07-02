@@ -15,7 +15,7 @@
                                 <div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
-                                        <img class="card-img-top img-responsive " src="/nrg/chek.jpeg" alt="Card image cap">
+                                        <img class="card-img-top img-responsive " src="/unilife/chek.png" alt="Card image cap">
                                         <div class="card-block">
                                             <h4 class="card-title">Скан квитанции</h4>
                                             <p class="card-text">Прикрепите Скан квитанции к форме</p>

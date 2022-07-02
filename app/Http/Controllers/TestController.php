@@ -90,8 +90,14 @@ class TestController extends Controller
 
     public function tester()
     {
+        $value = 1;
+        $parameters = 1;
 
 
+        $count = UserProgram::where('user_id',$value)->where('list','like','%,'.$parameters.',%')->count();
+
+        if($count == 1) return true;
+        else return false;
 
     }
 

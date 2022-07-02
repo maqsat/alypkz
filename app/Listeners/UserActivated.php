@@ -259,34 +259,6 @@ class UserActivated
                             Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
                             Balance::changeBalance($item,$sum*0.1,'revitalization',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
 
-
-                            /*start set  matching_bonus  */
-                            /*$inviter_list = $item_user_program->inviter_list;
-                            $inviter_list = explode(',',trim($inviter_list,','));
-                            $inviter_list = array_slice($inviter_list, 0, 3);*/
-
-                            /*foreach ($inviter_list as $inviter_key => $inviter_item){
-                                if($inviter_item != ''){
-
-                                    $check_user_processing = Processing::where('user_id',$inviter_item)->where('status','turnover_bonus')->first();
-
-                                    if(true){//!is_null($check_user_processing)
-                                        $inviter_user_program = UserProgram::where('user_id',$inviter_item)->first();
-                                        if(!is_null($inviter_user_program) && $inviter_user_program->package_id != 1 && $inviter_user_program->is_binary == 1){
-                                            $list_inviter_status = Status::find($inviter_user_program->status_id);
-                                            if($list_inviter_status->depth_line >= $inviter_key+1){
-                                                $matching_bonus_persantage = 15;
-                                                if($inviter_key == 1) $matching_bonus_persantage = 10;
-                                                if($inviter_key == 2) $matching_bonus_persantage = 5;
-                                                Balance::changeBalance($inviter_item,$sum*$matching_bonus_persantage/100,'matching_bonus',$item_user_program->user_id,$program->id,$package->id,$list_inviter_status->id,$to_enrollment_pv,0,$inviter_key+1);
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }*/
-
-                            /*end  set  matching_bonus  */
                         }
                         else {
                             Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
@@ -315,6 +287,27 @@ class UserActivated
                 }
             }
             /*end set  invite_bonus  */
+
+            /*start set  matching_bonus  */
+            $inviter_list_for_lkb = explode(',',trim($inviter_list,','));
+            $inviter_list_for_lkb = array_slice($inviter_list_for_lkb, 0, 7);
+            $max_status = 1;
+
+            foreach ($inviter_list_for_lkb as $key_matching => $item_matching){
+
+                $matching_user_program = UserProgram::where('user_id',$item_matching)->first();
+
+                if(!is_null($matching_user_program) && $matching_user_program->status_id > $max_status){
+                    $old_max_status_percentage = Status::find($max_status)->matching_bonus;
+                    $new_max_status_percentage = Status::find($matching_user_program->status_id)->matching_bonus;
+                    $max_status = $matching_user_program->status_id;
+
+                    $current_max_status_percentage = $new_max_status_percentage - $old_max_status_percentage;
+                    Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100*0.1,'revitalization',$id,$program->id,$package->id,'',$package->pv);
+                }
+            }
+            /*end set  matching_bonus  */
         }
 
     }

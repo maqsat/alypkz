@@ -106,7 +106,7 @@
                         <div>
                             <hr>
                         </div>
-                        <div class="p-1">
+                        {{--<div class="p-1">
                         @if(Auth::user()->is_verification == 1)
                             <div class="alert alert-success">
                                 <h3 class="text-success"><i class="fa fa-check-circle"></i> Ваш аккаунт верифицирован</h3>
@@ -116,7 +116,7 @@
                                     <h3 class="text-danger"><i class="fa fa-check-circle"></i> Ваш аккаунт не верифицирован,  <a href="">верифицировать</a> </h3>
                                 </div>
                         @endif
-                        </div>
+                        </div>--}}
                         <div>
                             <hr>
                         </div>

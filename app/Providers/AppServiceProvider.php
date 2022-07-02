@@ -38,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
 
         Validator::extend('sponsor_is_on_this_inviter', function ($attribute, $value, $parameters, $validator) {
 
+            if($value == $parameters[0]) return true;
+
             $count = UserProgram::where('user_id',$value)->where('list','like','%,'.$parameters[0].',%')->count();
 
             if($count == 1) return true;
