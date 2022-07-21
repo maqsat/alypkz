@@ -58,7 +58,7 @@ class Balance {
 
     public function getBalance($user_id)
     {
-        $sum = $this->getIncomeBalance($user_id) - $this->getBalanceOut($user_id) - $this->getWeekBalance($user_id);
+        $sum = $this->getIncomeBalance($user_id) - $this->getBalanceOut($user_id) - $this->getWeekBalance($user_id) - $this->revitalizationNotWeekBalance($user_id);
         return round($sum, 2);
     }
 
@@ -76,7 +76,7 @@ class Balance {
 
     public function getBalanceOut($user_id)
     {
-        $sum = Processing::whereUserId($user_id)->whereIn('status', ['out','shop','revitalization'])->sum('sum');
+        $sum = Processing::whereUserId($user_id)->whereIn('status', ['out','shop'])->sum('sum');
         return round($sum, 2);
     }
 
@@ -103,7 +103,6 @@ class Balance {
         return round($sum, 2);
     }
 
-
     public function getBalanceByStatus($status)
     {
         $sum = Processing::where('status', $status)->sum('sum');
@@ -112,12 +111,17 @@ class Balance {
 
     public function revitalizationBalance($user_id)
     {
-        $sum1 = Processing::whereUserId($user_id)->whereIn('status', ['cashback'])->sum('sum');
+        $sum1 = Processing::whereUserId($user_id)->whereIn('status', ['revitalization'])->sum('sum');
         $sum2 = Processing::whereUserId($user_id)->whereIn('status', ['revitalization-shop'])->sum('sum');
 
         return round($sum1-$sum2, 2);
     }
 
+    public function revitalizationNotWeekBalance($user_id)
+    {
+        $sum =  Processing::whereUserId($user_id)->whereIn('status', ['revitalization'])->whereNotBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
+        return round($sum, 2);
+    }
     /*************************** OLD METHODS ****************************/
 
     public function getBalanceAllUsers()
