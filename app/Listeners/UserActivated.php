@@ -215,7 +215,6 @@ class UserActivated
                                     $item_user_program = UserProgram::where('user_id',$item)->first();
                                     $item_status = Status::find($item_user_program->status_id);
                                     Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
-                                    Balance::changeBalance($item,$item_status->status_bonus*0.1,'revitalization',$id,$program->id,$item_user_program->package_id,$item_status->id);
 
 
                                     Notification::create([
@@ -257,8 +256,6 @@ class UserActivated
                             $temp_sum = 0;
 
                             Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
-                            Balance::changeBalance($item,$sum*0.1,'revitalization',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
-
                         }
                         else {
                             Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
@@ -277,14 +274,12 @@ class UserActivated
             foreach ($inviter_list_for_referral as $key_referral => $item_referral){
                 if($key_referral == 0){
                     Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
-                    Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100*0.1,'revitalization',$id,$program->id,$package->id,'',$package->pv);
                 }
-
+                /*
                 if($key_referral == 1){
                     Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
-                    Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100*0.1,'revitalization',$id,$program->id,$package->id,'',$package->pv);
 
-                }
+                }*/
             }
             /*end set  invite_bonus  */
 
@@ -304,7 +299,6 @@ class UserActivated
 
                     $current_max_status_percentage = $new_max_status_percentage - $old_max_status_percentage;
                     Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv);
-                    Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100*0.1,'revitalization',$id,$program->id,$package->id,'',$package->pv);
                 }
             }
             /*end set  matching_bonus  */

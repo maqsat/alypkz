@@ -30,7 +30,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="s" placeholder="Поиск по полям логин, спонсор, имя ..." value="{{ old('s') }}">
+                                            <input type="text" class="form-control" name="s" placeholder="Поиск по полям логин, спонсор, имя ..." value="{{ old('s',app('request')->input('s')) }}">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-info" type="submit">Искать!</button>
                                             </span>
@@ -72,13 +72,25 @@
                                             $package = \App\Models\Package::find($item->package_id);
                                             $user_program = \App\Models\UserProgram::where('user_id',$item->id)->first();
                                             $order = \App\Models\Order::where('user_id', $item->id)->where('type','register')->orderBy('id','desc')->first();
+                                            $commission = \App\Models\Processing::whereInUser($item->id)->whereIn('status',['invite_bonus','turnover_bonus','matching_bonus'])->sum('sum');
+                                            $percentage = $commission*100/$package->cost;
+
                                         @endphp
 
                                         <tr>
                                             <td>{{ $item->id }}</td>
                                             <td>
                                                 {{ $item->name }}<br>
-                                                <b>ID</b>: {{ $item->id_number  }}
+                                                <b>ID</b>: {{ $item->id_number  }}<br><br>
+                                                <div class="progress">
+                                                    <div class="progress-bar @if($percentage<=50) bg-success @else bg-danger @endif active progress-bar-striped"
+                                                         role="progressbar"
+                                                         style="width: {{$percentage}}%; height:14px;"
+                                                         aria-valuenow="18"
+                                                         aria-valuemin="0"
+                                                         aria-valuemax="100">{{$percentage}}%
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
                                                 <b>Наставник</b>: {{ is_null($sponsor) ? '' : $sponsor->name }}<br>
