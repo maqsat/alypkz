@@ -165,8 +165,8 @@
                                                 <input type="hidden" value="{{ $item->rank }}" id="#status{{$item->id}}">
                                             @endforeach
                                         </div>
-                                        <label  class="m-t-10" for="position">Статус:</label>
-                                        <div class="input-group">
+                                        <label  class="m-t-10" for="position"   style="display: none">Статус:</label>
+                                        <div class="input-group"   style="display: none">
                                             <select class="custom-select form-control required" id="status_id" name="status_id">
                                                 @foreach(\App\Models\Status::all() as $item)
                                                     <option value="{{ $item->id }}" @if(old('status_id') == $item->id) selected @endif>{{ $item->title }}</option>

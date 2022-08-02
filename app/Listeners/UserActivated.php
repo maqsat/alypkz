@@ -298,7 +298,7 @@ class UserActivated
                     $max_status = $matching_user_program->status_id;
 
                     $current_max_status_percentage = $new_max_status_percentage - $old_max_status_percentage;
-                    Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv,'',$key_matching);
                 }
             }
             /*end set  matching_bonus  */

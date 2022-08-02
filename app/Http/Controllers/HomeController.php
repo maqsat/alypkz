@@ -451,7 +451,7 @@ class HomeController extends Controller
     public function processing(Request $request)
     {
         $balance = Balance::getBalance(Auth::user()->id);
-        $all = Balance::getIncomeBalance(Auth::user()->id);;
+        $all = Balance::getIncomeBalance(Auth::user()->id);
         $out = Balance::getBalanceOut(Auth::user()->id);
         $week = Balance::getWeekBalance(Auth::user()->id);
         $revitalization = Balance::revitalizationBalance(Auth::user()->id);
@@ -459,14 +459,18 @@ class HomeController extends Controller
 
 
         if(isset($request->weeks)){
-            $dateFromString = date('Y-m-d',strtotime(Auth::user()->created_at));
+            $first_transaction = Processing::whereUserId(Auth::user()->id)->orderby('id')->first();
+
+            if(!is_null($first_transaction))
+                $dateFromString = date('Y-m-d',strtotime($first_transaction->created_at));
+            else $dateFromString = date('Y-m-d');
             $dateToString = date('Y-m-d');
 
             $weeks = Balance::getMondaysInRange($dateFromString, $dateToString);
             array_push($weeks, $dateToString);
             $weeks = array_reverse($weeks);
 
-            return view('profile.processing.weeks', compact('weeks','balance', 'revitalization', 'out','week'));
+            return view('profile.processing.weeks', compact('weeks','balance', 'revitalization', 'out','week','all'));
         }
 
 
@@ -477,7 +481,7 @@ class HomeController extends Controller
         })->orderBy('id','desc')->paginate(100);
 
 
-        return view('profile.processing.processing', compact('list', 'balance', 'revitalization', 'out','week'));
+        return view('profile.processing.processing', compact('list', 'balance', 'revitalization', 'out','week','all'));
     }
 
     public function profile()

@@ -1,6 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
+    {{ dd("Доступно только администраторам") }}
     <section id="wrapper" class="login-register register-padding"  style="background-image:url('unilife/bg.png');">
         <div class="row">
             <div class="col-10 offset-1">

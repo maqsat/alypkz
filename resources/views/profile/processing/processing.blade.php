@@ -49,8 +49,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($list as $item)
-                                        <tr @if($item->status == 'register'
-                                                or $item->status == 'cancel'  or $item->status == 'out'  or $item->status == 'revitalization')
+                                        <tr @if($item->status == 'register' or $item->status == 'cancel'  or $item->status == 'out'  or $item->status == 'revitalization')
                                                 style="color: #f62d51"
                                             @else
                                                 style="color: #5cb85c"
@@ -64,8 +63,11 @@
                                             <?php
                                                 $in_user = \App\User::find($item->in_user)
                                             ?>
-                                            <td class="txt-oflo">@if(!is_null($in_user)) {{ $in_user->name }} @else {{ $item->in_user }} @endif
-                                                @if($item->status == 'matching_bonus') <i>{{ $item->matching_line }} линия</i> @endif  </td>
+                                            <td class="txt-oflo">
+                                                @if(!is_null($in_user)) {{ $in_user->name }} @else {{ $item->in_user }} @endif
+                                                @if($item->status == 'matching_bonus') <i>{{ $item->matching_line+1 }} линия</i> @endif
+                                            </td>
+                                            <td>@if(!is_null(\App\Models\Package::find($item->package_id))){{ \App\Models\Package::find($item->package_id)->title }}@endif </td>
                                             <td>{{ $item->card_number }}</td>
                                             <td class="txt-oflo">{{ $item->created_at }}</td>
                                             <td class="txt-oflo">@if(!is_null(\App\Models\Status::find($item->status_id))){{ \App\Models\Status::find($item->status_id)->title }}@endif</td>

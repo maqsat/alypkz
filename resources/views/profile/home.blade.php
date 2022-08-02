@@ -78,6 +78,7 @@
                     <div class="card">
                         <div class="card-block">
                             <h3 class="card-title">Ваши достижения</h3>
+                            @if(!is_null($next_status))
                             <div class="row">
                                 <!-- Column -->
                                 <div class="col-lg-4 col-xlg-4 col-md-4">
@@ -102,6 +103,7 @@
                                     </div>
                                 </div>
                             </div>
+                                @endif
                         </div>
                         <div>
                             <hr>
@@ -167,35 +169,6 @@
             </div>
 
             @if(!is_null($package))
-            <div class="row" style="display: none">
-                <div class="col-md-6 col-xs-12">
-                    <div class="card">
-                        <div class="card-block timer">
-                            <h5>Бонус быстрого старта, до следующего зачисление  осталось: </h5>
-                            <p>{{ $quickstart_date }}, {{ trans('app.'.$display_day) }}</p>
-                            <ul>
-                                <li><span id="days"></span>День</li>
-                                <li><span id="hours"></span>Час</li>
-                                <li><span id="minutes"></span>Минут</li>
-                                <li><span id="seconds"></span>Секунд</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="card">
-                        <div class="card-block timer">
-                            <h5>Повторная покупка, до следующего списание осталось:</h5>
-                            <ul>
-                                <li><span id="days2"></span>День</li>
-                                <li><span id="hours2"></span>Час</li>
-                                <li><span id="minutes2"></span>Минут</li>
-                                <li><span id="seconds2"></span>Секунд</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
             <div class="row">
@@ -224,7 +197,7 @@
                             <div class="input-group m-t-15">
                                 <script src="https://yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
                                 <script src="https://yastatic.net/share2/share.js"></script>
-                                <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,viber,whatsapp,skype,telegram" data-title="Реферальная ссылка от {{ Auth::user()->name }}" data-url="https://nrg-max.com/register?inviter_id={{ Auth::user()->id }}"></div>
+                                <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,viber,whatsapp,skype,telegram" data-title="Реферальная ссылка от {{ Auth::user()->name }}" data-url="{{env('APP_URL', false)}}/register?inviter_id={{ Auth::user()->id }}"></div>
                             </div>
                         </div>
                     </div>

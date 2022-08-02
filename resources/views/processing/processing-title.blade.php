@@ -9,7 +9,7 @@
 @elseif($item->status == 'quickstart_bonus')
     Быстрый старт
 @elseif($item->status == 'matching_bonus')
-    Матчинг бонус
+    ЛКБ
 @elseif($item->status == 'request')
     Запрос на списание
 @elseif($item->status == 'register')
