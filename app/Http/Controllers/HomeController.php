@@ -162,7 +162,8 @@ class HomeController extends Controller
                 'display_day',
                 'percentage',
                 'next_status',
-                'move_status'
+                'move_status',
+                'user_program'
             ));
         }
         else{

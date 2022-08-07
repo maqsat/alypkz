@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-    {{ dd("Доступно только администраторам") }}
+
     <section id="wrapper" class="login-register register-padding"  style="background-image:url('unilife/bg.png');">
         <div class="row">
             <div class="col-10 offset-1">
@@ -67,7 +67,7 @@
                                                     <div class="error-message"></div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="email">Номер документа :</label>
+                                                    <label for="email">Номер удостоверения или ИИН:</label>
                                                     <input type="text" class="form-control required"  id="iin" name="inn">
                                                     <div class="error-message"></div>
                                                 </div>
@@ -86,7 +86,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="birthday">Дата рождения:</label>
-                                                    <input type="text" class="form-control required" id="birthday" name="birthday">
+                                                    <input type="date" class="form-control required" id="birthday" name="birthday">
                                                     <div class="error-message"></div>
                                                 </div>
                                                 <div class="form-group">

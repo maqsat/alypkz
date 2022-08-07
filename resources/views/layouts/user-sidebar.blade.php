@@ -61,12 +61,12 @@
                             {{--<li><a href="/activation-store">История Активации</a></li>--}}
                         </ul>
                     </li>
-                   {{-- <li>
+                    <li>
                         <a href="/programs" aria-expanded="false">
                             <i class="mdi mdi-package"></i>
                             <span class="hide-menu">Апгрейд</span>
                         </a>
-                    </li>--}}
+                    </li>
                     {{--<li>
                         <a class="has-arrow" href="#" aria-expanded="false">
                             <i class="mdi mdi-account-plus"></i>

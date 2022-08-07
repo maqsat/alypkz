@@ -210,18 +210,30 @@ class UserActivated
                             if($prev_statuses_pv <= $pv){ // && count(Hierarchy::followersList($item)) <= $next_status->condition
 
                                 if($item_user_program->is_binary == 1){
+                                    $needed_upgrade = true;
 
-                                    Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
-                                    $item_user_program = UserProgram::where('user_id',$item)->first();
-                                    $item_status = Status::find($item_user_program->status_id);
-                                    Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
+                                    if($next_status->id == 5 && $item_user_program->package_id < 2){
+                                        $needed_upgrade = false;
+                                    }
+
+                                    if($next_status->id == 7 && $item_user_program->package_id < 3){
+                                        $needed_upgrade = false;
+                                    }
 
 
-                                    Notification::create([
-                                        'user_id'   => $item,
-                                        'type'      => 'move_status',
-                                        'status_id' => $item_user_program->status_id
-                                    ]);
+                                    if($needed_upgrade){
+                                        Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
+                                        $item_user_program = UserProgram::where('user_id',$item)->first();
+                                        $item_status = Status::find($item_user_program->status_id);
+                                        Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
+
+
+                                        Notification::create([
+                                            'user_id'   => $item,
+                                            'type'      => 'move_status',
+                                            'status_id' => $item_user_program->status_id
+                                        ]);
+                                    }
 
                                 }
                             }
@@ -286,19 +298,30 @@ class UserActivated
             /*start set  matching_bonus  */
             $inviter_list_for_lkb = explode(',',trim($inviter_list,','));
             $inviter_list_for_lkb = array_slice($inviter_list_for_lkb, 0, 7);
-            $max_status = 1;
+            $old_max_status_percentage = 0;
 
             foreach ($inviter_list_for_lkb as $key_matching => $item_matching){
 
                 $matching_user_program = UserProgram::where('user_id',$item_matching)->first();
 
-                if(!is_null($matching_user_program) && $matching_user_program->status_id > $max_status){
-                    $old_max_status_percentage = Status::find($max_status)->matching_bonus;
+                if(!is_null($matching_user_program)){
                     $new_max_status_percentage = Status::find($matching_user_program->status_id)->matching_bonus;
-                    $max_status = $matching_user_program->status_id;
 
-                    $current_max_status_percentage = $new_max_status_percentage - $old_max_status_percentage;
-                    Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv,'',$key_matching);
+                    if($matching_user_program->package_id == 2 and $new_max_status_percentage < 5) {
+                        $new_max_status_percentage = 5;
+                    }
+
+                    if($matching_user_program->package_id == 3 and $new_max_status_percentage < 10) {
+                        $new_max_status_percentage = 10;
+                    }
+
+                    if($new_max_status_percentage > $old_max_status_percentage){
+
+                        $current_max_status_percentage = $new_max_status_percentage - $old_max_status_percentage;
+                        $old_max_status_percentage = $new_max_status_percentage;
+
+                        Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv,'',$key_matching);
+                    }
                 }
             }
             /*end set  matching_bonus  */

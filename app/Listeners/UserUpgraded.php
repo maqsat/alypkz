@@ -42,6 +42,7 @@ class UserUpgraded
      */
     public function handle(Upgrade $event)
     {
+        dd(0);
         $id = $event->order->user_id;
         $this_user = UserProgram::whereUserId($id)->first();
         $current_user = User::find($id);

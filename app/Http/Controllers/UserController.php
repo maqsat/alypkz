@@ -67,6 +67,7 @@ class UserController extends Controller
             $list = User::whereNotNull('program_id')->where('name','like','%'.$request->s.'%')
                 ->orWhere('id','like','%'.$request->s.'%')
                 ->orWhere('email','like','%'.$request->s.'%')
+                ->orWhere('id_number','like','%'.$request->s.'%')
                 ->orderBy('id','desc')
                 ->paginate(30);
         }
@@ -332,7 +333,7 @@ class UserController extends Controller
         if(!Gate::allows('admin_user_destroy')) {
             abort('401');
         }
-
+        dd("Только через супер админ");
         $result_sponsor = User::whereSponsorId($id);
         $result_inviter = User::whereInviterId($id);
 

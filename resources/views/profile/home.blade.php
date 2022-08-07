@@ -14,6 +14,20 @@
                     </div>
                 @endif
 
+                @if($next_status->id == 5 && $user_program->package_id < 2)
+                    <div class="alert alert-warning">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                        <h3 class="text-warning"><i class="fa fa-check-circle"></i> Вам нужно сделать Апгрейд</h3> Вам нужно сделать Апгрейд на Бизнес пакет(500$) или на VIP пакет(1000$) что бы перейти на  следующий статус  <b><a href="/programs">перейти на апгрейд</a></b>
+                    </div>
+                @endif
+
+                @if($next_status->id == 7 && $user_program->package_id < 3)
+                    <div class="alert alert-warning">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                        <h3 class="text-warning"><i class="fa fa-check-circle"></i> Вам нужно сделать Апгрейд</h3> Вам нужно сделать Апгрейд на  VIP пакет(1000$) что бы перейти на  следующий статус  <b><a href="/programs">перейти на апгрейд</a></b>
+                    </div>
+                @endif
+
                 @foreach($not_cash_bonuses as $item)
                     @if($item->type == 'travel_bonus')
                         <div class="alert alert-success">
