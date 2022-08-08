@@ -43,10 +43,11 @@
                 <div class="col-md-12">
                     <h4 class="card-title">Реквизиты и счета</h4>
                     <div class="ribbon-wrapper card">
-                        <div class="ribbon ribbon-bookmark  ribbon-warning"> Реквизиты</div>
+                        <div class="ribbon ribbon-bookmark  ribbon-danger"> Реквизиты</div>
                         <p class="ribbon-content"> ТОО «ALYP»</p>
                         <p class="ribbon-content"> БИН 0000000000000</p>
                         <p class="ribbon-content"> Адрес: РК, г.Алматы</p>
+                        <p> <a href="https://pay.kaspi.kz/pay/k1fnrbmv">Ссылка для оплаты в приложении Kaspi</a></p>
                     </div>
                 </div>
                 {{--<div class="col-md-6">

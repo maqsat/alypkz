@@ -90,6 +90,7 @@ class TestController extends Controller
 
     public function tester()
     {
+        dd(UserProgram::count());
         $value = 1;
         $parameters = 1;
 

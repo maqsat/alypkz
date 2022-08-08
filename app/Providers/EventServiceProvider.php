@@ -22,8 +22,8 @@ class EventServiceProvider extends ServiceProvider
 
         'App\Events\Activation' => [
             'App\Listeners\UserActivated',
+            'App\Listeners\TelegramSmsSender'
             //'App\Listeners\SponsorStatus',
-            //'App\Listeners\TelegramSmsSender'
         ],
 
         'App\Events\ShopTurnover' => [
