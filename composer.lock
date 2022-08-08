@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d097ce4260f9c20df3e7236513ed6448",
+    "content-hash": "24dd4bb7857cbf8a4567a252ff85e865",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -214,60 +214,6 @@
                 }
             ],
             "time": "2022-02-28T11:07:21+00:00"
-        },
-        {
-            "name": "dosarkz/paypost",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dosarkz/paypost.git",
-                "reference": "1dbad42263251a759c68637b9e9deb16dbf22625"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dosarkz/paypost/zipball/1dbad42263251a759c68637b9e9deb16dbf22625",
-                "reference": "1dbad42263251a759c68637b9e9deb16dbf22625",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.3"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Dosarkz\\PayPost\\ServiceProviders\\PayPostServiceProvider"
-                    ],
-                    "aliases": {
-                        "PayPost": "Dosarkz\\PayPost\\Facade\\PayPost"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Dosarkz\\PayPost\\": "src/"
-                },
-                "classmap": [
-                    "src/config",
-                    "src/Facade",
-                    "src/ServiceProviders",
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Yerzhan Hn",
-                    "email": "ashenov.e@gmail.com"
-                }
-            ],
-            "description": "The Paypost module for accepting payments by Kazpost",
-            "support": {
-                "issues": "https://github.com/dosarkz/paypost/issues",
-                "source": "https://github.com/dosarkz/paypost/tree/master"
-            },
-            "time": "2018-12-13T15:53:22+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -511,29 +457,27 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.5.8",
+            "version": "6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "a52f0440530b54fa079ce76e8c5d196a42cad981"
+                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/a52f0440530b54fa079ce76e8c5d196a42cad981",
-                "reference": "a52f0440530b54fa079ce76e8c5d196a42cad981",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
                 "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.9",
-                "php": ">=5.5",
-                "symfony/polyfill-intl-idn": "^1.17"
+                "guzzlehttp/psr7": "^1.4",
+                "php": ">=5.5"
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
-                "psr/log": "^1.1"
+                "phpunit/phpunit": "^4.0 || ^5.0",
+                "psr/log": "^1.0"
             },
             "suggest": {
                 "psr/log": "Required for using the Log middleware"
@@ -541,7 +485,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.5-dev"
+                    "dev-master": "6.2-dev"
                 }
             },
             "autoload": {
@@ -558,39 +502,9 @@
             ],
             "authors": [
                 {
-                    "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk",
-                    "homepage": "https://github.com/GrahamCampbell"
-                },
-                {
                     "name": "Michael Dowling",
                     "email": "mtdowling@gmail.com",
                     "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Jeremy Lindblom",
-                    "email": "jeremeamia@gmail.com",
-                    "homepage": "https://github.com/jeremeamia"
-                },
-                {
-                    "name": "George Mponos",
-                    "email": "gmponos@gmail.com",
-                    "homepage": "https://github.com/gmponos"
-                },
-                {
-                    "name": "Tobias Nyholm",
-                    "email": "tobias.nyholm@gmail.com",
-                    "homepage": "https://github.com/Nyholm"
-                },
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com",
-                    "homepage": "https://github.com/sagikazarmark"
-                },
-                {
-                    "name": "Tobias Schultze",
-                    "email": "webmaster@tubo-world.de",
-                    "homepage": "https://github.com/Tobion"
                 }
             ],
             "description": "Guzzle is a PHP HTTP client library",
@@ -606,23 +520,9 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/6.5.8"
+                "source": "https://github.com/guzzle/guzzle/tree/master"
             },
-            "funding": [
-                {
-                    "url": "https://github.com/GrahamCampbell",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/Nyholm",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/guzzlehttp/guzzle",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-06-20T22:16:07+00:00"
+            "time": "2017-06-22T18:50:49+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -7524,7 +7424,6 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dosarkz/paypost": 20,
         "hassansin/dbcart": 20
     },
     "prefer-stable": true,

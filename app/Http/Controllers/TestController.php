@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Facades\Balance;
+use App\Mail\ProcessingEmail;
 use App\Models\Counter;
 use App\Models\Order;
 use App\Models\UserProgram;
@@ -20,6 +21,7 @@ use App\Events\Activation;
 use App\Events\ShopTurnover;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TestController extends Controller
 {
@@ -90,15 +92,11 @@ class TestController extends Controller
 
     public function tester()
     {
-        dd(UserProgram::count());
-        $value = 1;
-        $parameters = 1;
-
-
-        $count = UserProgram::where('user_id',$value)->where('list','like','%,'.$parameters.',%')->count();
-
-        if($count == 1) return true;
-        else return false;
+        Mail::send('auth.passwords.email', array('key' => 'value'), function ($message)
+        {
+            $message->from('xxxxx@xxxx.com');
+            $message->to('xxxxx@xxxx.com', 'John Smith')->subject('Welcome!');
+        });
 
     }
 

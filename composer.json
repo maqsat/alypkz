@@ -9,8 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
-        "dosarkz/paypost": "dev-master",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "6.3",
         "hassansin/dbcart": "dev-master",
         "intervention/image": "^2.5",
         "jameslkingsley/laravel-mentions": "^1.2",
