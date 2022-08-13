@@ -117,7 +117,7 @@ class UserActivated
 
 
         /*set register sum */
-        Balance::changeBalance($id,$package_cost,'register',$event->user->id,$event->user->program_id,$package_id,0);
+        Balance::changeBalance($id,$package_cost+env('REGISTRATION_FEE'),'register',$event->user->id,$event->user->program_id,$package_id,0);
 
         UserProgram::insert(
             [
@@ -253,7 +253,7 @@ class UserActivated
                         else
                             $to_enrollment_pv = $right_pv - $credited_pv;
 
-                        $sum = $to_enrollment_pv*$item_status->turnover_bonus/100*env('COURSE');
+                        $sum = $to_enrollment_pv*$item_status->turnover_bonus/100;
 
                         /*if($credited_sum < $item_status->week_sum_limit){
                             $temp_sum = 0;

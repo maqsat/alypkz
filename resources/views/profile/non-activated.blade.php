@@ -39,7 +39,7 @@
                             @if(is_null($orders) or $orders->status != 12)<div class="alert alert-danger">
                                 <h3 class="text-danger"><i class="fa fa-exclamation-triangle"></i> Примечание!</h3> Вам необходимо оплатить регистрационный сбор и выбрать пакет. У вас есть 24 часа чтобы активировать кабинет, по истечению срока ваш кабинет удалится.
                             </div>@endif
-                            {{--<div class="col-lg-12 col-md-12 p-0">
+                            <div class="col-lg-12 col-md-12 p-0">
                                 <div class="card">
                                     <div class="d-flex flex-row">
                                         <div class="p-10 bg-success">
@@ -47,14 +47,11 @@
                                         </div>
                                         <div class="align-self-center m-l-20 pay_button">
                                             <h3 class="m-b-0 text-success">{{ env('REGISTRATION_FEE')*$current_currency }} {{$currency_symbol}}</h3>
-                                            <h5 class="text-muted m-b-0">Регистрационный сбор</h5>
+                                            <h5 class="text-muted m-b-0">Обязательный единоразовый сервисный сбор</h5>
                                         </div>
-                                        <a href="/pay-types">
-                                            <button class="btn btn-success waves-effect waves-light m-t-15 m-b-15 m-r-10">Оплатить без БИЗНЕС ПАКЕТА</button>
-                                        </a>
                                     </div>
                                 </div>
-                            </div>--}}
+                            </div>
                         @endif
                         <div class="card">
                             <div class="card-block">

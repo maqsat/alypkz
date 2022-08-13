@@ -25,9 +25,9 @@
                         <li><a href="">История Upgrade</a></li>
                         <li><a href="/user?upgrade_request=1">Заявки на Upgrade</a></li>
                         @endif
-                        @if(Gate::allows('admin_user_create'))
+                        {{--@if(Gate::allows('admin_user_create'))
                         <li><a href="/user/create">Добавить</a></li>
-                        @endif
+                        @endif--}}
                     </ul>
                 </li>
                 @endif
@@ -68,13 +68,6 @@
                     </ul>
                 </li>
                 @endif
-                {{--<li>
-                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Новые партнеры</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="/client">Все</a></li>
-                        <li><a href="/client/create">Добавить</a></li>
-                    </ul>
-                </li>--}}
                 @if(Gate::allows('admin_menu_item_income') || Gate::allows('admin_overview_access'))
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Доходы</span></a>
@@ -117,19 +110,6 @@
                     </ul>
                 </li>
                 @endif
-                @if(Gate::allows('admin_menu_item_news'))
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">Новости</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        @if(Gate::allows('admin_news_view'))
-                        <li><a href="/news">Все новости</a></li>
-                        @endif
-                        @if(Gate::allows('admin_news_create'))
-                        <li><a href="/news/create">Добавить новость</a></li>
-                        @endif
-                    </ul>
-                </li>
-                @endif
                 {{--<li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-help"></i><span class="hide-menu">FAQ</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -143,7 +123,13 @@
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="hide-menu">Дополнительно</span></a>
                     <ul aria-expanded="false" class="collapse">
                         @if(Gate::allows('admin_progress_access'))
-                        <li><a href="/progress">Лидеры</a></li>
+                            <li><a href="/progress">Лидеры</a></li>
+                            @if(Gate::allows('admin_news_view'))
+                                <li><a href="/news">Все новости</a></li>
+                            @endif
+                            @if(Gate::allows('admin_news_create'))
+                                <li><a href="/news/create">Добавить новость</a></li>
+                            @endif
                         @endif
                         {{--@if(Gate::allows('not_cash_bonuses_travel_bonus'))
                         <li><a href="/not_cash_bonuses?type=travel_bonus">Happy Travel</a></li>
@@ -175,6 +161,14 @@
                     </ul>
                 </li>--}}
                 <li class="nav-devider"></li>
+                @if(Gate::allows('admin_menu_item_profile'))
+                    <li>
+                        <a href="/delivery" aria-expanded="false">
+                            <i class="mdi mdi-truck-delivery"></i>
+                            <span class="hide-menu">Доставка</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-small-cap">{{ __('app.menu') }}</li>
                 @if(Gate::allows('admin_menu_item_profile'))
                 <li>

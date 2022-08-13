@@ -145,6 +145,12 @@ class HomeController extends Controller
                 $revitalization_date = Carbon::now()->addMonth(1)->day($registered_day)->format('M d, Y')." 00:00:00";
             }
 
+            $delivery = User::where('id',$user->id)
+                ->orderBy('id','desc')
+                ->take(1)
+                ->get();
+
+
             return view('profile.home', compact(
                 'user',
                 'invite_list',
@@ -163,7 +169,8 @@ class HomeController extends Controller
                 'percentage',
                 'next_status',
                 'move_status',
-                'user_program'
+                'user_program',
+                'delivery'
             ));
         }
         else{

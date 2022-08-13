@@ -186,6 +186,64 @@
 
 
             <div class="row">
+                <!-- Column -->
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Данные доставки</th>
+                                        <th>Адрес</th>
+                                        <th>Доставка</th>
+                                        <th>Телефон</th>
+                                        <th>Статус доставки</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($delivery as $key => $item)
+                                        @php $order =  \App\Models\Order::where('user_id',$item->id)->first() @endphp
+                                        <tr>
+                                            <td>
+                                                ФИО: {{ $item->name }} <br>
+                                                Пакет: {{ \App\Models\Package::find($item->package_id)->title }} <br>
+                                                Дата регистрации: {{ $item->created_at }}
+                                            </td>
+
+                                            <td  style="width:200px;">{{ \App\Models\Country::find($item->country_id)->title }}, {{ \App\Models\City::find($item->city_id)->title }},  {{ $item->address }}</td>
+                                            <td>
+                                                Почтовой индекс: {{ $item->post_index }}  <br>
+                                                Трекинг номер: @if(!is_null($order))
+                                                    {{ $order->trucking }}
+                                                @endif
+
+                                            </td>
+                                            <td>{{ $item->number }}</td>
+
+                                            <td>
+                                            @if(!is_null($order))
+                                                    @if($order->delivery_status == 1)
+                                                        <span class="label label-light-success">Доставлен</span></td>
+                                                    @elseif($order->delivery_status == 2)
+                                                        <span class="label label-light-warning">Отправлен</span></td>
+                                                    @else
+                                                        <span class="label label-light-danger">Оформление</span></td>
+                                                    @endif
+                                            @else
+                                                    <span class="label label-light-danger">Формироваание</span></td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-block">

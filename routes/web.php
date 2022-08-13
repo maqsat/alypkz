@@ -145,6 +145,7 @@ Route::resource('processing', 'ProcessingController');
 Route::resource('store', 'ProductController')->middleware("admin");
 Route::resource('page', 'PageController')->middleware("admin");
 Route::resource('news','NewsController')->middleware("admin");
+Route::resource('delivery','DeliveryController')->middleware("admin");
 
 /*
 ************************ Anything else ***********************

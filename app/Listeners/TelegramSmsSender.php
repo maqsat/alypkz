@@ -35,7 +35,7 @@ class TelegramSmsSender
         $counter = UserProgram::count();
 
         $message = "АКТИВИРОВАН НОВЫЙ ПОЛЬЗОВАТЕЛЬ \n";
-        $message .= "Пакет: $package->title ( $package->cost )\n";
+        $message .= "Пакет: $package->title ($package->cost$)\n";
         $message .= "Спонсор: ".$inviter->name." \n";
         $message .= "Наставник: ".$sponsor->name." \n";
         $message .= "Имя: ".$event->user->name." \n";

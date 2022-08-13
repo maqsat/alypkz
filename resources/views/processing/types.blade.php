@@ -6,7 +6,7 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-                    <?php $all_cost = $package->cost * $current_currency; ?>
+                    <?php $all_cost = $package->cost * $current_currency + env('REGISTRATION_FEE')*$current_currency; ?>
                     <div class="row">
                         <div class="col-12">
                             <h4 class="m-b-20">Выберите удобный вид оплаты</h4>
