@@ -284,7 +284,7 @@ class UserActivated
             $inviter_list_for_referral = array_slice($inviter_list_for_referral, 0, 2);
 
             foreach ($inviter_list_for_referral as $key_referral => $item_referral){
-                if($key_referral == 0){
+                if($key_referral == 0 && $item_referral != ""){
                     Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
                 }
                 /*

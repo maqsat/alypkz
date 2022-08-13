@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($users as $key => $item)
-                                    @php $order =  \App\Models\Order::where('user_id',$item->id)->first() @endphp
+                                    @php $order =  \App\Models\Order::where('user_id',$item->id)->where('type', 'register')->first() @endphp
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>

@@ -704,9 +704,8 @@ class UserController extends Controller
 
         $order = Order::find($order_id);
 
-        if(true){
-            tap(Order::where( 'id',$order_id))
-                ->update(
+        if(!is_null($order)){
+                Order::where( 'id',$order_id)->update(
                     [
                         'status' => 4,
                     ]

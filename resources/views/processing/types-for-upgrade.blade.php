@@ -83,7 +83,7 @@
                                 <div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
-                                        <img class="card-img-top img-responsive " src="/nrg/chek.jpeg" alt="Card image cap">
+                                        <img class="card-img-top img-responsive " src="/unilife/chek.png" alt="Card image cap">
                                         <div class="card-block">
                                             <h4 class="card-title">Скан квитанции</h4>
                                             <p class="card-text">Прикрепите Скан квитанции к форме</p>
@@ -92,8 +92,8 @@
                                     </div>
                                     <!-- Card -->
                                 </div>
-                                <div class="col-lg-2 col-md-6  img-responsive">
-                                    <!-- Card -->
+<!--                                <div class="col-lg-2 col-md-6  img-responsive">
+                                    &lt;!&ndash; Card &ndash;&gt;
                                     <div class="card">
                                         <img class="card-img-top img-responsive" src="/nrg/paypost.png" alt="Card image cap">
                                         <div class="card-block">
@@ -102,8 +102,8 @@
                                             <a href="/pay-prepare?type=paypost&upgrade={{$current_package_id}}&@if(!is_null($package))package={{ $package->id }}@endif" class="btn btn-success m-t-10">Оплатить ${{ $all_cost }}</a>
                                         </div>
                                     </div>
-                                    <!-- Card -->
-                                </div>
+                                    &lt;!&ndash; Card &ndash;&gt;
+                                </div>-->
                                 {{--<div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
@@ -116,8 +116,8 @@
                                     </div>
                                     <!-- Card -->
                                 </div>--}}
-                                <div class="col-lg-2 col-md-6  img-responsive">
-                                    <!-- Card -->
+<!--                                <div class="col-lg-2 col-md-6  img-responsive">
+                                    &lt;!&ndash; Card &ndash;&gt;
                                     <div class="card">
                                         <img class="card-img-top img-responsive" src="https://makoli.com/wp-content/uploads/payeer-logo.png" alt="Card image cap">
                                         <div class="card-block">
@@ -126,8 +126,8 @@
                                             <a href="/pay-prepare?type=payeer&upgrade={{$current_package_id}}&@if(!is_null($package))package={{ $package->id }}@endif" class="btn btn-success m-t-10">Оплатить ${{ $all_cost }}</a>
                                         </div>
                                     </div>
-                                    <!-- Card -->
-                                </div>
+                                    &lt;!&ndash; Card &ndash;&gt;
+                                </div>-->
                                 {{--<div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">

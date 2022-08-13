@@ -89,6 +89,7 @@ class DeliveryController extends Controller
     {
 
         Order::whereId($request->order_id)
+            ->where('type', 'register')
             ->update([
                 'delivery_status' => $request->delivery_status,
                 'trucking' =>$request->trucking,
