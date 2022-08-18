@@ -198,8 +198,10 @@ class HomeController extends Controller
             abort('401');
         }
 
-        $users = \App\User::whereStatus(1)->get();
-        return view('user.partner', compact('users'));
+        $sponsor_users = Hierarchy::followersList(Auth::user()->id);
+
+
+        return view('user.partner', compact('sponsor_users'));
     }
 
     /**
@@ -227,6 +229,7 @@ class HomeController extends Controller
             'sponsor_id'    => 'required',
             'position'      => 'required',
             'package_id'    => 'required',
+            'scan'    => 'required',
             //'office_id'    => 'required',
         ]);
 
@@ -243,7 +246,7 @@ class HomeController extends Controller
             $status_id = $request->status_id;
         }
 
-
+        DB::beginTransaction();
         $user = User::create([
             'name'          => $request->name,
             'number'        => $request->number,
@@ -272,26 +275,47 @@ class HomeController extends Controller
         }
         else $cost = env('REGISTRATION_FEE');
 
-        $order =  Order::updateOrCreate(
-            [
-                'type' => 'register',
-                'status' => 0,
-                'payment' => 'manual',
-                'uuid' => 0,
-                'user_id' => $user->id,
-            ],
-            ['amount' => $cost, 'package_id' => $request->package_id]
-        );
+        if ($request->hasFile('scan')) {
 
-        event(new Activation($user = $user));
+            $extension = $request->file('scan')->extension();
+            $dir = 'public/scan/'.date('Y-m-d');
+            $name = Auth::user()->id . '.' . $extension;
+            $request->scan->storeAs($dir, $name);
+            $path = "storage/scan/".date('Y-m-d').'/'.$name;
 
-        Notification::create([
-            'user_id'   => Auth::user()->id,
-            'type'      => 'admin_register_user',
-            'message'   => 'Зарегистрировал пользователя ' . $user->name . ' ( ' . $user->id . ' ) ',
-        ]);
+            $order =  Order::updateOrCreate(
+                [
+                    'type' => 'register',
+                    'status' => 11,
+                    'payment' => 'manual',
+                    'uuid' => 0,
+                    'user_id' => $user->id,
+                ],
+                ['amount' => $cost, 'package_id' => $request->package_id, 'scan' => $path,]
+            );
+            DB::commit();
 
-        return redirect('/home')->with('success', 'Действие выполнено успешно!');
+            return redirect('/home')->with('success', 'Действие выполнено успешно!');
+
+        }
+        else{
+            DB::rollBack();
+
+            return  redirect()->back()->with('status', 'Что то пошло не так');
+         }
+
+
+
+
+        //event(new Activation($user = $user));
+
+        //Notification::create([
+        //    'user_id'   => Auth::user()->id,
+        //    'type'      => 'admin_register_user',
+        //    'message'   => 'Зарегистрировал пользователя ' . $user->name . ' ( ' . $user->id . ' ) ',
+        //]);
+
+
     }
 
     public function partnerSponsorUsers(Request $request)

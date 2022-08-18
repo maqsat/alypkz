@@ -36,11 +36,11 @@
                                 <button class="btn btn-success btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">{{ __('app.log in') }}</button>
                             </div>
                         </div>
-                        <div class="form-group m-b-0">
+<!--                        <div class="form-group m-b-0">
                             <div class="col-sm-12 text-center">
                                 <p>{{ __('app.Dont have an account?') }} <a href="/register" class="text-success m-l-5"><b>{{ __('app.Sign Up in Login') }}</b></a></p>
                             </div>
-                        </div>
+                        </div>-->
                 </form>
 
                 <form method="POST" action="{{ route('password.email') }}" id="recoverform">

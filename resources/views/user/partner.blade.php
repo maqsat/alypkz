@@ -26,7 +26,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-block">
-                            <form action="{{ route('partner_store') }}" method="POST" class="form-horizontal user_create">
+                            <form action="{{ route('partner_store') }}" method="POST" class="form-horizontal user_create"  enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="row">
                                     <div class="col-md-6">
@@ -124,19 +124,31 @@
                                     <div class="col-md-6">
                                         <label class="m-t-10">Менеджер</label>
                                         <div class="input-group">
-                                            <select class="form-control form-control-line select2" name="inviter_id"  onchange="getSponsorUsers(this)">
-                                                <option>Выберите менеджера</option>
-                                                @foreach($users as $item)
-                                                    <option value="{{ $item->id }}" @if(old('inviter_id') == $item->id) selected @endif>{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @if ($errors->has('inviter_id'))
-                                                <span class="text-danger"><small>{{ $errors->first('inviter_id') }}</small></span>
+                                            <input type="text" value="{{ Auth::user()->name }}" class="form-control form-control-line" disabled>
+                                            <input type="hidden" value="{{ Auth::user()->id }}" name="inviter_id">
+                                            @if ($errors->has('name'))
+                                                <br>
+                                                <span class="text-danger"><small>{{ $errors->first('name') }}</small></span>
                                             @endif
                                         </div>
                                         <label class="m-t-10">Закреплен за(показывается только свободные позиции)</label>
                                         <div class="input-group">
-                                            <select class="form-control form-control-line select2" name="sponsor_id" id="sponsor_users"  onchange="getPosition(this)"></select>
+                                            <select class="form-control form-control-line select2" name="sponsor_id" id="sponsor_users"  onchange="getPosition(this)">
+                                                <option>Выберите менеджера</option>
+                                               @php
+                                                   foreach ($sponsor_users  as $item){
+
+                                                        $left_user = \App\User::whereSponsorId($item->user_id)->wherePosition(1)->whereStatus(1)->first();
+                                                        $right_user = \App\User::whereSponsorId($item->user_id)->wherePosition(2)->whereStatus(1)->first();
+
+                                                        if(is_null($left_user) or is_null($right_user)){
+                                                            $name = \App\User::find($item->user_id)->name;
+                                                            echo '<option value='.$item->user_id.'>'.$item->user_id.". ".$name.'</option>';
+                                                        }
+
+                                                    }
+                                                @endphp
+                                            </select>
                                             @if ($errors->has('sponsor_id'))
                                                 <span class="text-danger"><small>{{ $errors->first('sponsor_id') }}</small></span>
                                             @endif
@@ -154,7 +166,7 @@
                                         <div class="input-group">
                                             <select class="custom-select form-control required" id="package_id" name="package_id" onchange="getStatus(this)">
                                                 @foreach(\App\Models\Package::where('status',1)->get() as $item)
-                                                    <option value="{{ $item->id }}" @if(old('package_id') == $item->id) selected @endif>{{ $item->title }} - ${{ $item->cost }} / {{ $item->pv  }} PV</option>
+                                                    <option value="{{ $item->id }}" @if(old('package_id') == $item->id) selected @endif>{{ $item->title }} - ${{ $item->cost }} + ${{ env('REGISTRATION_FEE') }} / {{ $item->pv  }} PV</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('package_id'))
@@ -165,7 +177,7 @@
                                                 <input type="hidden" value="{{ $item->rank }}" id="#status{{$item->id}}">
                                             @endforeach
                                         </div>
-                                        <label  class="m-t-10" for="position"   style="display: none">Статус:</label>
+<!--                                        <label  class="m-t-10" for="position"   style="display: none">Статус:</label>
                                         <div class="input-group"   style="display: none">
                                             <select class="custom-select form-control required" id="status_id" name="status_id">
                                                 @foreach(\App\Models\Status::all() as $item)
@@ -175,14 +187,19 @@
                                             @if ($errors->has('status_id'))
                                                 <span class="text-danger"><small>{{ $errors->first('status_id') }}</small></span>
                                             @endif
-                                        </div>
-                                        <label  class="m-t-10" for="position"  style="display: none">Офис:</label>
+                                        </div>-->
+<!--                                        <label  class="m-t-10" for="position"  style="display: none">Офис:</label>
                                         <div class="input-group"  style="display: none">
                                             <select class="form-control form-control-line" name="office_id" id="user_offices"></select>
                                             @if ($errors->has('office_id'))
                                                 <span class="text-danger"><small>{{ $errors->first('office_id') }}</small></span>
                                             @endif
+                                        </div>-->
+                                        <label class="m-t-10">Квитанция об оплате</label>
+                                        <div class="input-group">
+                                            <input type="file" id="input-file-now"  name="scan" />
                                         </div>
+
                                     </div>
                                 </div>
                                 <hr>

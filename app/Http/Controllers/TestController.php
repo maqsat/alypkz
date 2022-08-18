@@ -26,6 +26,12 @@ use Illuminate\Support\Facades\Mail;
 class TestController extends Controller
 {
 
+
+    public function tester()
+    {
+
+    }
+
     public function setBots()
     {
         for ($i = 0; $i < 1000; $i++){
@@ -90,7 +96,7 @@ class TestController extends Controller
 
     }
 
-    public function tester()
+    public function testerMail()
     {
         Mail::send('auth.passwords.email', array('key' => 'value'), function ($message)
         {

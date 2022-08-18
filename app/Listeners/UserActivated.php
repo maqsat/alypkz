@@ -154,6 +154,38 @@ class UserActivated
         if($package_id != 0){
             $sponsors_list = explode(',',trim($list,','));
 
+            /*start set  matching_bonus  */
+            $inviter_list_for_lkb = explode(',',trim($inviter_list,','));
+            $inviter_list_for_lkb = array_slice($inviter_list_for_lkb, 0, 7);
+            $old_max_status_percentage = 0;
+
+            foreach ($inviter_list_for_lkb as $key_matching => $item_matching){
+
+                $matching_user_program = UserProgram::where('user_id',$item_matching)->first();
+
+                if(!is_null($matching_user_program)){
+                    $new_max_status_percentage = Status::find($matching_user_program->status_id)->matching_bonus;
+
+                    if($matching_user_program->package_id == 2 and $new_max_status_percentage < 5) {
+                        $new_max_status_percentage = 5;
+                    }
+
+                    if($matching_user_program->package_id == 3 and $new_max_status_percentage < 10) {
+                        $new_max_status_percentage = 10;
+                    }
+
+                    if($new_max_status_percentage > $old_max_status_percentage){
+
+                        $current_max_status_percentage = $new_max_status_percentage - $old_max_status_percentage;
+                        $old_max_status_percentage = $new_max_status_percentage;
+
+                        Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv,'',$key_matching);
+                    }
+                }
+            }
+            /*end set  matching_bonus  */
+
+
             foreach ($sponsors_list as $key => $item){
 
                 $item_user_program = UserProgram::where('user_id',$item)->first();
@@ -295,36 +327,7 @@ class UserActivated
             }
             /*end set  invite_bonus  */
 
-            /*start set  matching_bonus  */
-            $inviter_list_for_lkb = explode(',',trim($inviter_list,','));
-            $inviter_list_for_lkb = array_slice($inviter_list_for_lkb, 0, 7);
-            $old_max_status_percentage = 0;
 
-            foreach ($inviter_list_for_lkb as $key_matching => $item_matching){
-
-                $matching_user_program = UserProgram::where('user_id',$item_matching)->first();
-
-                if(!is_null($matching_user_program)){
-                    $new_max_status_percentage = Status::find($matching_user_program->status_id)->matching_bonus;
-
-                    if($matching_user_program->package_id == 2 and $new_max_status_percentage < 5) {
-                        $new_max_status_percentage = 5;
-                    }
-
-                    if($matching_user_program->package_id == 3 and $new_max_status_percentage < 10) {
-                        $new_max_status_percentage = 10;
-                    }
-
-                    if($new_max_status_percentage > $old_max_status_percentage){
-
-                        $current_max_status_percentage = $new_max_status_percentage - $old_max_status_percentage;
-                        $old_max_status_percentage = $new_max_status_percentage;
-
-                        Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv,'',$key_matching);
-                    }
-                }
-            }
-            /*end set  matching_bonus  */
         }
 
     }
