@@ -194,14 +194,18 @@ class HomeController extends Controller
      */
     public function partner()
     {
-        if(!Gate::allows('admin_user_create')) {
-            abort('401');
-        }
 
         $sponsor_users = Hierarchy::followersList(Auth::user()->id);
 
 
         return view('user.partner', compact('sponsor_users'));
+    }
+
+    public function partnerUsers()
+    {
+        $list = User::where('inviter_id',Auth::user()->id)->whereStatus(0)->get();
+
+        return view('profile.partner_users', compact('list'));
     }
 
     /**
@@ -210,10 +214,6 @@ class HomeController extends Controller
      */
     public function partnerStore(Request $request)
     {
-        if(!Gate::allows('admin_user_create')) {
-            abort('401');
-        }
-
         $request->validate([
             'name'          => 'required',
             'number'        => 'required',
@@ -304,25 +304,11 @@ class HomeController extends Controller
             return  redirect()->back()->with('status', 'Что то пошло не так');
          }
 
-
-
-
-        //event(new Activation($user = $user));
-
-        //Notification::create([
-        //    'user_id'   => Auth::user()->id,
-        //    'type'      => 'admin_register_user',
-        //    'message'   => 'Зарегистрировал пользователя ' . $user->name . ' ( ' . $user->id . ' ) ',
-        //]);
-
-
     }
 
     public function partnerSponsorUsers(Request $request)
     {
-        if(!Gate::allows('admin_user_create')) {
-            abort('401');
-        }
+
         $request->validate([
             'inviter_id' => 'required', 'integer'
         ]);
@@ -348,9 +334,7 @@ class HomeController extends Controller
 
     public function partnerSponsorPositions(Request $request)
     {
-        if(!Gate::allows('admin_user_create')) {
-            abort('401');
-        }
+
         $request->validate([
             'sponsor_id' => 'required', 'integer'
         ]);
@@ -368,9 +352,7 @@ class HomeController extends Controller
 
     public function partnerUserOffices(Request $request)
     {
-        if(!Gate::allows('admin_user_create')) {
-            abort('401');
-        }
+
         $request->validate([
             'city_id' => 'required', 'integer'
         ]);

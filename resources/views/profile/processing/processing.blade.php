@@ -58,7 +58,7 @@
                                             <td>
                                                 @include('processing.processing-title')
                                             </td>
-                                            <td>{{ round($item->sum,2) }} $</td>
+                                            <td>{{ round($item->sum,2) }} PV</td>
                                             <td>{{ $item->pv}} PV</td>
                                             <?php
                                                 $in_user = \App\User::find($item->in_user)

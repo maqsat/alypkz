@@ -71,6 +71,7 @@ Route::post('/transfer', 'ProcessingController@transfer')->name('transfer');
 Route::post('/request', 'ProcessingController@request')->name('request');
 Route::get('/transfer/{status}/{processing_id}', 'ProcessingController@transferAnswer');
 Route::get('partner/create', 'HomeController@partner')->name('partner_create');
+Route::get('partner_users', 'HomeController@partnerUsers');
 Route::post('partner/create', 'HomeController@partnerStore')->name('partner_store');
 Route::get('partner/sponsor/users', 'HomeController@partnerSponsorUsers')->name("partner_sponsor_users");
 Route::get('partner/sponsor/positions', 'HomeController@partnerSponsorPositions')->name("partner_sponsor_positions");

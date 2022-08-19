@@ -32,9 +32,8 @@
                             {{--<li><a href="/team?upgrade=1">Апгрейд команды</a></li>--}}
                             <li><a href="/team?move=1">Прогресс команды</a></li>
                             <li><a href="/team?own=1">Моя команда(без перелива)</a></li>
-                            @if(Gate::allows('admin_user_create'))
-                                <li><a href="{{ route('partner_create') }}">{{ __('app.add_partner') }}</a></li>
-                            @endif
+                            <li><a href="/partner_users">Неактивные</a></li>
+                            <li><a href="{{ route('partner_create') }}">{{ __('app.add_partner') }}</a></li>
                         </ul>
                     </li>
                     <li>
