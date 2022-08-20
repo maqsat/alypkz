@@ -24,7 +24,7 @@
                                 <img src="@if($current_user->photo != ''){{ $current_user->photo }} @else /monster_admin/assets/images/users/1.jpg @endif" alt="user" class="img-circle img-responsive tree-img">
                             </div>
                             <div class="col-md-8 col-lg-9">
-                                <h3 class="box-title m-b-0">{{ $current_user->name }}(ID: {{ $current_user->id }})</h3> <small>{{ \App\Models\Status::find($current_user->status_id)->title }} / @if($current_user->package_id != 0) {{ \App\Models\Package::find($current_user->package_id)->title }} @else Без пакета @endif</small>
+                                <h3 class="box-title m-b-0">{{ $current_user->name }}(ID: {{ $current_user->user_id }})</h3> <small>{{ \App\Models\Status::find($current_user->status_id)->title }} / @if($current_user->package_id != 0) {{ \App\Models\Package::find($current_user->package_id)->title }} @else Без пакета @endif</small>
                                 <address class="m-b-0">
                                     <?php
                                         $left = \App\Facades\Hierarchy::pvCounter($current_user->user_id,1);
@@ -64,7 +64,7 @@
                                         <img src="@if($left_user->photo != ''){{ $left_user->photo }} @else /monster_admin/assets/images/users/1.jpg @endif" alt="user" class="img-circle img-responsive tree-img">
                                     </div>
                                     <div class="col-md-8 col-lg-9">
-                                        <h3 class="box-title m-b-0">{{ $left_user->name }} (ID: {{ $left_user->id }})</h3> <small>{{ \App\Models\Status::find($left_user->status_id)->title }} / @if($left_user->package_id != 0) {{ \App\Models\Package::find($left_user->package_id)->title }} @else Без пакета @endif</small>
+                                        <h3 class="box-title m-b-0">{{ $left_user->name }} (ID: {{ $left_user->user_id }})</h3> <small>{{ \App\Models\Status::find($left_user->status_id)->title }} / @if($left_user->package_id != 0) {{ \App\Models\Package::find($left_user->package_id)->title }} @else Без пакета @endif</small>
                                         <address class="m-b-0">
                                             <?php
                                             $left = \App\Facades\Hierarchy::pvCounter($left_user->user_id,1);
@@ -97,7 +97,7 @@
                                         <img src="@if($right_user->photo != ''){{ $right_user->photo }} @else /monster_admin/assets/images/users/1.jpg @endif" alt="user" class="img-circle img-responsive tree-img">
                                     </div>
                                     <div class="col-md-8 col-lg-9">
-                                        <h3 class="box-title m-b-0">{{ $right_user->name }} (ID: {{ $right_user->id }})</h3> <small>{{ \App\Models\Status::find($right_user->status_id)->title }} /@if($right_user->package_id != 0)  {{ \App\Models\Package::find($right_user->package_id)->title }} @else Без пакета @endif</small>
+                                        <h3 class="box-title m-b-0">{{ $right_user->name }} (ID: {{ $right_user->user_id }})</h3> <small>{{ \App\Models\Status::find($right_user->status_id)->title }} /@if($right_user->package_id != 0)  {{ \App\Models\Package::find($right_user->package_id)->title }} @else Без пакета @endif</small>
                                         <address class="m-b-0">
                                             <?php
                                             $left = \App\Facades\Hierarchy::pvCounter($right_user->user_id,1);
@@ -131,7 +131,7 @@
                                         <img src="@if($left_user_l->photo != ''){{ $left_user_l->photo }} @else /monster_admin/assets/images/users/1.jpg @endif" alt="user" class="img-circle img-responsive tree-img">
                                     </div>
                                     <div class="col-md-8 col-lg-9">
-                                        <h3 class="box-title m-b-0">{{ $left_user_l->name }} (ID: {{ $left_user_l->id }})</h3> <small>{{ \App\Models\Status::find($left_user_l->status_id)->title }} /@if($left_user_l->package_id != 0)   {{ \App\Models\Package::find($left_user_l->package_id)->title }} @else Без пакета @endif</small>
+                                        <h3 class="box-title m-b-0">{{ $left_user_l->name }} (ID: {{ $left_user_l->user_id }})</h3> <small>{{ \App\Models\Status::find($left_user_l->status_id)->title }} /@if($left_user_l->package_id != 0)   {{ \App\Models\Package::find($left_user_l->package_id)->title }} @else Без пакета @endif</small>
                                         <address class="m-b-0">
                                             <?php
                                             $left = \App\Facades\Hierarchy::pvCounter($left_user_l->user_id,1);
@@ -163,7 +163,7 @@
                                         <img src="@if($left_user_r->photo != ''){{ $left_user_r->photo }} @else /monster_admin/assets/images/users/1.jpg @endif" alt="user" class="img-circle img-responsive tree-img">
                                     </div>
                                     <div class="col-md-8 col-lg-9">
-                                        <h3 class="box-title m-b-0">{{ $left_user_r->name }} (ID: {{ $left_user_r->id }})</h3> <small>{{ \App\Models\Status::find($left_user_r->status_id)->title }} /@if($left_user_r->package_id != 0)   {{ \App\Models\Package::find($left_user_r->package_id)->title }} @else Без пакета @endif</small>
+                                        <h3 class="box-title m-b-0">{{ $left_user_r->name }} (ID: {{ $left_user_r->user_id }})</h3> <small>{{ \App\Models\Status::find($left_user_r->status_id)->title }} /@if($left_user_r->package_id != 0)   {{ \App\Models\Package::find($left_user_r->package_id)->title }} @else Без пакета @endif</small>
                                         <address class="m-b-0">
                                             <?php
                                             $left = \App\Facades\Hierarchy::pvCounter($left_user_r->user_id,1);
@@ -195,7 +195,7 @@
                                         <img src="@if($right_user_l->photo != ''){{ $right_user_l->photo }} @else /monster_admin/assets/images/users/1.jpg @endif" alt="user" class="img-circle img-responsive tree-img">
                                     </div>
                                     <div class="col-md-8 col-lg-9">
-                                        <h3 class="box-title m-b-0">{{ $right_user_l->name }} (ID: {{ $right_user_l->id }})</h3> <small>{{ \App\Models\Status::find($right_user_l->status_id)->title }} /@if($right_user_l->package_id != 0)   {{ \App\Models\Package::find($right_user_l->package_id)->title }} @else Без пакета @endif</small>
+                                        <h3 class="box-title m-b-0">{{ $right_user_l->name }} (ID: {{ $right_user_l->user_id }})</h3> <small>{{ \App\Models\Status::find($right_user_l->status_id)->title }} /@if($right_user_l->package_id != 0)   {{ \App\Models\Package::find($right_user_l->package_id)->title }} @else Без пакета @endif</small>
                                         <address class="m-b-0">
                                             <?php
                                             $left = \App\Facades\Hierarchy::pvCounter($right_user_l->user_id,1);
@@ -227,7 +227,7 @@
                                         <img src="@if($right_user_r->photo != ''){{ $right_user_r->photo }} @else /monster_admin/assets/images/users/1.jpg @endif" alt="user" class="img-circle img-responsive tree-img">
                                     </div>
                                     <div class="col-md-8 col-lg-9">
-                                        <h3 class="box-title m-b-0">{{ $right_user_r->name }} (ID: {{ $right_user_r->id }})</h3> <small>{{ \App\Models\Status::find($right_user_r->status_id)->title }} /@if($right_user_r->package_id != 0)   {{ \App\Models\Package::find($right_user_r->package_id)->title }} @else Без пакета @endif</small>
+                                        <h3 class="box-title m-b-0">{{ $right_user_r->name }} (ID: {{ $right_user_r->user_id }})</h3> <small>{{ \App\Models\Status::find($right_user_r->status_id)->title }} /@if($right_user_r->package_id != 0)   {{ \App\Models\Package::find($right_user_r->package_id)->title }} @else Без пакета @endif</small>
                                         <address class="m-b-0">
                                             <?php
                                             $left = \App\Facades\Hierarchy::pvCounter($right_user_r->user_id,1);

@@ -135,7 +135,7 @@ class UserActivated
             ->where('users.inviter_id',$this_user->inviter_id)
             ->where('users.status',1)
             ->count();
-        if($sponsor_subscribers == 2) UserProgram::whereId($this_user->inviter_id)->update(['is_binary' => 1]);
+        if($sponsor_subscribers == 2) UserProgram::whereUserId($this_user->inviter_id)->update(['is_binary' => 1]);
         /*end activate sponsor binary*/
 
         if (Auth::check())

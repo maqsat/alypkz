@@ -49,7 +49,6 @@
                                         <label class="m-t-10">Выберите пол:</label>
                                         <div class="input-group">
                                             <select class="custom-select form-control" id="gender" name="gender">
-                                                <option>Не указан</option>
                                                 <option value="1"  @if(old('gender') == 1) selected @endif>Мужской</option>
                                                 <option value="2"  @if(old('gender') == 2) selected @endif>Женский</option>
                                             </select>
@@ -101,7 +100,6 @@
                                         <label  class="m-t-10" for="position">Город:</label>
                                         <div class="input-group">
                                             <select class="custom-select form-control required" id="city_id" name="city_id"> <!--onchange="getOffices(this)"-->
-                                                <option>Выберите город</option>
                                                 @foreach(\App\Models\City::where('status',1)->get() as $item)
                                                     <option value="{{ $item->id }}" @if(old('city_id') == $item->id) selected @endif>{{ $item->title }}</option>
                                                 @endforeach

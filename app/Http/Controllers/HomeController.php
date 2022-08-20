@@ -81,7 +81,7 @@ class HomeController extends Controller
             $pv_counter_left = Hierarchy::pvCounter($user->id,1);
             $pv_counter_right = Hierarchy::pvCounter($user->id,2);
             $list = UserProgram::where('list','like','%,'.$user->id.',%')->count();
-            $package = Package::find($user_program->package_id);
+            $package = Package::find($user->package_id);
             $non_activate_count = User::whereSponsorId($user->id)->whereStatus(0)->count();
             $balance = Balance::getBalance($user->id);
             $out_balance = Balance::getBalanceOut($user->id);
@@ -93,11 +93,17 @@ class HomeController extends Controller
             if($pv_counter_left < $pv_counter_right) $small_branch_pv = $pv_counter_left;
             else $small_branch_pv = $pv_counter_right;
 
-            $next_status = Status::find($status->order+1);
-            if(!is_null($next_status)){
-                $percentage = $small_branch_pv*100/$next_status->pv;
+            if(!is_null($status)){
+                $next_status = Status::find($status->order+1);
+                if(!is_null($next_status)){
+                    $percentage = $small_branch_pv*100/$next_status->pv;
+                }
+                else  $percentage = 100;
             }
-            else  $percentage = 100;
+            else{
+                $percentage = 0;
+            }
+
 
             $not_cash_bonuses = DB::table('not_cash_bonuses')->where('user_id', $user->id)->where('status',0)->get();
 
@@ -107,19 +113,6 @@ class HomeController extends Controller
                 ->first();
 
 
-            /*$date = new \DateTime();
-            $date->setDate(2020, 5, 31);
-            $dt = Carbon::create($date->format('Y'), $date->format('m'), $date->format('d'), 1, 0, 0, 'Asia/Almaty');
-
-            $registered_week_day = $user_program->created_at->weekday();
-            $today_week_day =  $dt->weekday();
-
-            if($today_week_day <= $registered_week_day){
-                $quickstart_date = $dt->weekday($registered_week_day)->format('M d, Y')." 00:00:00";
-            }
-            else{
-                $quickstart_date = $dt->addDays(7)->weekday($registered_week_day)->format('M d, Y')." 00:00:00";
-            }*/
 
             $registered_week_day = $user_program->created_at->weekday();
             $today_week_day =  Carbon::now()->weekday();
@@ -214,6 +207,7 @@ class HomeController extends Controller
      */
     public function partnerStore(Request $request)
     {
+
         $request->validate([
             'name'          => 'required',
             'number'        => 'required',
@@ -226,7 +220,7 @@ class HomeController extends Controller
             'created_at'    => 'required',
             'city_id'       => 'required',
             'inviter_id'    => ['required', "sponsor_in_program:1", 'exists:users,id'],
-            'sponsor_id'    => 'required',
+            'sponsor_id'    => ['required', 'exists:users,id'],
             'position'      => 'required',
             'package_id'    => 'required',
             'scan'    => 'required',
