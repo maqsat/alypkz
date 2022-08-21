@@ -110,7 +110,7 @@
                                         </div>
                                         <label class="m-t-10">Дата регистрации</label>
                                         <div class="input-group">
-                                            <input type="date" value="{{ old('created_at') }}" name="created_at" class="form-control">
+                                            <input type="date" value="{{ date('Y-m-d') }}" name="created_at" class="form-control">
                                             @if ($errors->has('created_at'))
                                                 <span class="text-danger"><small>{{ $errors->first('created_at') }}</small></span>
                                             @endif
