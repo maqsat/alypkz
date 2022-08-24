@@ -273,7 +273,7 @@ class HomeController extends Controller
 
             $extension = $request->file('scan')->extension();
             $dir = 'public/scan/'.date('Y-m-d');
-            $name = Auth::user()->id . '.' . $extension;
+            $name = $user->id . '.' . $extension;
             $request->scan->storeAs($dir, $name);
             $path = "storage/scan/".date('Y-m-d').'/'.$name;
 

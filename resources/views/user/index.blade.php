@@ -115,7 +115,6 @@
                                                         <a href="{{asset($order->scan)}}" target="_blank" class="btn btn-xs btn-primary"><i class="mdi mdi-account-search"></i></a>
                                                     @endif
                                                 </td>
-
                                             @else
                                                 <td class="actions">
                                                     @if(Gate::allows('admin_activation_user'))
