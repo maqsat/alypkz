@@ -63,12 +63,20 @@ class UserController extends Controller
 
         //if(Auth::user()->role_id == 2) return redirect('processing?status=request');
 
+
         if(isset($request->s)){
+
             $list = User::whereNotNull('program_id')->where('name','like','%'.$request->s.'%')
                 ->orWhere('id','like','%'.$request->s.'%')
                 ->orWhere('email','like','%'.$request->s.'%')
                 ->orWhere('id_number','like','%'.$request->s.'%')
                 ->orderBy('id','desc')
+                ->paginate(30);
+        }
+        elseif(isset($request->status_id)){
+            $list = User::join('user_programs','users.id','=','user_programs.user_id')
+                ->where('user_programs.status_id',$request->status_id)
+                ->select('users.*')
                 ->paginate(30);
         }
         else{
@@ -355,77 +363,7 @@ class UserController extends Controller
 
     }
 
-    public function addBonus($id)
-    {
-        if(!Gate::allows('admin_user_add_bonus')) {
-            abort('401');
-        }
 
-        $user = User::find($id);
-        $array_ids_children = explode(',', trim(Hierarchy::getFollowersList($id, ''), ','));
-        //$array_ids_parents = explode(',', trim(Hierarchy::getSponsorsList($id, ''), ','));
-        $users = User::find(array_merge($array_ids_children/*, $array_ids_parents*/, [$id]));
-        return view('user.add_bonus', compact('user', 'users'));
-    }
-
-    public function addBonusUser(Request $request, $id)
-    {
-        if(!Gate::allows('admin_user_add_bonus')) {
-            abort('401');
-        }
-
-        $user = User::find($id);
-
-        if($request->position) {
-            $validator = Validator::make($request->all(), [
-                'description'   => 'required',
-                'pv'           => 'required|integer',
-            ]);
-
-            if ($validator->fails())
-            {
-                return redirect()->back()->with('status', 'Данные указаны не верно!<br />Поля обязательны для заполнения!');
-            }
-
-            $position_user = $request->position;
-
-            Balance::changeBalance($id,0,'admin_add',$id,$user->program_id,$user->package_id,$user->status_id,$request->pv * -1,0,0,0,$request->description);
-            if($request->pv > 0) {
-                Balance::setQV($id,$request->pv * -1,$id,$user->package_id,$position_user,is_null($user->status_id) ? 0 : $user->status_id);
-            }
-
-        } else {
-            $validator = Validator::make($request->all(), [
-                'description'   => 'required',
-                'sum'           => 'required|regex:/^[0-9]*\.?,?[0-9]*$/',
-                'pv'           => 'required|integer',
-                'in_user'           => 'required|integer',
-            ]);
-
-            if ($validator->fails())
-            {
-                return redirect()->back()->with('status', 'Поля не прошли валидацию!<br />Поля обязательны для заполнения!');
-            }
-
-            $in_user = User::find($request->in_user);
-            $position_user = $in_user->position;
-
-            $in_user_program_list = explode(',', trim(UserProgram::where('user_id', $request->in_user)->first()->list, ','));
-            for ($i = 0; $i < count($in_user_program_list); $i++) {
-                if($in_user_program_list[$i] === $id && $i - 1 >= 0) {
-                    $position_user = User::find($in_user_program_list[$i - 1])->position;
-                }
-            }
-
-            Balance::changeBalance($id,str_replace(',', '.', $request->sum),'admin_add',$request->in_user,$in_user->program_id,$in_user->package_id,$user->status_id,$request->pv,0,0,0,$request->description);
-            if($request->pv > 0) {
-                Balance::setQV($id,$request->pv,$request->in_user,$in_user->package_id,$position_user,is_null($user->status_id) ? 0 : $user->status_id );
-            }
-        }
-
-
-        return redirect()->back()->with('status', 'Успешно выполнено!');//view('user.add_bonus', compact('user'));
-    }
 
     public function activation($user_id)
     {
@@ -1114,6 +1052,7 @@ class UserController extends Controller
         }
 
         $user  = User::find($id);
+        $id = $user->id;
         $balance = Balance::getBalance($id);
         $all = Balance::getIncomeBalance($id);
         $out = Balance::getBalanceOut($id);
@@ -1125,42 +1064,59 @@ class UserController extends Controller
                 ->orWhere('pv', '!=', '0');
         })->orderBy('created_at','desc')->paginate(100);
 
-        return view('user.processing', compact('list', 'balance', 'all', 'out','week','user'));
+        $array_ids_children = explode(',', trim(Hierarchy::getFollowersList($id, ''), ','));
+        $users = User::find(array_merge($array_ids_children, [$id]));
+
+
+
+        return view('user.processing', compact('id','list', 'balance', 'all', 'out','week','user', 'users'));
     }
 
-    public function processingStore(Request $request)
+    public function changeUserBonus(Request $request, $id)
     {
-        if(!Gate::allows('admin_user_processing')) {
-            abort('401');
+        $user = User::find($id);
+
+
+        $validator = Validator::make($request->all(), [
+            'description'   => 'required',
+            'sum'           => 'required|integer',
+            'currency_type'  => 'required|integer',
+            'operation_type'  => 'required|integer',
+            'in_user'           => 'required|integer',
+        ]);
+
+        if ($validator->fails())
+        {
+            return redirect()->back()->with('status', 'Данные указаны не верно!<br />Поля обязательны для заполнения!');
         }
 
-        $request->validate([
-            'sum' => ['required', 'numeric', 'min:0'],
-            'user_id' => ['required', 'integer']
-        ]);
 
-        $balance = Balance::getBalance($request->user_id);
-        $sum = $request->sum/385;
+        if($request->currency_type == 1){
 
-        if($balance < $sum) return redirect()->back()->with('status', 'У аккаунта недостаточно средств!');
+            if($request->operation_type == 1) $sum = $request->sum;
+            else  $sum = $request->sum * -1;
+            Balance::changeBalance($id,$sum,'admin_add',$request->in_user,$user->program_id,$user->package_id,$user->status_id,$request->sum,0,0,0,$request->description);
+        }
+        else{
+            if($request->operation_type == 1) $sum = $request->sum;
+            else  $sum = $request->sum * -1;
 
-        $user = User::find($request->user_id);
-        $user_program = UserProgram::where('user_id',$user->id)->first();
+            $in_user = User::find($request->in_user);
+            $position_user = $in_user->position;
 
-        $data = Processing::create([
-            'status' => 'out',
-            'sum' => $request->sum,
-            'in_user' => 0,
-            'user_id' => $user->id,
-            'program_id' => $user->program_id,
-            'status_id' => $user_program->status_id,
-            'package_id' => $user->package_id,
-            'is_admin' => Auth::user()->id,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
+            Balance::setQV($id, $sum, $request->in_user, $user->package_id, $position_user, is_null($user->status_id) ? 0 : $user->status_id);
 
-        return redirect()->back()->with('status', 'Успешно выполнено!');
+            /*$in_user_program_list = explode(',', trim(UserProgram::where('user_id', $request->in_user)->first()->list, ','));
+            for ($i = 0; $i < count($in_user_program_list); $i++) {
+                if($in_user_program_list[$i] === $id && $i - 1 >= 0) {
+                    $position_user = User::find($in_user_program_list[$i - 1])->position;
+                }
+            }*/
+        }
+
+        return redirect()->back()->with('status', 'Успешно выполнено!');//view('user.add_bonus', compact('user'));
     }
+
 
     /*
      *

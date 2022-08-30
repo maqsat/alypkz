@@ -117,9 +117,8 @@ Route::post('user/transfer','UserController@transferStore');
 Route::get('user/{id}/program','UserController@program');
 Route::post('user/{id}/program','UserController@programStore');
 Route::get('user/{id}/processing','UserController@processing');
-Route::post('user/processing','UserController@processingStore');
-Route::get('user/{id}/add_bonus','UserController@addBonus')->middleware("admin");
-Route::post('user/{id}/add_bonus','UserController@addBonusUser')->middleware("admin");
+
+Route::post('user/{id}/change','UserController@changeUserBonus')->middleware("admin");
 Route::get('admin/notifications', 'AdminController@notifications')->name('admin_notifications')->middleware("admin");
 Route::get('order', 'ProductController@orders');
 Route::get('overview-money', 'ProcessingController@overview')->name('overview');

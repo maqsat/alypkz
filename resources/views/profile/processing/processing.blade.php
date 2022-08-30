@@ -104,10 +104,6 @@
 @endsection
 
 @push('scripts')
-    <!-- This page plugins -->
-    <!-- ============================================================== -->
-    <script src="/monster_admin/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <script src="/monster_admin/horizontal/js/widget-data.js"></script>
 
 
     @if (session('status'))
@@ -140,9 +136,5 @@
         @endforeach
     @endif
 
-
-@endpush
-
-@push('styles')
 
 @endpush

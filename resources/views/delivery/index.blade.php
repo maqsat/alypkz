@@ -62,7 +62,7 @@
                                            <td>{{ $item->id }}</td>
                                            <td>
                                                ФИО: {{ $item->name }} <br>
-                                               Пакет: {{ \App\Models\Package::find($item->package_id)->title }} <br>
+                                               Пакет: <span class="label label-info">{{ \App\Models\Package::find($item->package_id)->title }} </span> <br>
                                                Дата регистрации: {{ $item->created_at }}
                                            </td>
 

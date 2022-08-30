@@ -11,7 +11,7 @@
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-6 col-8 align-self-center">
-                    <h3 class="text-themecolor m-b-0 m-t-0">Доходы - {{ $user->name }}</h3>
+                    <h3 class="text-themecolor m-b-0 m-t-0">Процессинг - {{ $user->name }}</h3>
                 </div>
                 <div class="col-md-6 col-4 align-self-center">
                 </div>
@@ -23,61 +23,82 @@
             <!-- Start Page Content -->
             <!-- ============================================================== -->
 
+            @include('profile.processing.main-balance')
+
             <div class="row">
                 <!-- Column -->
-                <div class="col-lg-3 col-md-3">
-                    <div class="card">
-                        <div class="d-flex flex-row">
-                            <div class="p-10 bg-info">
-                                <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                            <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0 text-info">{{ $balance }}$</h3>
-                                <h5 class="text-muted m-b-0">Доступная сумма</h5></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="card">
-                        <div class="d-flex flex-row">
-                            <div class="p-10 bg-primary">
-                                <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                            <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0 text-info">{{ $week }}$</h3>
-                                <h5 class="text-muted m-b-0">Еженедельная  выплата</h5></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="card">
-                        <div class="d-flex flex-row">
-                            <div class="p-10 bg-success">
-                                <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                            <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0 text-success">{{ $out }}$</h3>
-                                <h5 class="text-muted m-b-0">Выведено</h5></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="card">
-                        <div class="d-flex flex-row">
-                            <div class="p-10 bg-inverse">
-                                <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                            <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0">{{ $all }}$</h3>
-                                <h5 class="text-muted m-b-0">Оборот</h5></div>
+                <div class="col-md-6 col-lg-6 col-xlg-6">
+                    <div class="card card-inverse card-info">
+                        <div class="box bg-info text-center">
+                            <h1 class="font-light text-white">{{ number_format(Hierarchy::pvCounter($user->id,1), 0, '', ' ') }}</h1>
+                            <h6 class="text-white">Левая ветка PV</h6>
                         </div>
                     </div>
                 </div>
                 <!-- Column -->
+                <div class="col-md-6 col-lg-6 col-xlg-6">
+                    <div class="card card-primary card-inverse">
+                        <div class="box text-center">
+                            <h1 class="font-light text-white">{{ number_format(Hierarchy::pvCounter($user->id,2), 0, '', ' ') }}</h1>
+                            <h6 class="text-white">Правая ветка PV</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <h4 class="card-title  p-t-10 p-l-10">Редактор баланса пользователя</h4>
+                        <div class="card-block">
+                            <form method="POST" action="/user/{{$id}}/change" class="form-horizontal user_create">
+                                {{ csrf_field() }}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label  class="m-t-10" for="description">Описание:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" required name="description" id="description">
+                                        </div>
+                                        <label  class="m-t-10" for="description">Выберите валюту:</label>
+                                        <select class="form-control form-control-line" name="currency_type">
+                                           <option value="1">($)</option>
+                                           <option value="2">(PV)</option>
+                                        </select>
+                                        <label  class="m-t-10" for="description">Операция:</label>
+                                        <select class="form-control form-control-line" name="operation_type">
+                                            <option value="1">Увеличить</option>
+                                            <option value="2">Уменьшить</option>
+                                        </select>
+                                        <label  class="m-t-10" for="sum">Сумма</label>
+                                        <div class="input-group">
+                                            <input type="number" value="0" class="form-control" required name="sum" id="sum"  min="1" />
+                                        </div>
+                                        <label  class="m-t-10" for="sum">От кого:</label>
+                                        <div class="input-group">
+                                            <select name="in_user" class="form-control form-control-line select2" id="in_user">
+                                                @foreach($users as $item)
+                                                    <option value="{{ $item['id'] }}"{{$item['id'] == $user->id ? ' selected="selected"' : ''}}>{{ $item['name'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success" type="submit">Отправить</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-block">
-
-                        @include('user.actions')
 
                         <div class="table-responsive">
                             <table id="demo-foo-addrow" class="table table-hover no-wrap contact-list" data-page-size="10">
@@ -96,13 +117,17 @@
                                 </thead>
                                 <tbody>
                                 @foreach($list as $item)
-                                        <tr>
+                                    <tr @if($item->status == 'register' or $item->status == 'cancel'  or $item->status == 'out'  or $item->status == 'revitalization'   or $item->status == 'request')
+                                        style="color: #f62d51"
+                                        @else
+                                        style="color: #5cb85c"
+                                        @endif>
                                             <td class="text-center">{{ $item->id }}</td>
                                             <td>
                                                 @include('processing.processing-title')
                                             </td>
-                                            <td><span class="text-success">{{ round($item->sum,2) }} $</span></td>
-                                            <td><span class="text-success">{{ $item->pv}} PV</span></td>
+                                            <td>{{ round($item->sum,2) }} $</td>
+                                            <td>{{ $item->pv}} PV</td>
                                             <td class="txt-oflo">@if($item->in_user != 0) {{ \App\User::find($item->in_user)->name }} @endif</td>
                                             <td class="txt-oflo">@if($item->package_id != 0) {{ \App\Models\Package::find($item->package_id)->title }} @endif</td>
                                             <td>{{ $item->card_number }}</td>

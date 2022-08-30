@@ -492,7 +492,8 @@ class HomeController extends Controller
         })->orderBy('id','desc')->paginate(100);
 
 
-        return view('profile.processing.processing', compact('list', 'balance', 'revitalization', 'out','week','all'));
+        $id = Auth::user()->id;
+        return view('profile.processing.processing', compact('id','list', 'balance', 'revitalization', 'out','week','all'));
     }
 
     public function profile()

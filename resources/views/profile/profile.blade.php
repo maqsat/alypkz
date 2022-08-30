@@ -165,14 +165,18 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-12">Скан удостоверение личности</label>
-                                            <div class="col-md-6">
-                                                <input type="file" id="input-file-now"  name="passport" />
-                                                @if ($errors->has('passport'))
-                                                    <span class="text-danger"><small>{{ $errors->first('passport') }}</small></span>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="file" id="input-file-now"  name="passport" />
+                                                    @if ($errors->has('passport'))
+                                                        <span class="text-danger"><small>{{ $errors->first('passport') }}</small></span>
+                                                    @endif
+                                                </div>
+                                                @if(!is_null(Auth::user()->is_verification))
+                                                <div class="col-md-6">
+                                                    <img src="/{{Auth::user()->is_verification }}" class="img-circle profile-img" width="150" />
+                                                </div>
                                                 @endif
-                                            </div>
-                                            <div class="col-md-6">
-                                                <img src="/{{Auth::user()->is_verification }}" class="img-circle profile-img" width="150" />
                                             </div>
                                         </div>
 

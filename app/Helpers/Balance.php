@@ -81,7 +81,7 @@ class Balance {
 
     public function getBalanceOutNew($user_id, $statuses)
     {
-        if(count($statuses) == 2) $type = 1;
+        if(count($statuses) == 3) $type = 1;
         else $type = 2;
 
         $sum = Processing::whereUserId($user_id)->whereIn('status', ['out'])->where('message', $type)->sum('sum');
