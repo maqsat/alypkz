@@ -481,7 +481,9 @@ class HomeController extends Controller
             array_push($weeks, $dateToString);
             $weeks = array_reverse($weeks);
 
-            return view('profile.processing.weeks', compact('weeks','balance', 'revitalization', 'out','week','all'));
+            $id = Auth::user()->id;
+
+            return view('profile.processing.weeks', compact('id','weeks','balance', 'revitalization', 'out','week','all'));
         }
 
 

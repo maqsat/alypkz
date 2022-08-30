@@ -20,8 +20,6 @@ class StoreController extends Controller
     {
         $user = Auth::user();
 
-        $balance = Balance::revitalizationBalance(Auth::user()->id);
-
 
         if($request->history == 'delete'){
             Order::where('user_id', Auth::user()->id)->where('type','shop')->where('status',0)->update(['status' => 12]);
@@ -44,7 +42,7 @@ class StoreController extends Controller
                 $list = Tag::find($request->tag)->products;
             }
 
-            return view('product.main', compact('list','tag','orders','balance'));
+            return view('product.main', compact('list','tag','orders'));
         }
 
 
