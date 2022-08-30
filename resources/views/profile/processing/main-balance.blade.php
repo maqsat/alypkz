@@ -41,9 +41,9 @@
                 <h4 class="card-title">Выведено</h4>
                 <div class="d-flex flex-row">
                     <div class="p-10 p-l-0 b-r">
-                        <h6 class="font-light">Реферальный бонус + ЛКБ</h6><b>80.40%</b></div>
+                        <h6 class="font-light">Реферальный бонус + ЛКБ</h6><b>{{ Balance::getBalanceOutNew(Auth::user()->id, ['invite_bonus','matching_bonus']) }} PV</b></div>
                     <div class="p-10 b-r">
-                        <h6 class="font-light">Бинарный бонус</h6><b>20.40%</b>
+                        <h6 class="font-light">Бинарный бонус</h6><b>{{ Balance::getBalanceOutNew(Auth::user()->id, ['turnover_bonus']) }} PV</b>
                     </div>
                 </div>
             </div>
