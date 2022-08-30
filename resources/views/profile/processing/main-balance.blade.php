@@ -1,47 +1,53 @@
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-3 col-md-3">
+    <div class="col-lg-4">
         <div class="card">
-            <div class="d-flex flex-row">
-                <div class="p-10 bg-success-custom">
-                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                <div class="align-self-center m-l-20">
-                    <h3 class="m-b-0 text-info-custom">{{ number_format($balance, 0, '', ' ') }}$</h3>
-                    <h5 class="text-muted m-b-0">Доступная сумма</h5></div>
+            <div class="card-block">
+                <h4 class="card-title">Доступная сумма</h4>
+                <div class="d-flex flex-row">
+                    <div class="p-10 p-l-0 b-r">
+                        <h6 class="font-light">Реферальный бонус + ЛКБ</h6><b>{{ Balance::getBalanceNew(Auth::user()->id, ['invite_bonus','matching_bonus']) }} PV /
+                            <span class="text-danger">0% </span></b></div>
+                    <div class="p-10 b-r">
+                        <h6 class="font-light">Бинарный бонус</h6><b>{{ Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus']) }} PV / <span class="text-danger">0,8% </span></b>
+                    </div>
+                </div>
             </div>
+            <div id="spark1" class="sparkchart"></div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-3">
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-4">
         <div class="card">
-            <div class="d-flex flex-row">
-                <div class="p-10 bg-primary">
-                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                <div class="align-self-center m-l-20">
-                    <h3 class="m-b-0 text-primary">{{ number_format($week, 0, '', ' ') }}$</h3>
-                    <h5 class="text-muted m-b-0">Еженедельная  выплата</h5></div>
+            <div class="card-block">
+                <h4 class="card-title">Еженедельная  выплата</h4>
+                <div class="d-flex flex-row">
+                    <div class="p-10 p-l-0 b-r">
+                        <h6 class="font-light">Реферальный бонус + ЛКБ</h6><b>{{ Balance::getWeekBalanceByStatusNew(Auth::user()->id, ['invite_bonus','matching_bonus']) }} PV</b></div>
+                    <div class="p-10 b-r">
+                        <h6 class="font-light">Бинарный бонус</h6><b>{{ Balance::getWeekBalanceByStatusNew(Auth::user()->id, ['turnover_bonus']) }} PV</b>
+                    </div>
+                </div>
             </div>
+            <div id="spark2" class="sparkchart"></div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-3">
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-4">
         <div class="card">
-            <div class="d-flex flex-row">
-                <div class="p-10 bg-success">
-                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                <div class="align-self-center m-l-20">
-                    <h3 class="m-b-0 text-success">{{ number_format($out, 0, '', ' ') }}$</h3>
-                    <h5 class="text-muted m-b-0">Выведено</h5></div>
+            <div class="card-block">
+                <h4 class="card-title">Выведено</h4>
+                <div class="d-flex flex-row">
+                    <div class="p-10 p-l-0 b-r">
+                        <h6 class="font-light">Реферальный бонус + ЛКБ</h6><b>80.40%</b></div>
+                    <div class="p-10 b-r">
+                        <h6 class="font-light">Бинарный бонус</h6><b>20.40%</b>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-3">
-        <div class="card">
-            <div class="d-flex flex-row">
-                <div class="p-10 bg-warning">
-                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                <div class="align-self-center m-l-20">
-                    <h3 class="m-b-0">{{ number_format($all, 0, '', ' ') }}$</h3>
-                    <h5 class="text-muted m-b-0">Общий оборот</h5></div>
-            </div>
+            <div id="spark3" class="sparkchart"></div>
         </div>
     </div>
     <!-- Column -->

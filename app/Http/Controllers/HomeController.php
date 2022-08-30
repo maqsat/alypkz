@@ -459,10 +459,13 @@ class HomeController extends Controller
     public function processing(Request $request)
     {
         $balance = Balance::getBalance(Auth::user()->id);
-        $all = Balance::getIncomeBalance(Auth::user()->id);
         $out = Balance::getBalanceOut(Auth::user()->id);
+
+
+        $all = Balance::getIncomeBalance(Auth::user()->id);
+
         $week = Balance::getWeekBalance(Auth::user()->id);
-        $revitalization = Balance::revitalizationBalance(Auth::user()->id);
+        $revitalization = 0;
         //$activation = Hierarchy::activationCheck();
 
 

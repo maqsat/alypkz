@@ -49,7 +49,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($list as $item)
-                                        <tr @if($item->status == 'register' or $item->status == 'cancel'  or $item->status == 'out'  or $item->status == 'revitalization')
+                                        <tr @if($item->status == 'register' or $item->status == 'cancel'  or $item->status == 'out'  or $item->status == 'revitalization'   or $item->status == 'request')
                                                 style="color: #f62d51"
                                             @else
                                                 style="color: #5cb85c"
@@ -58,7 +58,12 @@
                                             <td>
                                                 @include('processing.processing-title')
                                             </td>
-                                            <td>{{ round($item->sum,2) }} PV</td>
+                                            <td>
+                                                {{ round($item->sum,2) }} PV
+                                                @if($item->status == 'request' or $item->status == 'out')
+                                                    ({{ $item->limited_sum }}$)
+                                                @endif
+                                            </td>
                                             <td>{{ $item->pv}} PV</td>
                                             <?php
                                                 $in_user = \App\User::find($item->in_user)
@@ -99,8 +104,11 @@
 @endsection
 
 @push('scripts')
-    <script src="/monster_admin/main/js/toastr.js"></script>
-    <script src="/monster_admin/assets/plugins/toast-master/js/jquery.toast.js"></script>
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <script src="/monster_admin/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="/monster_admin/horizontal/js/widget-data.js"></script>
+
 
     @if (session('status'))
         <script>
@@ -131,8 +139,10 @@
             </script>
         @endforeach
     @endif
+
+
 @endpush
 
 @push('styles')
-<link href="/monster_admin/assets/plugins/toast-master/css/jquery.toast.css" rel="stylesheet">
+
 @endpush

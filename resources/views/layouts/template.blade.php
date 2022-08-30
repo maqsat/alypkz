@@ -78,6 +78,8 @@
 <script src="/monster_admin/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
 <!--Custom JavaScript -->
 <script src="/monster_admin/horizontal/js/custom.min.js"></script>
+
+
 <script src="/monster_admin/horizontal/js/jasny-bootstrap.js"></script>
 <script src="/monster_admin/assets/plugins/wizard/jquery.steps.min.js"></script>
 <script src="/monster_admin/assets/plugins/wizard/jquery.validate.min.js"></script>

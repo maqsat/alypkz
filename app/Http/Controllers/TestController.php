@@ -29,7 +29,7 @@ class TestController extends Controller
 
     public function tester()
     {
-
+        echo Balance::getBalanceNew(Auth::user()->id,  ['invite_bonus','matching_bonus']);
     }
 
     public function setBots()

@@ -314,12 +314,24 @@ class ProcessingController extends Controller
             'sum' => ['required', 'numeric', 'min:0'],
             'login' => 'required',
             'program_id' => 'required',
+            'type' => 'required',
         ]);
 
-        if(Balance::getBalance(Auth::user()->id) < $request->sum) return redirect()->back()->with('status', 'У вас недостаточно средств!');
-        $pv = $request->sum/env('COURSE');
 
-        Balance::changeBalance(Auth::user()->id,$request->sum,'request',0,$request->program_id,0,0,$pv,0,0,$request->login,'',$request->withdrawal_method);
+        if($request->type == 1){
+            if(Balance::getBalanceNew(Auth::user()->id, ['invite_bonus','matching_bonus']) < $request->sum) return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Реферальный бонус + ЛКБ!');
+            $sum = $request->sum;
+        }
+        else{
+            if(Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus']) < $request->sum) return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Бинарный бонус');
+            $sum = $request->sum*0.8;
+        }
+
+
+        $pv = $request->sum;
+
+
+        Balance::changeBalance(Auth::user()->id,$request->sum,'request',Auth::user()->id,$request->program_id,Auth::user()->package_id,0,$pv,$sum,0,$request->login,$request->type,$request->withdrawal_method);
 
 
         return redirect()->back()->with('status', 'Запрос успешно отправлен админу!');

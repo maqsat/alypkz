@@ -19,7 +19,7 @@
 @elseif($item->status == 'cancel')
     Отменено
 @elseif($item->status == 'revitalization')
-    <span style="color: red">Депозит</span>
+    <span>Депозит</span>
 @elseif($item->status == 'revitalization-shop')
     Покупка с баланса(повторная)
 @elseif($item->status == 'shop')

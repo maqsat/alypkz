@@ -56,9 +56,42 @@ class Balance {
         );
     }
 
+
+    public function getBalanceNew($user_id, $statuses)
+    {
+        $sum = $this->getIncomeBalanceByStatus($user_id, $statuses) - $this->getBalanceOutNew($user_id, $statuses) - $this->getWeekBalanceByStatusNew($user_id, $statuses);
+        return round($sum, 2);
+    }
+
+    public function getIncomeBalanceByStatus($user_id, $statuses)
+    {
+        $sum =  Processing::whereUserId($user_id)
+            ->whereIn('status', $statuses)
+            ->sum('sum');
+        return round($sum, 2);
+    }
+
+
+    public function getWeekBalanceByStatusNew($user_id, $statuses)
+    {
+        $sum = Processing::whereUserId($user_id)->whereIn('status', $statuses)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
+        return round($sum, 2);
+    }
+
+
+    public function getBalanceOutNew($user_id, $statuses)
+    {
+        if(count($statuses) == 2) $type = 1;
+        else $type = 2;
+
+        $sum = Processing::whereUserId($user_id)->whereIn('status', ['out'])->where('message', $type)->sum('sum');
+        return round($sum, 2);
+    }
+
+
     public function getBalance($user_id)
     {
-        $sum = $this->getIncomeBalance($user_id) - $this->getBalanceOut($user_id) - $this->getWeekBalance($user_id) - $this->revitalizationNotWeekBalance($user_id);
+        $sum = $this->getIncomeBalance($user_id) - $this->getBalanceOut($user_id) - $this->getWeekBalance($user_id);
         return round($sum, 2);
     }
 
@@ -109,19 +142,9 @@ class Balance {
         return round($sum, 2);
     }
 
-    public function revitalizationBalance($user_id)
-    {
-        $sum1 = Processing::whereUserId($user_id)->whereIn('status', ['revitalization'])->sum('sum');
-        $sum2 = Processing::whereUserId($user_id)->whereIn('status', ['revitalization-shop'])->sum('sum');
 
-        return round($sum1-$sum2, 2);
-    }
 
-    public function revitalizationNotWeekBalance($user_id)
-    {
-        $sum =  Processing::whereUserId($user_id)->whereIn('status', ['revitalization'])->whereNotBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
-        return round($sum, 2);
-    }
+
     /*************************** OLD METHODS ****************************/
 
     public function getBalanceAllUsers()
