@@ -60,7 +60,7 @@ Route::get('review/add', 'HomeController@review')->name('review_add');
 Route::post('review/{id}/view', 'HomeController@commentAdd')->name('comment_add');
 Route::post('review', 'HomeController@updateReview')->name('review');
 Route::post('update_review_image', 'HomeController@updateReviewImage')->name('updateReviewImage');
-Route::get('faq-profile','FaqController@index');
+Route::get('faq-profile','FaqController@index')->middleware("auth");
 Route::post('updateProfile', 'HomeController@updateProfile')->name('updateProfile');
 Route::post('updateAvatar', 'HomeController@updateAvatar')->name('updateAvatar');
 Route::get('marketing', 'HomeController@marketing')->name('marketing');
@@ -81,9 +81,9 @@ Route::get('partner/user/offices', 'HomeController@partnerUserOffices')->name("p
 ************************ Shop ***********************
  */
 Route::get('product/{id}','StoreController@show');
-Route::get('story-store', 'StoreController@story');
+Route::get('story-store', 'StoreController@story')->middleware("auth");
 Route::get('activation-store', 'StoreController@activationStore');
-Route::get('main-store', 'StoreController@store');
+Route::get('main-store', 'StoreController@store')->middleware("auth");
 
 
 /*

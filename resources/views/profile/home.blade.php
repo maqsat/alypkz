@@ -54,10 +54,6 @@
                         <div class="card  not-margin">
                             <center class="m-t-30"> <img src="{{Auth::user()->photo}}" class="img-circle" width="150"/>
                                 <h4 class="card-title m-t-10">{{ $user->name }}</h4>
-                                <div class="row text-center justify-content-md-center">
-                                    <div class="col-4"><a href="javascript:void(0)" class="link"><i class="mdi mdi-wallet"></i> <font class="font-medium">{{ number_format($balance, 0, '', ' ') }}$</font></a></div>
-                                    <div class="col-4"><a href="javascript:void(0)" class="link"><i class="mdi mdi-file-powerpoint-box"></i> <font class="font-medium">{{ number_format($pv_counter_all, 0, '', ' ') }} PV</font></a></div>
-                                </div>
                             </center>
                         </div>
                         <div>
@@ -119,20 +115,6 @@
                             </div>
                                 @endif
                         </div>
-                        <div>
-                            <hr>
-                        </div>
-                        {{--<div class="p-1">
-                        @if(Auth::user()->is_verification == 1)
-                            <div class="alert alert-success">
-                                <h3 class="text-success"><i class="fa fa-check-circle"></i> Ваш аккаунт верифицирован</h3>
-                            </div>
-                        @else
-                                <div class="alert alert-danger">
-                                    <h3 class="text-danger"><i class="fa fa-check-circle"></i> Ваш аккаунт не верифицирован,  <a href="">верифицировать</a> </h3>
-                                </div>
-                        @endif
-                        </div>--}}
                         <div>
                             <hr>
                         </div>

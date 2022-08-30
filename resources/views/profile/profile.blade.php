@@ -42,16 +42,13 @@
                                 </form>
                                 <h4 class="card-title m-t-10">{{ Auth::user()->login }}</h4>
                                 <h6 class="card-subtitle">{{ Auth::user()->name }}</h6>
-                                <div class="row text-center justify-content-md-center">
-                                    <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">{{ count($list) }}</font></a></div>
-                                    <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-wallet"></i> <font class="font-medium">{{ $balance }}</font></a></div>
-                                </div>
                             </center>
                         </div>
                         <div>
 
                         </div>
                     </div>
+
                 </div>
                 <!-- Column -->
                 <!-- Column -->
@@ -61,7 +58,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active settings" id="settings" role="tabpanel">
                                 <div class="card-block">
-                                    <form action="/updateProfile" method="POST" class="form-horizontal">
+                                    <form action="/updateProfile" method="POST" class="form-horizontal"   enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <div class="form-group">
                                             <label class="col-md-12">{{ __('app.name') }}</label>
@@ -164,6 +161,18 @@
                                                 @if ($errors->has('password'))
                                                     <span class="text-danger"><small>{{ $errors->first('password') }}</small></span>
                                                 @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">Скан удостоверение личности</label>
+                                            <div class="col-md-6">
+                                                <input type="file" id="input-file-now"  name="passport" />
+                                                @if ($errors->has('passport'))
+                                                    <span class="text-danger"><small>{{ $errors->first('passport') }}</small></span>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-6">
+                                                <img src="/{{Auth::user()->is_verification }}" class="img-circle profile-img" width="150" />
                                             </div>
                                         </div>
 

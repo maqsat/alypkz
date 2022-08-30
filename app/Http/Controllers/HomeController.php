@@ -815,6 +815,13 @@ class HomeController extends Controller
                 $password = $user->password;
             }
 
+
+
+        $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->passport->getFilename().'.'.$request->passport->getClientOriginalExtension();
+        $path = $request->passport->storeAs('public/passport', $tmp_path);
+        $request->passport = str_replace("public", "storage", $path);
+
+
             User::whereId(Auth::user()->id)->update([
                 //'name' => $request->name,
                 //'email' => $request->email,
@@ -827,6 +834,7 @@ class HomeController extends Controller
                 'card' => $request->card,//hostory
                 'gender'        =>  $request->gender,
                 'bank'          =>  $request->bank,
+                'is_verification'   =>  $request->passport
             ]);
 
 

@@ -37,7 +37,7 @@
                                             <option value="2">Бинарный бонус</option>
                                         </select>
                                         <input type="number"  name="sum" id="sum" class="form-control" placeholder="Выводимая сумма PV" max="{{ Balance::getBalanceNew(Auth::user()->id, ['invite_bonus','matching_bonus']) }}" required onkeyup="myFunction()">
-                                        <input type="number"  name="login" class="form-control" placeholder="Номер карты Kaspi" required>
+                                        <input type="text"  name="login" class="form-control" placeholder="Номер карты Kaspi" required>
                                         <span class="input-group-btn">
                                             <button class="btn btn-info" type="submit">Вывести</button>
                                         </span>
