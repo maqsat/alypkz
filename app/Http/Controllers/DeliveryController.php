@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Models\Delivery;
 use App\Models\Order;
 use App\User;
@@ -18,7 +19,6 @@ class DeliveryController extends Controller
     {
 
         if(isset($request->s)){
-
             $users = User::whereNotNull('program_id')->where('name','like','%'.$request->s.'%')
                 ->orWhere('id','like','%'.$request->s.'%')
                 ->orWhere('email','like','%'.$request->s.'%')
@@ -27,19 +27,39 @@ class DeliveryController extends Controller
                 ->select('users.*')
                 ->paginate(30);
         }
-        elseif(isset($request->status_id)){
-            $users = User::join('user_programs','users.id','=','user_programs.user_id')
-                ->where('user_programs.status_id',$request->status_id)
+        elseif(isset($request->status_id) or isset($request->package_id) or isset($request->country_id) or isset($request->city_id)){
+            $filter = DB::table('users')
                 ->select('users.*')
-                ->paginate(30);
+                ->join('user_programs','users.id','=','user_programs.user_id');
+
+            if(isset($request->delivery_status) && $request->delivery_status != 0){
+
+                if($request->delivery_status == 3) $request->delivery_status = 0;
+
+                $filter->join('orders','users.id','=','orders.user_id')
+                    ->where('orders.type', 'register')
+                    ->where('orders.delivery_status',$request->delivery_status);
+            }
+
+            if(isset($request->package_id) && $request->package_id != 0){
+                $filter->where('user_programs.package_id',$request->package_id);
+            }
+
+            if(isset($request->country_id) && $request->country_id != 0){
+                $filter->where('users.country_id',$request->country_id);
+            }
+
+            if(isset($request->city_id) && $request->city_id != 0){
+                $filter->where('users.city_id',$request->city_id);
+            }
+
+            $users = $filter->paginate(30);
         }
         else{
             $users = User::where('users.status',1)
                 ->orderBy('id','desc')
                 ->paginate(30);
         }
-
-
 
 
         return view('delivery.index', compact('users'));
