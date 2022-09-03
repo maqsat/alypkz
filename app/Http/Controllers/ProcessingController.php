@@ -102,7 +102,6 @@ class ProcessingController extends Controller
      */
     public function store(Request $request)
     {
-
         //dd("Вывод средств недоступен!");
         $request->validate([
             'sum' => 'required', 'integer',/* ,'min:1000',*/
@@ -315,15 +314,20 @@ class ProcessingController extends Controller
             'login' => 'required',
             'program_id' => 'required',
             'type' => 'required',
+            'withdrawal_method' => 'required',
         ]);
 
 
         if($request->type == 1){
-            if(Balance::getBalanceNew(Auth::user()->id, ['invite_bonus','matching_bonus']) < $request->sum) return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Реферальный бонус + ЛКБ!');
+            if(Balance::getBalanceNew(Auth::user()->id, ['invite_bonus', 'admin_add']) < $request->sum)
+                return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Реферальный бонус + ЛКБ!');
+
             $sum = $request->sum;
         }
         else{
-            if(Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus']) < $request->sum) return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Бинарный бонус');
+            if(Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus','matching_bonus']) < $request->sum)
+                return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Бинарный бонус');
+
             $sum = $request->sum*0.8;
         }
 
@@ -331,7 +335,7 @@ class ProcessingController extends Controller
         $pv = $request->sum;
 
 
-        Balance::changeBalance(Auth::user()->id,$request->sum,'request',Auth::user()->id,$request->program_id,Auth::user()->package_id,0,$pv,$sum,0,$request->login,$request->type,$request->withdrawal_method);
+        Balance::changeBalance(Auth::user()->id,$request->sum,'request',Auth::user()->id,$request->program_id,Auth::user()->package_id,0,$pv,$sum,0,$request->login,'',$request->withdrawal_method, $request->type, $request->iin);
 
 
         return redirect()->back()->with('status', 'Запрос успешно отправлен админу!');

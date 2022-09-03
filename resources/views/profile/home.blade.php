@@ -197,8 +197,10 @@
                                             <td>
                                                 Почтовой индекс: {{ $item->post_index }}  <br>
                                                 Трекинг номер: @if(!is_null($order))
-                                                    {{ $order->trucking }}
-                                                @endif
+                                                                    {{ $order->trucking }}
+                                                                @endif <br>
+                                                @php $courier = \App\User::find($order->courier_id); @endphp
+                                                Ответственный: @if(!is_null($courier)) {{ $courier->name }} @endif
 
                                             </td>
                                             <td>{{ $item->number }}</td>
@@ -333,7 +335,7 @@
                 text: '{{ session('status') }}',
                 position: 'top-right',
                 loaderBg:'#ffffff',
-                icon: 'warning',
+                icon: 'success',
                 hideAfter: 60000,
                 stack: 6
             });

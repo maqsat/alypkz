@@ -38,6 +38,7 @@ class NewsController extends Controller
             'news_date'=> 'required | date',
             'news_image'=> 'file',
             'news_desc'=>  'required|max:1000',
+            'category_id'=> 'required',
         ],[
             'news_name.required' => 'Заполните поле Заголовок',
             'news_text.required' => 'Заполните поле Текст',
@@ -45,6 +46,7 @@ class NewsController extends Controller
             'news_image.required' => 'Заполните поле Фото',
             'news_desc.required' => 'Заполните поле Краткое описание',
             'image' => 'Загрузите фото',
+            'category_id'=> 'Заполните поле Категория',
 
         ]);
         if ($request->hasFile('news_image')) {
@@ -59,10 +61,25 @@ class NewsController extends Controller
             'news_date' => $request->news_date,
             'news_image' => $request->news_image,
             'news_desc' => $request->news_desc,
+            'category_id' => $request->category_id,
 
         ]);
         return redirect('/news');
     }
+
+    public function profileNews()
+    {
+        $news = News::all();
+        return view('news.profile-news',compact('news'));
+    }
+
+    public function profileNewsShow($id)
+    {
+        $news = News::find($id);
+        return view('news.profile-news-show',compact('news'));
+    }
+
+
     public function show($id)
     {
         if(!Gate::allows('admin_news_view')) {

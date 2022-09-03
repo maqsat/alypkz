@@ -15,7 +15,7 @@ use App\Models\Processing;
 
 class Balance {
 
-    public function changeBalance($user_id,$sum,$status,$in_user,$program_id,$package_id=0,$status_id=0,$pv = 0,$limited_sum = 0,$matching_line = 0,$card_number = 0,$message = '', $withdrawal_method = null)
+    public function changeBalance($user_id,$sum,$status,$in_user,$program_id,$package_id=0,$status_id=0,$pv = 0,$limited_sum = 0,$matching_line = 0,$card_number = 0,$message = '', $withdrawal_method = null, $type = null , $iin = null )
     {
         $processing = new Processing(
             [
@@ -32,6 +32,8 @@ class Balance {
                 'limited_sum' => $limited_sum,
                 'message' => $message,
                 'withdrawal_method' => $withdrawal_method,
+                'type' => $type,
+                'iin' => $iin,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]
         );
@@ -81,12 +83,30 @@ class Balance {
 
     public function getBalanceOutNew($user_id, $statuses)
     {
-        if(count($statuses) == 3) $type = 1;
+
+        if(array_search('invite_bonus', $statuses) !== false) $type = 1;
         else $type = 2;
 
-        $sum = Processing::whereUserId($user_id)->whereIn('status', ['out'])->where('message', $type)->sum('sum');
+        $sum = Processing::whereUserId($user_id)->whereIn('status', ['out', 'remove'])->where('type', $type)->sum('sum');
         return round($sum, 2);
     }
+
+
+
+    public function getBalanceAllUsers()
+    {
+        $sum = Processing::whereIn('status', ['invite_bonus', 'admin_add', 'turnover_bonus','matching_bonus'])->sum('sum') - Processing::whereIn('status', ['out'])->sum('sum');
+        return round($sum, 2);
+    }
+
+
+
+    public function getBalanceOutAllUsers()
+    {
+        $sum = Processing::whereIn('status', ['out'])->sum('sum');
+        return round($sum, 2);
+    }
+
 
 
     public function getBalance($user_id)
@@ -112,6 +132,9 @@ class Balance {
         $sum = Processing::whereUserId($user_id)->whereIn('status', ['out','shop'])->sum('sum');
         return round($sum, 2);
     }
+
+
+
 
     public function getWeekBalanceByStatus($user_id,$date_from,$date_to,$status)
     {
@@ -147,17 +170,7 @@ class Balance {
 
     /*************************** OLD METHODS ****************************/
 
-    public function getBalanceAllUsers()
-    {
-        $sum = Processing::whereIn('status', ['admin_add', 'turnover_bonus', 'status_bonus', 'invite_bonus','quickstart_bonus','matching_bonus'])->sum('sum') - Processing::whereStatus('out')->sum('sum');
-        return round($sum, 2);
-    }
 
-    public function getBalanceOutAllUsers()
-    {
-        $sum = Processing::whereStatus('out')->sum('sum');
-        return round($sum, 2);
-    }
 
     public function getBalanceWithOut($user_id)
     {

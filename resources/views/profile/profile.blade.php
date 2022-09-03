@@ -29,7 +29,7 @@
                     <div class="card">
                         <div class="card-block">
                             <center class="m-t-30">
-                                <img src="{{Auth::user()->photo}}" class="img-circle profile-img" width="150" />
+                                <img src="{{$user->photo}}" class="img-circle profile-img" width="150" />
 
                                 <form action="/updateAvatar" method="post" enctype="multipart/form-data">
                                     @csrf
@@ -40,8 +40,8 @@
                                         <i class="fa fa-plus"></i>
                                     </label>
                                 </form>
-                                <h4 class="card-title m-t-10">{{ Auth::user()->login }}</h4>
-                                <h6 class="card-subtitle">{{ Auth::user()->name }}</h6>
+                                <h4 class="card-title m-t-10">{{ $user->login }}</h4>
+                                <h6 class="card-subtitle">{{ $user->name }}</h6>
                             </center>
                         </div>
                         <div>
@@ -63,7 +63,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12">{{ __('app.name') }}</label>
                                             <div class="col-md-12">
-                                                <input type="text" value="{{ old('name',Auth::user()->name) }}" name="name" class="form-control form-control-line" disabled>
+                                                <input type="text" value="{{ old('name',$user->name) }}" name="name" class="form-control form-control-line" disabled>
                                                 @if ($errors->has('name'))
                                                     <span class="text-danger"><small>{{ $errors->first('name') }}</small></span>
                                                 @endif
@@ -72,7 +72,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12">{{ __('app.number') }}</label>
                                             <div class="col-md-12">
-                                                <input type="text" value="{{ Auth::user()->number }}" name="number" class="form-control form-control-line">
+                                                <input type="text" value="{{ $user->number }}" name="number" class="form-control form-control-line">
                                                 @if ($errors->has('number'))
                                                     <span class="text-danger"><small>{{ $errors->first('number') }}</small></span>
                                                 @endif
@@ -81,7 +81,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12">{{ __('app.email') }}</label>
                                             <div class="col-md-12">
-                                                <input type="email" value="{{ Auth::user()->email }}" name="email" class="form-control form-control-line" disabled>
+                                                <input type="email" value="{{ $user->email }}" name="email" class="form-control form-control-line" disabled>
                                                 @if ($errors->has('email'))
                                                     <span class="text-danger"><small>{{ $errors->first('email') }}</small></span>
                                                 @endif
@@ -92,8 +92,8 @@
                                             <div class="col-md-12">
                                                 <select class="custom-select form-control required" id="gender" name="gender">
                                                     <option>Не указан</option>
-                                                    <option value="1"  @if(old('gender',Auth::user()->gender) == 1) selected @endif>Мужской</option>
-                                                    <option value="2"  @if(old('gender',Auth::user()->gender) == 2) selected @endif>Женский</option>
+                                                    <option value="1"  @if(old('gender',$user->gender) == 1) selected @endif>Мужской</option>
+                                                    <option value="2"  @if(old('gender',$user->gender) == 2) selected @endif>Женский</option>
                                                 </select>
                                                 <div class="error-message"></div>
                                             </div>
@@ -101,7 +101,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12">{{ __('app.birthday') }}</label>
                                             <div class="col-md-12">
-                                                <input type="text" value="{{ Auth::user()->birthday }}" name="birthday" class="form-control form-control-line">
+                                                <input type="text" value="{{ $user->birthday }}" name="birthday" class="form-control form-control-line">
                                                 @if ($errors->has('birthday'))
                                                     <span class="text-danger"><small>{{ $errors->first('birthday') }}</small></span>
                                                 @endif
@@ -112,7 +112,7 @@
                                             <div class="col-sm-12">
                                                 <select class="form-control form-control-line" name="country_id">
                                                     @foreach(\App\Models\Country::all() as $item)
-                                                        <option value="{{ $item->id }}"  @if(Auth::user()->country_id == $item->id) selected @endif>{{ $item->title }}</option>
+                                                        <option value="{{ $item->id }}"  @if($user->country_id == $item->id) selected @endif>{{ $item->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -122,7 +122,7 @@
                                             <div class="col-sm-12">
                                                 <select class="form-control form-control-line" name="city_id">
                                                     @foreach(\App\Models\City::all() as $item)
-                                                        <option value="{{ $item->id }}"  @if(Auth::user()->city_id == $item->id) selected @endif>{{ $item->title }}</option>
+                                                        <option value="{{ $item->id }}"  @if($user->city_id == $item->id) selected @endif>{{ $item->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -130,7 +130,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12">{{ __('app.address') }}</label>
                                             <div class="col-md-12">
-                                                <input type="text" value="{{ Auth::user()->address }}" name="address" class="form-control form-control-line">
+                                                <input type="text" value="{{ $user->address }}" name="address" class="form-control form-control-line">
                                                 @if ($errors->has('address'))
                                                     <span class="text-danger"><small>{{ $errors->first('address') }}</small></span>
                                                 @endif
@@ -139,7 +139,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12">{{ __('app.bank') }}</label>
                                             <div class="col-md-12">
-                                                <input type="text" value="{{ Auth::user()->bank }}" name="bank" class="form-control form-control-line">
+                                                <input type="text" value="{{ $user->bank }}" name="bank" class="form-control form-control-line">
                                                 @if ($errors->has('bank'))
                                                     <span class="text-danger"><small>{{ $errors->first('bank') }}</small></span>
                                                 @endif
@@ -148,7 +148,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12">{{ __('app.card') }}</label>
                                             <div class="col-md-12">
-                                                <input type="text" value="{{ Auth::user()->card }}" name="card" class="form-control form-control-line">
+                                                <input type="text" value="{{ $user->card }}" name="card" class="form-control form-control-line">
                                                 @if ($errors->has('card'))
                                                     <span class="text-danger"><small>{{ $errors->first('card') }}</small></span>
                                                 @endif
@@ -172,9 +172,9 @@
                                                         <span class="text-danger"><small>{{ $errors->first('passport') }}</small></span>
                                                     @endif
                                                 </div>
-                                                @if(!is_null(Auth::user()->is_verification))
+                                                @if(!is_null($user->is_verification))
                                                 <div class="col-md-6">
-                                                    <img src="/{{Auth::user()->is_verification }}" class="img-circle profile-img" width="150" />
+                                                    <img src="/{{$user->is_verification }}" class="img-circle profile-img" width="150" />
                                                 </div>
                                                 @endif
                                             </div>
@@ -215,8 +215,3 @@
 @section('body-class')
     fix-header card-no-border fix-sidebar
 @endsection
-@push('scripts')
-    <style>
-
-    </style>
-@endpush

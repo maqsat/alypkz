@@ -14,11 +14,34 @@ class DeliveryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::where('users.status',1)
-            ->orderBy('id','desc')
-            ->paginate(30);
+
+        if(isset($request->s)){
+
+            $users = User::whereNotNull('program_id')->where('name','like','%'.$request->s.'%')
+                ->orWhere('id','like','%'.$request->s.'%')
+                ->orWhere('email','like','%'.$request->s.'%')
+                ->orWhere('id_number','like','%'.$request->s.'%')
+                ->orderBy('id','desc')
+                ->select('users.*')
+                ->paginate(30);
+        }
+        elseif(isset($request->status_id)){
+            $users = User::join('user_programs','users.id','=','user_programs.user_id')
+                ->where('user_programs.status_id',$request->status_id)
+                ->select('users.*')
+                ->paginate(30);
+        }
+        else{
+            $users = User::where('users.status',1)
+                ->orderBy('id','desc')
+                ->paginate(30);
+        }
+
+
+
+
         return view('delivery.index', compact('users'));
     }
 
@@ -67,6 +90,8 @@ class DeliveryController extends Controller
             ->take(1)
             ->get();
 
+        $couriers = User::whereStatus(1)->get();
+
         $order =  Order::firstOrCreate(
             [
                 'type' => 'register',
@@ -75,7 +100,7 @@ class DeliveryController extends Controller
         );
 
 
-        return view('delivery.edit', compact('order','users'));
+        return view('delivery.edit', compact('order','users','couriers'));
     }
 
     /**
@@ -92,7 +117,8 @@ class DeliveryController extends Controller
             ->where('type', 'register')
             ->update([
                 'delivery_status' => $request->delivery_status,
-                'trucking' =>$request->trucking,
+                'trucking' => $request->trucking,
+                'courier_id' => $request->courier_id
             ]);
 
         return redirect('/delivery');

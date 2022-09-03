@@ -92,6 +92,14 @@ class UserController extends Controller
                     ->paginate(30);
                 return view('user.upgrade', compact('list'));
             }
+            elseif (isset($request->upgrade_list)){
+                $list = User::join('orders','users.id','=','orders.user_id')
+                    ->where('orders.status',4)
+                    ->where('orders.type',"upgrade")
+                    ->select('users.*')
+                    ->paginate(30);
+                return view('user.upgrade', compact('list'));
+            }
             else
                 $list = User::whereNotNull('program_id')->orderBy('id','desc')->paginate(30);
         }
@@ -1093,9 +1101,17 @@ class UserController extends Controller
 
         if($request->currency_type == 1){
 
-            if($request->operation_type == 1) $sum = $request->sum;
-            else  $sum = $request->sum * -1;
-            Balance::changeBalance($id,$sum,'admin_add',$request->in_user,$user->program_id,$user->package_id,$user->status_id,$request->sum,0,0,0,$request->description);
+            if($request->operation_type == 1) {
+                $sum = $request->sum;
+                $status =  'admin_add';
+            }
+            else  {
+                $sum = $request->sum * -1;
+                $status = 'remove';
+            }
+
+
+            Balance::changeBalance($id,$sum,$status,$request->in_user,$user->program_id,$user->package_id,$user->status_id,$request->sum,0,0,0,$request->description);
         }
         else{
             if($request->operation_type == 1) $sum = $request->sum;

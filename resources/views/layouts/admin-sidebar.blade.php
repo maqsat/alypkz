@@ -22,7 +22,7 @@
                         <li><a href="/user">Все пользователи</a></li>
                         @endif
                         @if(Gate::allows('admin_user_upgrade'))
-                        <li><a href="">История Upgrade</a></li>
+                        <li><a href="/user?upgrade_list=1">История Upgrade</a></li>
                         <li><a href="/user?upgrade_request=1">Заявки на Upgrade</a></li>
                         @endif
                         {{--@if(Gate::allows('admin_user_create'))
@@ -80,7 +80,7 @@
                 @endif
                 @if(Gate::allows('admin_menu_item_processing'))
                 <li>
-                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-export"></i><span class="hide-menu">Процессинг</span></a>
+                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-export"></i><span class="hide-menu">Бухгалтер</span></a>
                     <ul aria-expanded="false" class="collapse">
                         @if(Gate::allows('admin_processing_view'))
                             <li><a href="/processing">Все движения</a></li>

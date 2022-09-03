@@ -491,19 +491,20 @@ class HomeController extends Controller
             $query
                 ->where('sum','!=','0')
                 ->orWhere('pv', '!=', '0');
-        })->orderBy('id','desc')->paginate(100);
+        })->orderBy('id','desc')->paginate(30);
 
 
         $id = Auth::user()->id;
         return view('profile.processing.processing', compact('id','list', 'balance', 'revitalization', 'out','week','all'));
     }
 
-    public function profile()
+    public function profile(Request $request)
     {
-        $feed = User::whereSponsorId(Auth::user()->id)->orderBy('created_at','desc')->get();
-        $list = User::whereSponsorId(Auth::user()->id)->get();
-        $balance = Balance::getBalance(Auth::user()->id);
-        return view('profile.profile', compact('list','balance','feed'));
+
+        if(isset($request->user_id)) $user = User::find($request->user_id);
+        else $user = Auth::user();
+
+        return view('profile.profile', compact('user'));
     }
 
     public function review($id = 0)

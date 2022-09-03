@@ -26,6 +26,20 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label>Категория</label>
+
+                                <select class="custom-select form-control required" name="category_id">
+                                    <option value="1"   @if(old('gender',$news->category_id) == 1) selected @endif>Общее</option>
+                                    <option value="2"   @if(old('gender',$news->category_id) == 1) selected @endif>Кабинет</option>
+                                </select>
+
+                                @if ($errors->has('category_id'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('category_id') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label>Текст</label>
                                 <textarea  name="news_text" class="form-control">{{$news->news_text}}</textarea>
                                 @if ($errors->has('news_text'))
@@ -58,7 +72,7 @@
 
                             <div class="form-group">
                                 <label>Дата</label>
-                                <input  type="date" value="{{$news->news_date}}" class="form-control datetimepicker-input" name="news_date" >
+                                <input type="datetime-local" id="register_day" value="{{ date('Y-m-d\TH:i', strtotime(old('created_at',$news->news_date))) }}" name="news_date" class="form-control form-control-line">
                                 @if ($errors->has('news_date'))
                                     <div class="alert alert-danger">
                                         {{ $errors->first('news_date') }}

@@ -13,13 +13,13 @@
 @elseif($item->status == 'request')
     Запрос на списание
 @elseif($item->status == 'register')
-    <span style="color: red">Регистрация</span>
+    Регистрация
 @elseif($item->status == 'out')
     Выведено
 @elseif($item->status == 'cancel')
     Отменено
 @elseif($item->status == 'revitalization')
-    <span>Депозит</span>
+    Депозит
 @elseif($item->status == 'revitalization-shop')
     Покупка с баланса(повторная)
 @elseif($item->status == 'shop')
@@ -27,6 +27,8 @@
 @elseif($item->status == 'upgrade')
     Апгрейд
 @elseif($item->status == 'admin_add')
+    {{ $item->message }}
+@elseif($item->status == 'remove')
     {{ $item->message }}
 @else
     Не определено

@@ -82,6 +82,7 @@
                             <li><a href="/notifications">Уведомления</a></li>
                             <li><a href="/faq-profile">База знаний</a></li>
                             <li><a href="/">Наследник</a></li>
+                            <li><a href="/profile-news">Новости</a></li>
                         </ul>
                     </li>
                     {{--<li>

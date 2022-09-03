@@ -103,7 +103,19 @@
                                         @endif
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label class="col-md-12">Ответственый партнер</label>
+                                    <div class="col-md-12">
+                                        <select class="custom-select form-control required select2" name="courier_id" required>
+                                            @foreach($couriers as $item)
+                                                <option value="{{ $item->id }}" @if($order->courier_id == $item->id) selected @endif>{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('title'))
+                                            <span class="help-block"><small>{{ $errors->first('title') }}</small></span>
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button class="btn btn-success" type="submit">Обновить</button>
@@ -141,5 +153,18 @@
             });
         </script>
     @endif
+
+<script src="/monster_admin//assets/plugins/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
+<script src="/monster_admin/assets/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+<script>
+    jQuery(document).ready(function() {
+        // For select 2
+        $(".select2").select2();
+        $('.selectpicker').selectpicker();
+    });
+</script>
 @endpush
 
+@push('scripts')
+    <link href="/monster_admin/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+@endpush

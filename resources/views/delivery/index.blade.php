@@ -26,13 +26,31 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-block">
-                            <form action="/user">
+                            <form action="/delivery">
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="s" placeholder="Поиск по полям логин, спонсор, имя ..." value="{{ old('s',app('request')->input('s')) }}">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-info" type="submit">Искать!</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <div class="input-group" >
+                                                <select class="custom-select form-control required" id="status_id" name="status_id">
+                                                    <option>Выберите статус</option>
+                                                    @foreach(\App\Models\Status::all() as $item)
+                                                        <option value="{{ $item->id }}" @if(old('s',app('request')->input('status_id')) == $item->id) selected @endif>{{ $item->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('status_id'))
+                                                    <span class="text-danger"><small>{{ $errors->first('status_id') }}</small></span>
+                                                @endif
+                                            </div>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-info" type="submit">Филтровать!</button>
                                             </span>
                                         </div>
                                     </div>

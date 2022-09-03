@@ -44,7 +44,7 @@ class TelegramSmsSender
         $message .= "Всего зарегистрировано: ".$counter." \n";
         $message = urlencode($message);
 
-        $ch = curl_init("https://api.telegram.org/bot338084061:AAHlh9UWXyPVI7WnI4AALn2B6f0rafk-pmc/sendMessage?chat_id=-732950860&text=$message");
+        $ch = curl_init("https://api.telegram.org/bot338084061:AAEf5s-TegdOIQB8Akx0yj82v18ZyJ07XwI/sendMessage?chat_id=-1001762935237&text=$message");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         //---curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         curl_exec($ch);

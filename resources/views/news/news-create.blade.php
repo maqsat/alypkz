@@ -22,6 +22,20 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label>Категория</label>
+
+                                <select class="custom-select form-control required" name="category_id">
+                                    <option value="1">Общее</option>
+                                    <option value="2">Кабинет</option>
+                                </select>
+
+                                @if ($errors->has('category_id'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('category_id') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label>Текст</label>
                                 <textarea  name="news_text" class="form-control"></textarea>
                                 @if ($errors->has('news_text'))
@@ -71,7 +85,13 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=5y85yv1z81uofzj5d6j38pqqxzrxddxqym36d3n7kv5c5ejy"></script>
+<script>
+    import Options
+        from "../../../public/monster_admin/assets/plugins/select2/docs/_includes/options/core/options.html";
+    export default {
+        components: {Options}
+    }
+</script>
 
     <script>
         tinymce.init({

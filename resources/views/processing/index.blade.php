@@ -44,7 +44,7 @@
                             <div class="p-10 bg-success">
                                 <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                             <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0 text-success">{{ number_format($out, 0, '', ' ') }}</h3>
+                                <h3 class="m-b-0 text-success">{{ number_format(\App\Facades\Balance::getBalanceOutAllUsers(), 0, '', ' ') }}</h3>
                                 <h5 class="text-muted m-b-0">Выведено</h5></div>
                         </div>
                     </div>
@@ -57,8 +57,8 @@
                             <div class="p-10 bg-inverse">
                                 <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                             <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0">{{ number_format($all, 0, '', ' ') }}</h3>
-                                <h5 class="text-muted m-b-0">Общий оборот</h5></div>
+                                <h3 class="m-b-0">{{ number_format(\App\Facades\Balance::getBalanceAllUsers(), 0, '', ' ') }}</h3>
+                                <h5 class="text-muted m-b-0">Комиссионные на балансах</h5></div>
                         </div>
                     </div>
                 </div>
@@ -116,11 +116,13 @@
                                             <td class="txt-oflo">@if(!is_null($user_id)) {{ $user_id->name }} @else Не найден @endif </td>
                                             <td class="txt-oflo">@if(!is_null($in_user)) {{ $in_user->name }} @else {{ $item->in_user }} @endif @if($item->status == 'matching_bonus') <i>{{ $item->matching_line }} линия</i> @endif  </td>
                                             <td>{{ $item->card_number }}</td>
-                                            <td>@if($item->withdrawal_method === 'checking-account') Расчётный счёт @endif</td>
+                                            <td>@if($item->withdrawal_method === '2') Расчётный счёт @else Наличный счет @endif</td>
                                             <td class="txt-oflo">{{ $item->created_at }}</td>
                                             <td class="actions">
                                                 <a href="/user/{{ $user_id->id }}/processing" target="_blank" class="btn  btn-xs btn-success"  title="Финансы"><i class="mdi mdi-cash-multiple"></i></a>
                                                 <a href="/user/{{ $user_id->id }}" target="_blank" class="btn  btn-xs btn-info"   title="Зайти под"><i class="mdi mdi-eye"></i></a>
+                                                <a href="/profile?user_id={{ $user_id->id }}" target="_blank" class="btn  btn-xs btn-warning    "   title="Зайти под"><i class="mdi mdi-account"></i></a>
+
                                             </td>
                                         </tr>
                                     @endforeach
