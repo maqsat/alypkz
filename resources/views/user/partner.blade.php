@@ -58,7 +58,7 @@
                                         </div>
                                         <label class="m-t-10">{{ __('app.country') }}</label>
                                         <div class="input-group">
-                                            <select class="form-control form-control-line" name="country_id">
+                                            <select class="form-control form-control-line" name="country_id" onchange="getCities(this)">
                                                 @foreach(\App\Models\Country::all() as $item)
                                                     <option value="{{ $item->id }}" @if(old('country_id') == $item->id) selected @endif>{{ $item->title }}</option>
                                                 @endforeach
@@ -100,7 +100,7 @@
                                         <label  class="m-t-10" for="position">Город:</label>
                                         <div class="input-group">
                                             <select class="custom-select form-control required" id="city_id" name="city_id"> <!--onchange="getOffices(this)"-->
-                                                @foreach(\App\Models\City::where('status',1)->get() as $item)
+                                                @foreach(\App\Models\City::where('status',1)->where('country_id',1)->get() as $item)
                                                     <option value="{{ $item->id }}" @if(old('city_id') == $item->id) selected @endif>{{ $item->title }}</option>
                                                 @endforeach
                                             </select>
@@ -131,7 +131,7 @@
                                         </div>
                                         <label class="m-t-10">Закреплен за(показывается только свободные позиции)</label>
                                         <div class="input-group">
-                                            <select class="form-control form-control-line select2" name="sponsor_id" id="sponsor_users"  onchange="getPosition(this)">
+                                            <select class="form-control form-control-line select2" name="sponsor_id" id="sponsor_users"   onchange="getPosition(this)">
                                                 <option>Выберите менеджера</option>
                                                @php
                                                    foreach ($sponsor_users  as $item){
@@ -175,7 +175,7 @@
                                                 <input type="hidden" value="{{ $item->rank }}" id="#status{{$item->id}}">
                                             @endforeach
                                         </div>
-<!--                                        <label  class="m-t-10" for="position"   style="display: none">Статус:</label>
+                                        <!--<label  class="m-t-10" for="position"   style="display: none">Статус:</label>
                                         <div class="input-group"   style="display: none">
                                             <select class="custom-select form-control required" id="status_id" name="status_id">
                                                 @foreach(\App\Models\Status::all() as $item)
@@ -186,7 +186,7 @@
                                                 <span class="text-danger"><small>{{ $errors->first('status_id') }}</small></span>
                                             @endif
                                         </div>-->
-<!--                                        <label  class="m-t-10" for="position"  style="display: none">Офис:</label>
+                                        <!--<label  class="m-t-10" for="position"  style="display: none">Офис:</label>
                                         <div class="input-group"  style="display: none">
                                             <select class="form-control form-control-line" name="office_id" id="user_offices"></select>
                                             @if ($errors->has('office_id'))
@@ -324,6 +324,32 @@
             console.log(status_id);
             $("#status_id").val(status_id);
         }
+
+        function getCities(country_id) {
+            $.ajax({
+                type: "GET",
+                url: "/partner/user/cities",
+                data: 'country_id='+country_id.value,
+                success: function (data) {
+                    console.log('Submission was successful.');
+                    console.log(data);
+
+                    $('#city_id')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append(data)
+                        .val('whatever')
+                    ;
+
+                },
+                error: function (data) {
+                    console.log('An error occurred.');
+                    console.log(data);
+                },
+            });
+        }
+
     </script>
     <script src="/monster_admin//assets/plugins/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
     <script src="/monster_admin/assets/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>

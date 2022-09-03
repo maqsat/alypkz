@@ -76,6 +76,7 @@ Route::post('partner/create', 'HomeController@partnerStore')->name('partner_stor
 Route::get('partner/sponsor/users', 'HomeController@partnerSponsorUsers')->name("partner_sponsor_users");
 Route::get('partner/sponsor/positions', 'HomeController@partnerSponsorPositions')->name("partner_sponsor_positions");
 Route::get('partner/user/offices', 'HomeController@partnerUserOffices')->name("partner_user_offices");
+Route::get('partner/user/cities', 'HomeController@partnerUserCities')->name("partner_user_cities");
 Route::get('/profile-news', 'NewsController@profileNews')->name("profile-news");
 Route::get('/profile-news/{id}', 'NewsController@profileNewsShow')->name("profile-news");
 

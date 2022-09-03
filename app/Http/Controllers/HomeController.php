@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Comment;
 use App\Models\Office;
 use App\Models\Review;
@@ -363,6 +364,29 @@ class HomeController extends Controller
 
         return $text;
     }
+
+
+    public function partnerUserCities(Request $request)
+    {
+
+        $request->validate([
+            'country_id' => 'required', 'integer'
+        ]);
+
+        $text = '';
+
+        $cities = City::where('country_id',$request->country_id)->get();
+
+
+        foreach ($cities  as $item){
+            $tmt_text = '<option value='.$item->id.'>'.$item->title.'</option>';
+            $text .= $tmt_text;
+        }
+
+
+        return $text;
+    }
+
 
     /**
      * @param Request $request
