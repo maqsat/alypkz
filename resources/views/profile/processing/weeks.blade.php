@@ -56,7 +56,7 @@
                                                             <tr>
                                                                 <td>1</td>
                                                                 <td>ЛКБ</td>
-                                                                <td>{{ \App\Facades\Balance::getWeekBalanceByStatus(Auth::user()->id,$weeks[$key+1],$item,'matching_bonus') }}$</td>
+                                                                <td>{{ \App\Facades\Balance::getWeekBalanceByStatus(Auth::user()->id,$weeks[$key+1],$item,'matching_bonus')  }}$</td>
                                                                 <td><a href="">Подробнее</a></td>
                                                             </tr>
                                                             <tr>
@@ -68,7 +68,7 @@
                                                             <tr>
                                                                 <td>3</td>
                                                                 <td>Реферальный бонус</td>
-                                                                <td>{{ \App\Facades\Balance::getWeekBalanceByStatus(Auth::user()->id,$weeks[$key+1],$item,'invite_bonus') }}$</td>
+                                                                <td>{{ \App\Facades\Balance::getWeekBalanceByStatus(Auth::user()->id,$weeks[$key+1],$item,'invite_bonus') + \App\Facades\Balance::getWeekBalanceByStatus(Auth::user()->id,$weeks[$key+1],$item,'admin_add') }}$</td>
                                                                 <td><a href="">Подробнее</a></td>
                                                             </tr>
                                                             <tr>

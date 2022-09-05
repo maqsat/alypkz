@@ -318,15 +318,21 @@ class ProcessingController extends Controller
         ]);
 
 
+
+         if(count(Processing::where('user_id', Auth::user()->id)->where('status','request')->get()) > 0){
+             return redirect()->back()->with('status', 'У есть не обработанный запрос, не пожете отправить повторную заявку пока текущий запрос не обработается');
+         }
+
+
         if($request->type == 1){
             if(Balance::getBalanceNew(Auth::user()->id, ['invite_bonus', 'admin_add']) < $request->sum)
-                return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Реферальный бонус + ЛКБ!');
+                return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Реферальный бонус!');
 
             $sum = $request->sum;
         }
         else{
             if(Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus','matching_bonus']) < $request->sum)
-                return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Бинарный бонус');
+                return redirect()->back()->with('status', 'У вас недостаточно средств на балансе Бинарный бонус + ЛКБ!');
 
             $sum = $request->sum*0.8;
         }

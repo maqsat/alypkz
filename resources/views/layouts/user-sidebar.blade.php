@@ -43,8 +43,8 @@
                         </a>
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="/user_processing">{{ __('app.processing') }}</a></li>
-<!--                            <li><a href="/user_processing?weeks=1">Еженедельная  выплата</a></li>
-                            <li><a href="/rang-history">История ранга</a></li>-->
+                            <li><a href="/user_processing?weeks=1">Еженедельная  выплата</a></li>
+<!--                            <li><a href="/rang-history">История ранга</a></li>-->
                         </ul>
                     </li>
                     <li>

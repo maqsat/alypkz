@@ -92,6 +92,29 @@ class Balance {
     }
 
 
+    public function getWeekBalanceByRange($user_id,$date_from,$date_to)
+    {
+        $date_from = explode('-',$date_from);
+        $date_from = Carbon::create($date_from[0], $date_from[1], $date_from[2],0,0,0, date_default_timezone_get())->toDateTimeString();
+
+        $date_to = explode('-',$date_to);
+        $date_to = Carbon::create($date_to[0], $date_to[1], $date_to[2],23,59,59, date_default_timezone_get())->toDateTimeString();
+        $sum = Processing::whereUserId($user_id)->whereIn('status', ['invite_bonus', 'admin_add','turnover_bonus','matching_bonus'])->whereBetween('created_at', [$date_from, $date_to])->sum('sum');
+        return round($sum, 2);
+    }
+
+    public function getWeekBalanceByStatus($user_id,$date_from,$date_to,$status)
+    {
+        $date_from = explode('-',$date_from);
+        $date_from = Carbon::create($date_from[0], $date_from[1], $date_from[2],0,0,0, date_default_timezone_get())->toDateTimeString();
+
+        $date_to = explode('-',$date_to);
+        $date_to = Carbon::create($date_to[0], $date_to[1], $date_to[2],23,59,59, date_default_timezone_get())->toDateTimeString();
+
+        $sum = Processing::whereUserId($user_id)->where('status', $status)->whereBetween('created_at', [$date_from, $date_to])->sum('sum');
+        return round($sum, 2);
+    }
+
 
     public function getBalanceAllUsers()
     {
@@ -136,28 +159,7 @@ class Balance {
 
 
 
-    public function getWeekBalanceByStatus($user_id,$date_from,$date_to,$status)
-    {
-        $date_from = explode('-',$date_from);
-        $date_from = Carbon::create($date_from[0], $date_from[1], $date_from[2],0,0,0, date_default_timezone_get())->toDateTimeString();
 
-        $date_to = explode('-',$date_to);
-        $date_to = Carbon::create($date_to[0], $date_to[1], $date_to[2],23,59,59, date_default_timezone_get())->toDateTimeString();
-
-        $sum = Processing::whereUserId($user_id)->where('status', $status)->whereBetween('created_at', [$date_from, $date_to])->sum('sum');
-        return round($sum, 2);
-    }
-
-    public function getWeekBalanceByRange($user_id,$date_from,$date_to)
-    {
-        $date_from = explode('-',$date_from);
-        $date_from = Carbon::create($date_from[0], $date_from[1], $date_from[2],0,0,0, date_default_timezone_get())->toDateTimeString();
-
-        $date_to = explode('-',$date_to);
-        $date_to = Carbon::create($date_to[0], $date_to[1], $date_to[2],23,59,59, date_default_timezone_get())->toDateTimeString();
-        $sum = Processing::whereUserId($user_id)->whereIn('status', ['turnover_bonus', 'status_bonus', 'invite_bonus','quickstart_bonus','matching_bonus'])->whereBetween('created_at', [$date_from, $date_to])->sum('sum');
-        return round($sum, 2);
-    }
 
     public function getBalanceByStatus($status)
     {
