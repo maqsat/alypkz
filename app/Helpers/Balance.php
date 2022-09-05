@@ -15,8 +15,12 @@ use App\Models\Processing;
 
 class Balance {
 
-    public function changeBalance($user_id,$sum,$status,$in_user,$program_id,$package_id=0,$status_id=0,$pv = 0,$limited_sum = 0,$matching_line = 0,$card_number = 0,$message = '', $withdrawal_method = null, $type = null , $iin = null )
+    public function changeBalance($user_id,$sum,$status,$in_user,$program_id,$package_id=0,$status_id=0,$pv = 0,$limited_sum = 0,$matching_line = 0,$card_number = 0,$message = '', $withdrawal_method = null, $type = null , $iin = null , $date = null )
     {
+
+        if($date === null)
+            $date = Carbon::now()->format('Y-m-d H:i:s');
+
         $processing = new Processing(
             [
                 'user_id' => $user_id,
@@ -34,7 +38,7 @@ class Balance {
                 'withdrawal_method' => $withdrawal_method,
                 'type' => $type,
                 'iin' => $iin,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => $date,
             ]
         );
         $processing->save();

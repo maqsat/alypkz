@@ -1106,11 +1106,11 @@ class UserController extends Controller
                 $status =  'admin_add';
             }
             else  {
-                $sum = $request->sum * -1;
+                $sum = $request->sum;
                 $status = 'remove';
             }
 
-            Balance::changeBalance($id,$sum,$status,$request->in_user,$user->program_id,$user->package_id,$user->status_id,$request->sum,0,0,0,$request->description, null, 1);
+            Balance::changeBalance($id,$sum,$status,$request->in_user,$user->program_id,$user->package_id,$user->status_id,$request->sum,0,0,0,$request->description, null, 1, null, Carbon::now()->subDays(7));
         }
         else{
             if($request->operation_type == 1) $sum = $request->sum;
