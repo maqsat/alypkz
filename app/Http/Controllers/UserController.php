@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Events\ShopTurnover;
 use App\Facades\Hierarchy;
 use App\Models\Basket;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Notification;
 use App\Models\Office;
 use App\Models\Order;
@@ -394,51 +396,38 @@ class UserController extends Controller
 
     public function activationWithoutBonus($user_id)
     {
-        if(!Gate::allows('admin_user_activation')) {
-            abort('401');
-        }
-
         $id = $user_id;
+        $program = Program::find(1);
         $this_user = User::find($id);
-        $program = Program::find($this_user->program_id);
         $inviter = User::find($this_user->inviter_id);
+        $package = Package::find(1);
+        $package_id = 1;
+        $status_id = 1;
+        $package_cost = 0;
 
         /*start check*/
-        if(is_null($this_user)) {
-            dd("Пользователь не найден");
-        }
-        $check_user_program = UserProgram::where('program_id', $program->id)
-            ->where('user_id',$id)
-            ->count();
-        if($check_user_program != 0) {
-            dd("Пользователь уже активирован -> $id");
-        }
+        if(is_null($this_user)) dd("Пользователь не найден");
+        $check_user_program = UserProgram::where('program_id', $program->id)->where('user_id',$id)->count();
+        if($check_user_program != 0) dd("Пользователь уже активирован -> $id");
         /*end check*/
 
+        /*start sponsor check*/
+        $check_this_user_sponsor_id_program = UserProgram::where('program_id', $program->id)->where('user_id',$this_user->sponsor_id)->count();
+        if($check_this_user_sponsor_id_program == 0) dd("Спонсор не активирован -> $this_user->sponsor_id");
+        /*end sponsor check*/
+
+
         /*start init and activate*/
-        if ($this_user->package_id == 0){
-            $package_id = 0;
-            $status_id = 1;
-            $package_cost = env('REGISTRATION_FEE');
-        }
-        else{
-            $package = Package::find($this_user->package_id);
-            $package_id = $package->id;
-            $status_id = $package->rank;
-            $package_cost = $package->cost + env('REGISTRATION_FEE');
-        }
-
-
+        /*set sponsor if sponsor not found*/
         if(is_null($this_user->sponsor_id)){
             $sponsor_data = Hierarchy::getSponsorId($inviter->id);
             $sponsor_id = $sponsor_data[0];
             $position_data = $sponsor_data[1];
 
             $checker = User::where('sponsor_id',$sponsor_id)->where('position',$position_data)->count();
-            if($checker > 0) {
-                dd('status', 'Позиция занята, проверьте, есть не активированный партнер в этой позиции');
-            }
+            if($checker > 0) dd('status', 'Позиция занята, проверьте, есть не активированный партнер в этой позиции');
             else{
+
                 User::find($id)->update([
                     'sponsor_id' => $sponsor_id,
                     'position' => $position_data,
@@ -447,6 +436,7 @@ class UserController extends Controller
                 $this_user = User::find($id);
             }
         }
+        /*end set sponsor if sponsor not found*/
 
         if(!is_null($this_user->status_id) && $this_user->status_id != 0  && $status_id < $this_user->status_id){
             $status_id = $this_user->status_id;
@@ -455,7 +445,32 @@ class UserController extends Controller
         $list = Hierarchy::getSponsorsList($this_user->id,'').',';
         $inviter_list = Hierarchy::getInviterList($this_user->id,'').',';
 
-        User::whereId($this_user->id)->update(['status' => 1]);
+
+        $country_short_name = 'KZ';
+        $city_code = '01';
+        $user_country = Country::where('id',$this_user->country_id)->first();
+        $user_city = City::where('id',$this_user->city_id)->first();
+
+        if(is_null($user_country)){
+            $country_short_name = $user_country->short;
+        }
+
+        if(is_null($user_city)){
+            $city_code = $user_city->code;
+        }
+
+        $id_number = $country_short_name.$city_code.date('Ymd').$this_user->id;
+
+        User::whereId($this_user->id)->update([
+            'status' => 1,
+        ]);
+
+        if(is_null($this_user->id_number)){
+            User::whereId($this_user->id)->update([
+                'id_number' => $id_number
+            ]);
+        }
+
 
         /*set register sum */
         Balance::changeBalance($id,$package_cost,'register',$this_user->id,$this_user->program_id,$package_id,0);
@@ -471,25 +486,26 @@ class UserController extends Controller
             ]
         );
 
-        if (Auth::check()){
+        /*start activate sponsor binary*/
+        $sponsor_subscribers =  UserProgram::join('users','user_programs.user_id','=','users.id')
+            ->where('users.inviter_id',$this_user->inviter_id)
+            ->where('users.status',1)
+            ->count();
+        if($sponsor_subscribers == 2) UserProgram::whereUserId($this_user->inviter_id)->update(['is_binary' => 1]);
+        /*end activate sponsor binary*/
+
+        if (Auth::check())
             $author_id = Auth::user()->id;
-        }
-        else {
+        else
             $author_id = 0;
-        }
 
         Notification::create([
             'user_id' => $this_user->id,
             'type' => 'user_activated',
             'author_id' => $author_id
         ]);
-        /*end init and activate*/
 
-        Notification::create([
-            'user_id'   => Auth::user()->id,
-            'type'      => 'admin_activated_user',
-            'message'   => 'Активировал пользователя ' . $this_user->name . ' ( ' . $this_user->id . ' ) без бонусов',
-        ]);
+        /*end init and activate*/
 
         return "<h2>Пользователь успешно  активирован!</h2>";
     }

@@ -56,7 +56,7 @@
                                     @endphp
 
 
-                                    <tr @if($item->status == 'register' or $item->status == 'cancel'  or $item->status == 'out'  or $item->status == 'revitalization'   or $item->status == 'request')
+                                    <tr @if($item->status == 'register' or $item->status == 'cancel'  or $item->status == 'out'  or $item->status == 'revitalization'   or $item->status == 'request' or $item->status == 'remove')
                                         style="color: #009efb"
                                         @else
                                         style="color: #5cb85c"

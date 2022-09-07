@@ -74,9 +74,20 @@ class ProcessingController extends Controller
             $list = Processing::orderBy('created_at','desc')->paginate(30);
         }
 
-        $in = Processing::whereStatus('register')->sum('sum');
-        $all = Processing::sum('sum');
-        $out = Processing::whereStatus('out')->sum('sum');
+
+        if(isset($request->date_from) and isset($request->date_to)){
+            $in = Processing::whereStatus('register')->whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])->sum('sum');
+            $all = Processing::whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])->sum('sum');
+            $out = Balance::getBalanceOutAllUsers($request->date_from,$request->date_to);
+
+        }
+        else{
+            $in = Processing::whereStatus('register')->sum('sum');
+            $all = Processing::sum('sum');
+            $out = Processing::whereStatus('out')->sum('sum');
+        }
+
+
 
         return view('processing.index', compact('list', 'in', 'all', 'out'));
     }
@@ -319,8 +330,8 @@ class ProcessingController extends Controller
 
 
 
-         if(count(Processing::where('user_id', Auth::user()->id)->where('status','request')->get()) > 0){
-             return redirect()->back()->with('status', 'У есть не обработанный запрос, не пожете отправить повторную заявку пока текущий запрос не обработается');
+         if(count(Processing::where('user_id', Auth::user()->id)->where('status','request')->get()) > 1){
+             return redirect()->back()->with('status', 'У вас есть не обработанный  запрос , не можете отправить повторную заявку пока текущий запрос не обработается ');
          }
 
 

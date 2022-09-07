@@ -128,9 +128,16 @@ class Balance {
 
 
 
-    public function getBalanceOutAllUsers()
+    public function getBalanceOutAllUsers($date_from = null, $date_to = null)
     {
-        $sum = Processing::whereIn('status', ['out'])->sum('sum');
+        if($date_from !== null)
+        {
+            $sum = Processing::whereIn('status', ['out'])->whereBetween('created_at', [Carbon::parse($date_from), Carbon::parse($date_to)])->sum('sum');
+        }
+        else {
+            $sum = Processing::whereIn('status', ['out'])->sum('sum');
+        }
+
         return round($sum, 2);
     }
 

@@ -87,25 +87,28 @@
         if(document.getElementById("type").value == 1) {
             var x = 1;
             document.getElementById("sum").max = {{ Balance::getBalanceNew(Auth::user()->id, ['invite_bonus', 'admin_add']) }};
+            document.getElementById("demo").innerHTML = "Сумма PV*1$: " + document.getElementById("sum").value * x + "$";
         }
         else {
             var x = 0.8;
             document.getElementById("sum").max = {{ Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus','matching_bonus']) }};
+            document.getElementById("demo").innerHTML = "Сумма PV*0,8$: " + document.getElementById("sum").value * x + "$";
         }
 
-        document.getElementById("demo").innerHTML = "Сумма PV*0,8$: " + document.getElementById("sum").value * x + "$";
     }
 
     function myFunction2() {
         if(document.getElementById("type2").value == 1) {
             var x = 1;
             document.getElementById("sum2").max = {{ Balance::getBalanceNew(Auth::user()->id, ['invite_bonus', 'admin_add']) }};
+            document.getElementById("demo2").innerHTML = "Сумма PV*1$: " + document.getElementById("sum2").value * x + "$";
         }
         else {
             var x = 0.8;
             document.getElementById("sum2").max = {{ Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus','matching_bonus']) }};
+            document.getElementById("demo2").innerHTML = "Сумма PV*0,8$: " + document.getElementById("sum2").value * x + "$";
         }
 
-        document.getElementById("demo2").innerHTML = "Сумма PV*0,8$: " + document.getElementById("sum2").value * x + "$";
+
     }
 </script>

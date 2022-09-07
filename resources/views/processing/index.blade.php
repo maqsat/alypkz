@@ -23,6 +23,32 @@
             <!-- Start Page Content -->
             <!-- ============================================================== -->
 
+            <form method="get" class="form-horizontal user_create">
+                {{ csrf_field() }}
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="m-t-10">Дата фильтрации c:</label>
+                        <div class="input-group">
+                            <input type="date" name="date_from" value="{{ old('date_from', date('Y-m-d'))}}" class="form-control form-control-line" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="m-t-10">Дата фильтрации до:</label>
+                        <div class="input-group">
+                            <input type="date" name="date_to" value="{{ old('date_to', date('Y-m-d')) }}" class="form-control form-control-line" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="m-t-10"></label>
+                        <span class="input-group-btn m-t-10">
+                            <button class="btn btn-info" type="submit">Отправить</button>
+                        </span>
+                    </div>
+                </div>
+                <hr>
+            </form>
+
+
             <div class="row">
                 <!-- Column -->
                 <div class="col-lg-4 col-md-4">
@@ -44,7 +70,7 @@
                             <div class="p-10 bg-success">
                                 <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                             <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0 text-success">{{ number_format(\App\Facades\Balance::getBalanceOutAllUsers(), 0, '', ' ') }}</h3>
+                                <h3 class="m-b-0 text-success">{{ number_format($out, 0, '', ' ') }}</h3>
                                 <h5 class="text-muted m-b-0">Выведено</h5></div>
                         </div>
                     </div>
