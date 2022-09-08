@@ -17,7 +17,7 @@
     </div>
     <!-- Column -->
     <!-- Column -->
-<!--    <div class="col-lg-4">
+    <div class="col-lg-4">
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">Еженедельная  выплата</h4>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
     <!-- Column -->
     <!-- Column -->
     <div class="col-lg-4">
