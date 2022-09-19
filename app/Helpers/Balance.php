@@ -95,6 +95,40 @@ class Balance {
         return round($sum, 2);
     }
 
+    public function getBalanceOutAllUserNew($statuses, $date_from = null, $date_to = null)
+    {
+
+        if(array_search('invite_bonus', $statuses) !== false) $type = 1;
+        else $type = 2;
+
+        if($date_from !== null)
+        {
+            $sum = Processing::whereIn('status', ['out', 'remove'])->where('type', $type)->whereBetween('created_at', [Carbon::parse($date_from), Carbon::parse($date_to)])->sum('sum');
+        }
+        else {
+            $sum = Processing::whereIn('status', ['out', 'remove'])->where('type', $type)->sum('sum');
+        }
+
+
+        return round($sum, 2);
+    }
+
+
+
+    public function getBalanceOutAllUsers($date_from = null, $date_to = null)
+    {
+        if($date_from !== null)
+        {
+            $sum = Processing::whereIn('status', ['out', 'remove'])->whereBetween('created_at', [Carbon::parse($date_from), Carbon::parse($date_to)])->sum('sum');
+        }
+        else {
+            $sum = Processing::whereIn('status', ['out', 'remove'])->sum('sum');
+        }
+
+        return round($sum, 2);
+    }
+
+
 
     public function getWeekBalanceByRange($user_id,$date_from,$date_to)
     {
@@ -125,22 +159,6 @@ class Balance {
         $sum = Processing::whereIn('status', ['invite_bonus', 'admin_add', 'turnover_bonus','matching_bonus'])->sum('sum') - Processing::whereIn('status', ['out'])->sum('sum');
         return round($sum, 2);
     }
-
-
-
-    public function getBalanceOutAllUsers($date_from = null, $date_to = null)
-    {
-        if($date_from !== null)
-        {
-            $sum = Processing::whereIn('status', ['out'])->whereBetween('created_at', [Carbon::parse($date_from), Carbon::parse($date_to)])->sum('sum');
-        }
-        else {
-            $sum = Processing::whereIn('status', ['out'])->sum('sum');
-        }
-
-        return round($sum, 2);
-    }
-
 
 
     public function getBalance($user_id)

@@ -76,20 +76,23 @@ class ProcessingController extends Controller
 
 
         if(isset($request->date_from) and isset($request->date_to)){
-            $in = Processing::whereStatus('register')->whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])->sum('sum');
-            $all = Processing::whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])->sum('sum');
-            $out = Balance::getBalanceOutAllUsers($request->date_from,$request->date_to);
+
+            session()->flashInput($request->input());
+
+
+            $invite = Balance::getBalanceOutAllUserNew(['invite_bonus', 'admin_add'], Carbon::parse($request->date_from), Carbon::parse($request->date_to));
+            $other = Balance::getBalanceOutAllUserNew(['turnover_bonus','matching_bonus'], Carbon::parse($request->date_from), Carbon::parse($request->date_to));
+
 
         }
         else{
-            $in = Processing::whereStatus('register')->sum('sum');
-            $all = Processing::sum('sum');
-            $out = Processing::whereStatus('out')->sum('sum');
+            $invite = Balance::getBalanceOutAllUserNew(['invite_bonus', 'admin_add']);
+            $other = Balance::getBalanceOutAllUserNew(['turnover_bonus','matching_bonus']);
         }
 
 
 
-        return view('processing.index', compact('list', 'in', 'all', 'out'));
+        return view('processing.index', compact('list', 'invite', 'other'));
     }
 
     /**

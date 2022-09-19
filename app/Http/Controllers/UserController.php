@@ -919,7 +919,7 @@ class UserController extends Controller
             $user->inviter_id = $request->inviter_id;
             $user->save();
 
-            $inviter_followers = ',' . $request->user_id . Hierarchy::getInviterFollowerList($request->user_id, '') . ',';
+            $inviter_followers = ',' . $request->user_id . Hierarchy::getSponsorsList($request->user_id, '') . ',';
             $inviter_followers = explode(',', trim($inviter_followers, ','));
 
             foreach ($inviter_followers as $item){
@@ -932,6 +932,15 @@ class UserController extends Controller
                     $user_program->save();
                 }
             }
+
+
+            /*start activate sponsor binary*/
+            $sponsor_subscribers =  UserProgram::join('users','user_programs.user_id','=','users.id')
+                ->where('users.inviter_id',$user->inviter_id)
+                ->where('users.status',1)
+                ->count();
+            if($sponsor_subscribers == 2) UserProgram::whereUserId($user->inviter_id)->update(['is_binary' => 1]);
+            /*end activate sponsor binary*/
         }
 
         if ($user->sponsor_id !== $request->sponsor_id) {
@@ -945,7 +954,7 @@ class UserController extends Controller
             $user->sponsor_id = $request->sponsor_id;
             $user->save();
 
-            $followers = ',' . $request->user_id . Hierarchy::getFollowersList($request->user_id, '') . ',';
+            $followers = ',' . $request->user_id . Hierarchy::getSponsorsList($request->user_id, '') . ',';
             $followers = explode(',', trim($followers, ','));
 
             foreach ($followers as $item){
@@ -971,6 +980,8 @@ class UserController extends Controller
             $user->position = $request->position;
             $user->save();
         }
+
+
 
         return redirect()->back()->with('status', 'Успешно изменено');
     }
