@@ -155,7 +155,7 @@ class UserActivated
             $sponsors_list = explode(',',trim($list,','));
 
             /*start set  matching_bonus  */
-            $inviter_list_for_lkb = explode(',',trim($inviter_list,','));
+            /*$inviter_list_for_lkb = explode(',',trim($inviter_list,','));
             $inviter_list_for_lkb = array_slice($inviter_list_for_lkb, 0, 7);
             $old_max_status_percentage = 0;
 
@@ -182,7 +182,7 @@ class UserActivated
                         Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv,'',$key_matching);
                     }
                 }
-            }
+            }*/
             /*end set  matching_bonus  */
 
 
