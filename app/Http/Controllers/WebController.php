@@ -13,8 +13,41 @@ class WebController extends Controller
 
     public function welcome()
     {
-        return redirect('index.html');
+        return view('web.welcome');
     }
+
+    public function product()
+    {
+        return view('web.products');
+    }
+
+    public function owners()
+    {
+        return view('web.owners');
+    }
+
+    public function marketing()
+    {
+        return view('web.marketing');
+    }
+
+    public function academy()
+    {
+        return view('web.academy');
+    }
+
+    public function webNews()
+    {
+         return view('web.news');
+    }
+
+
+    public function webNewsInner($id)
+    {
+        return view('web.news-inner');
+    }
+
+
 
     public function reviews()
     {

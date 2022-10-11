@@ -22,6 +22,8 @@ use App\Models\UserProgram;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+
+
 //dd(date('Ymd'));
 //dd(bcrypt(123456789));
 Auth::routes();
@@ -30,10 +32,16 @@ Route::post('register-validate', 'UserController@registerValidate')->name('valid
 /*
 ************************ Website ***********************
  */
-Route::get('/', 'HomeController@index');
-//Route::get('/', 'WebController@welcome');
+
+Route::get('/', 'WebController@welcome');
+Route::get('product', 'WebController@product');
+Route::get('owners', 'WebController@owners');
+Route::get('marketing', 'WebController@marketing');
+Route::get('academy', 'WebController@academy');
+Route::get('web-news', 'WebController@webNews');
+Route::get('web-news/{id}', 'WebController@webNewsInner');
+
 Route::get('about', 'WebController@about');
-Route::get('products', 'WebController@products');
 Route::get('cert', 'WebController@cert');
 Route::get('faq', 'WebController@faq');
 
@@ -63,7 +71,6 @@ Route::post('update_review_image', 'HomeController@updateReviewImage')->name('up
 Route::get('faq-profile','FaqController@index')->middleware("auth");
 Route::post('updateProfile', 'HomeController@updateProfile')->name('updateProfile');
 Route::post('updateAvatar', 'HomeController@updateAvatar')->name('updateAvatar');
-Route::get('marketing', 'HomeController@marketing')->name('marketing');
 Route::post('transfer', 'ProcessingController@transfer')->name('transfer');
 Route::get('transfer/{status}/{processing_id}', 'ProcessingController@transferAnswer');
 Route::get('rang-history', 'UserController@rangHistory')->middleware("activation");// скоро нужно удалить
