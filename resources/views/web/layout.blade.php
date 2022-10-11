@@ -80,6 +80,11 @@
                                 <a href="/web-news" class="menu-list-link text-medium1">Новости</a>
                             </div>
                         </li>
+                        <li>
+                            <div class="menu-list-item">
+                                <a href="/academy" class="menu-list-link text-medium1">Бизнес академия</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
 
@@ -90,17 +95,22 @@
                     <ul class="menu-list">
                         <li>
                             <div class="menu-list-item">
-                                <a href="/academy" class="menu-list-link text-medium1">Бизнес академия</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="menu-list-item">
                                 <a href="/marketing" class="menu-list-link text-medium1">Начать бизнес</a>
                             </div>
                         </li>
                         <li>
                             <div class="menu-list-item">
-                                <a href="/" class="menu-list-link text-medium1">Цели</a>
+                                <a href="/alyp_group/confirm.pdf" target="_blank" class="menu-list-link text-medium1">Публичная оферта</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-list-item">
+                                <a href="/alyp_group/dog.pdf" target="_blank" class="menu-list-link text-medium1">Договор купли-продажи в интернет-магазине</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-list-item">
+                                <a href="/alyp_group/pril.pdf" target="_blank" class="menu-list-link text-medium1">Положение</a>
                             </div>
                         </li>
                     </ul>
