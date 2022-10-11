@@ -1,24 +1,28 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-block p-b-0">
+            <div class="card-block p-b-0 out">
                 <h4 class="card-title">Доступные операции</h4>
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs customtab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#home2" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Вывод наличными</span>
+                        <a class="nav-link active" data-toggle="tab" href="#home2" role="tab">
+                            <span><i class="ti-wallet"></i> Вывод наличными</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#home2" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Вывод на карту</span>
+                        <a class="nav-link" data-toggle="tab" href="#home2" role="tab">
+                            <span><i class="ti-credit-card"></i> Вывод на карту</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#checkingAccount" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Вывод на  Расчетный счет(ИП)</span>
+                        <a class="nav-link" data-toggle="tab" href="#checkingAccount" role="tab">
+                            <span><i class="ti-home"></i> Вывод на  Расчетный счет(ИП)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile2" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Вывод на TRC20</span>
+                        <a class="nav-link" data-toggle="tab" href="#profile2" role="tab">
+                            <span><i class="ti-tumblr"></i>Вывод на TRC20</span>
                         </a>
                     </li>
                 </ul>

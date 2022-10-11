@@ -240,8 +240,19 @@ input.error {
     color: #8bc826;
 }
 
+
+
+.footable.breakpoint > tbody > tr > td > span.footable-toggle{
+    display: inline !important;
+}
+
 @media (max-width: 767px)
 {
+    .out .nav{
+        display: inline-block;
+    }
+
+
     .dark-logo {
         display: none;
     }
