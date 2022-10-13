@@ -29,7 +29,7 @@
                 <li><a href="/owners" class="menu-list-link text-medium1">Об основателе</a></li>
                 <li><a href="/web-news" class="menu-list-link text-medium1">Новости</a></li>
                 <li><a href="/academy" class="menu-list-link text-medium1">Бизнес академия</a></li>
-                <li><a href="/marketing" class="menu-list-link text-medium1">Начать бизнес</a></li>
+<!--                <li><a href="/marketing" class="menu-list-link text-medium1">Начать бизнес</a></li>-->
             </ul>
             <a href="/login" class="btn-login-adap btn1">
                 Войти
@@ -93,11 +93,11 @@
                         <h3>Дополнительно</h3>
                     </div>
                     <ul class="menu-list">
-                        <li>
+<!--                        <li>
                             <div class="menu-list-item">
                                 <a href="/marketing" class="menu-list-link text-medium1">Начать бизнес</a>
                             </div>
-                        </li>
+                        </li>-->
                         <li>
                             <div class="menu-list-item">
                                 <a href="/alyp_group/confirm.pdf" target="_blank" class="menu-list-link text-medium1">Публичная оферта</a>

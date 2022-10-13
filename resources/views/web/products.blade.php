@@ -26,7 +26,7 @@
                     <div class="tab1 nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="tab1-link nav-link active" id="nav-1-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="true">Состав AGL IMUNO PLUS</button>
                         <button class="tab1-link nav-link" id="nav-2-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-2" aria-selected="false">Способ применения</button>
-                        <button class="tab1-link nav-link" id="nav-3-tab" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">Способ применения</button>
+                        <button class="tab1-link nav-link" id="nav-3-tab" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">Результат</button>
                     </div>
                     <div class="tab1-content tab-content" id="nav-tabContent">
                         <div class="tab1-pane tab-pane fade active show" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
