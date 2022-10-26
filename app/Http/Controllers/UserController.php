@@ -351,7 +351,7 @@ class UserController extends Controller
         if(!Gate::allows('admin_user_destroy')) {
             abort('401');
         }
-        dd("Только через супер админ");
+
         $result_sponsor = User::whereSponsorId($id);
         $result_inviter = User::whereInviterId($id);
 
@@ -361,12 +361,10 @@ class UserController extends Controller
         elseif($result_inviter->exists()){
             return redirect()->back()->with('status', 'У данного пользователя имеется лично приглашенные, сначала удалите людей который данный спонсор приглашал');
         }
-        elseif(!is_null(UserProgram::where('user_id',$id)->first())){
-            return redirect()->back()->with('status', 'Данный пользователь активирован, удаление осуществляется только через администраторов сайта');
-        }
         else
         {
             Processing::where('in_user',$id)->delete();
+            UserProgram::where('user_id',$id)->delete();
             User::destroy($id);
             return redirect()->back()->with('status', 'Успешно удалено');
         }
@@ -1106,6 +1104,20 @@ class UserController extends Controller
 
         return view('user.processing', compact('id','list', 'balance', 'all', 'out','week','user', 'users'));
     }
+
+
+    public function commission($id)
+    {
+        $user  = User::find($id);
+        $list = Processing::whereInUser($id)->where(function ($query) {
+            $query
+                ->where('sum','!=','0')
+                ->orWhere('pv', '!=', '0');
+        })->orderBy('created_at','desc')->paginate(100);
+
+        return view('user.commission', compact('list', 'user'));
+    }
+
 
     public function changeUserBonus(Request $request, $id)
     {

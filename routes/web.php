@@ -36,7 +36,7 @@ Route::post('register-validate', 'UserController@registerValidate')->name('valid
 Route::get('/', 'WebController@welcome');
 Route::get('product', 'WebController@product');
 Route::get('owners', 'WebController@owners');
-Route::get('marketing', 'WebController@marketing');
+//Route::get('marketing', 'WebController@marketing');
 Route::get('academy', 'WebController@academy');
 Route::get('web-news', 'WebController@webNews');
 Route::get('web-news/{id}', 'WebController@webNewsInner');
@@ -129,6 +129,7 @@ Route::post('user/transfer','UserController@transferStore');
 Route::get('user/{id}/program','UserController@program');
 Route::post('user/{id}/program','UserController@programStore');
 Route::get('user/{id}/processing','UserController@processing');
+Route::get('user/{id}/commission','UserController@commission');
 
 Route::post('user/{id}/change','UserController@changeUserBonus')->middleware("admin");
 Route::get('admin/notifications', 'AdminController@notifications')->name('admin_notifications')->middleware("admin");

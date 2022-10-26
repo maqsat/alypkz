@@ -158,7 +158,7 @@
                             @if(isset($_GET['status']))
                                 {{ $list->appends(['status' => $_GET['status']])->links() }}
                             @else
-                                {{ $list->links() }}
+                                {{ $list->appends(request()->input())->links() }}
                             @endif
                         </div>
                     </div>

@@ -189,11 +189,11 @@
                         </div>
                         <div class="swiper-slide">
                             <div class="section4-img">
-                                <img src="/alyp_group/img/img-section4-1.jpg" alt="">
+                                <img src="/alyp_group/img/img-section4-7.jpg" alt="">
                             </div>
                             <div class="section4-block">
-                                <h3 class="section4-block-title">Жартыбаев Айбек Ергалиевич</h3>
-                                <h3 class="section4-block-subtitle">Основатель,президент компании ALYP GROUP...</h3>
+                                <h3 class="section4-block-title">Утегенов Галымбек Сапарбергенович</h3>
+                                <h3 class="section4-block-subtitle">«Ұлт Жанашыры», Награжден орденом «НАМЫС» имени Б. Момышұлы</h3>
                                 <a href="/owners" class="section4-block-link link-more-detailed">
                                     Подробнее
                                     <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -204,41 +204,11 @@
                         </div>
                         <div class="swiper-slide">
                             <div class="section4-img">
-                                <img src="/alyp_group/img/img-section4-2.jpg" alt="">
+                                <img src="/alyp_group/img/img-section4-5.jpg" alt="">
                             </div>
                             <div class="section4-block">
-                                <h3 class="section4-block-title">Ермугамбетов Абзал Омиртаевич</h3>
-                                <h3 class="section4-block-subtitle">В сфере МЛМ-бизнеса с 2013 года по настоящее время...</h3>
-                                <a href="/owners" class="section4-block-link link-more-detailed">
-                                    Подробнее
-                                    <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M26.5303 7.03033C26.8232 6.73744 26.8232 6.26257 26.5303 5.96967L21.7574 1.1967C21.4645 0.903808 20.9896 0.903808 20.6967 1.1967C20.4038 1.48959 20.4038 1.96447 20.6967 2.25736L24.9393 6.5L20.6967 10.7426C20.4038 11.0355 20.4038 11.5104 20.6967 11.8033C20.9896 12.0962 21.4645 12.0962 21.7574 11.8033L26.5303 7.03033ZM-6.55671e-08 7.25L26 7.25L26 5.75L6.55671e-08 5.75L-6.55671e-08 7.25Z" fill="#8BC23B"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="section4-img">
-                                <img src="/alyp_group/img/img-section4-3.jpg" alt="">
-                            </div>
-                            <div class="section4-block">
-                                <h3 class="section4-block-title">Игенов Думан Боранбаевич</h3>
-                                <h3 class="section4-block-subtitle">Автор идеи мобильного приложения GoSauda...</h3>
-                                <a href="/owners" class="section4-block-link link-more-detailed">
-                                    Подробнее
-                                    <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M26.5303 7.03033C26.8232 6.73744 26.8232 6.26257 26.5303 5.96967L21.7574 1.1967C21.4645 0.903808 20.9896 0.903808 20.6967 1.1967C20.4038 1.48959 20.4038 1.96447 20.6967 2.25736L24.9393 6.5L20.6967 10.7426C20.4038 11.0355 20.4038 11.5104 20.6967 11.8033C20.9896 12.0962 21.4645 12.0962 21.7574 11.8033L26.5303 7.03033ZM-6.55671e-08 7.25L26 7.25L26 5.75L6.55671e-08 5.75L-6.55671e-08 7.25Z" fill="#8BC23B"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="section4-img">
-                                <img src="/alyp_group/img/img-section4-4.jpg" alt="">
-                            </div>
-                            <div class="section4-block">
-                                <h3 class="section4-block-title">Жунисов Еркебулан Толегенович </h3>
-                                <h3 class="section4-block-subtitle">Инвестор, ментор, с сфере МЛМ бизнеса с 2017 года...</h3>
+                                <h3 class="section4-block-title">Аширбеков Жандос Ерланович</h3>
+                                <h3 class="section4-block-subtitle">Открыл представительства Gosauda в Кыргызстане, Турции, Казахстане, Узбекстане</h3>
                                 <a href="/owners" class="section4-block-link link-more-detailed">
                                     Подробнее
                                     <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -260,24 +230,14 @@
             </div>
             <div class="section-body">
                 <div class="section5-block">
-                    <a href="/alyp_group/#" class="section5-block-items">
+                    @foreach($news as $item)
+                    <a href="/web-news/{{$item->id}}" class="section5-block-items">
                         <div class="section5-img">
-                            <img src="/alyp_group/img/img-section5-1.jpg" alt="">
+                            <img src="{{ $item->news_image }}" alt="">
                         </div>
-                        <h1 class="section5-block-title">Биологически активные добавки  к пище</h1>
+                        <h1 class="section5-block-title">{{ $item->news_name }}</h1>
                     </a>
-                    <a href="/alyp_group/#" class="section5-block-items">
-                        <div class="section5-img">
-                            <img src="/alyp_group/img/img-section5-2.jpg" alt="">
-                        </div>
-                        <h1 class="section5-block-title">Что кушать при авитаминозе</h1>
-                    </a>
-                    <a href="/alyp_group/#" class="section5-block-items">
-                        <div class="section5-img">
-                            <img src="/alyp_group/img/img-section5-3.jpg" alt="">
-                        </div>
-                        <h1 class="section5-block-title">Биологически активные добавки  к пище</h1>
-                    </a>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@
                             @csrf
                             <div class="form-group">
                                 <label>Заголовок</label>
-                                <input  value="" type="text" class="form-control" name="news_name" >
+                                <input  value="{{ old('news_name') }}" type="text" class="form-control" name="news_name" >
                                 @if ($errors->has('news_name'))
                                     <div class="alert alert-danger">
                                         {{ $errors->first('news_name') }}
@@ -25,8 +25,8 @@
                                 <label>Категория</label>
 
                                 <select class="custom-select form-control required" name="category_id">
-                                    <option value="1">Общее</option>
-                                    <option value="2">Кабинет</option>
+                                    <option value="1" @if(old('category_id') == 1) selected @endif>Общее</option>
+                                    <option value="2" @if(old('category_id') == 2) selected @endif>Кабинет</option>
                                 </select>
 
                                 @if ($errors->has('category_id'))
@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Текст</label>
-                                <textarea  name="news_text" class="form-control"></textarea>
+                                <textarea  name="news_text" class="form-control">{{ old('news_text') }}</textarea>
                                 @if ($errors->has('news_text'))
                                     <div class="alert alert-danger">
                                         {{ $errors->first('news_text') }}
@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Краткое описание</label>
-                                <textarea name="news_desc" class="form-control"></textarea>
+                                <textarea name="news_desc" class="form-control">{{ old('news_desc') }}</textarea>
                                 @if ($errors->has('news_desc'))
                                     <div class="alert alert-danger">
                                         {{ $errors->first('news_desc') }}
@@ -66,7 +66,7 @@
 
                             <div class="form-group">
                                 <label>Дата</label>
-                                <input  type="date" class="form-control datetimepicker-input" name="news_date" >
+                                <input  type="date" class="form-control datetimepicker-input" value="{{ old('news_date') }}" name="news_date" >
                                 @if ($errors->has('news_date'))
                                     <div class="alert alert-danger">
                                         {{ $errors->first('news_date') }}

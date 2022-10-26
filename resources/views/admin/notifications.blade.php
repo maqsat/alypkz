@@ -62,7 +62,7 @@
                                 </table>
                             </div>
 
-                            {{ $all->links() }}
+                            {{ $all->appends(request()->input())->links() }}
                         </div>
                     </div>
                 </div>

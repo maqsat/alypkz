@@ -76,7 +76,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {{ $list->links() }}
+                                {{ $list->appends(request()->input())->links() }}
                             </div>
                         </div>
                     </div>

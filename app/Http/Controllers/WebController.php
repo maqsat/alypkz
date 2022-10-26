@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Faq;
+use App\Models\News;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -13,7 +14,8 @@ class WebController extends Controller
 
     public function welcome()
     {
-        return view('web.welcome');
+        $news = News::where('category_id',1)->orderBy('id', 'desc')->take(3)->get();
+        return view('web.welcome', compact('news'));
     }
 
     public function product()
@@ -38,13 +40,15 @@ class WebController extends Controller
 
     public function webNews()
     {
-         return view('web.news');
+        $news = News::where('category_id',1)->orderBy('id', 'desc')->get();
+         return view('web.news', compact('news'));
     }
 
 
     public function webNewsInner($id)
     {
-        return view('web.news-inner');
+        $news = News::find($id);
+        return view('web.news-inner', compact('news'));
     }
 
 

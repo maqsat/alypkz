@@ -103,15 +103,17 @@
                                             <td>
                                                 {{ $item->name }}<br>
                                                 <b>ID</b>: {{ $item->id_number  }}<br><br>
-                                                <div class="progress">
-                                                    <div class="progress-bar @if($percentage<=50) bg-success @else bg-danger @endif active progress-bar-striped"
-                                                         role="progressbar"
-                                                         style="width: {{$percentage}}%; height:14px;"
-                                                         aria-valuenow="18"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100">{{$percentage}}%
+                                                <a href="/user/{{ $item->id }}/commission">
+                                                    <div class="progress">
+                                                        <div class="progress-bar @if($percentage<=50) bg-success @else bg-danger @endif active progress-bar-striped"
+                                                             role="progressbar"
+                                                             style="width: {{$percentage}}%; height:14px;"
+                                                             aria-valuenow="18"
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="100">{{$percentage}}%
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </a>
                                             </td>
                                             <td>
                                                 <b>Наставник</b>: {{ is_null($sponsor) ? '' : $sponsor->name }}<br>
@@ -226,14 +228,10 @@
 
 @push('scripts')
     <script>
-        import Options
-            from "../../../public/monster_admin/assets/plugins/select2/docs/_includes/options/core/options.html";
+
         function deleteAlert() {
             if(!confirm("Вы уверены что хотите удалить?"))
                 event.preventDefault();
-        }
-        export default {
-            components: {Options}
         }
     </script>
 

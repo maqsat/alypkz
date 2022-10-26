@@ -15,7 +15,7 @@ class NewsController extends Controller
             abort('401');
         }
 
-        $news=News::all();
+        $news=News::orderBy('id','desc')->get();
         return view('news.news',compact('news'));
     }
     public function create()
@@ -116,7 +116,16 @@ class NewsController extends Controller
             'image' => 'Загрузите фото',
 
         ]);
+
+
         if ($request->hasFile('news_image')) {
+            if ($request->hasFile('news_image')) {
+                $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->news_image->getFilename().'.'.$request->news_image->getClientOriginalExtension();
+                $path = $request->news_image->storeAs('public/images', $tmp_path);
+                $request->news_image = str_replace("public", "storage", $path);
+
+            }
+
             News::find($id)->update([
                 'news_name'=>$request->news_name,
                 'news_text'=>$request->news_text,
