@@ -114,6 +114,14 @@
                                 </div>
                             </div>
                                 @endif
+
+                            <span class="label label-light-success">
+                                Количество <b>{{ $status->title }}</b> на вашей личной командной структуре:
+                            {{ $status_condition_count = \App\Models\UserProgram::where('inviter_list','like','%,'.$user_program->user_id.',%')
+                                            ->where('status_id', '>=' ,$user_program->status_id)
+                                            ->count() }}
+                            </span>
+
                         </div>
                         <div>
                             <hr>

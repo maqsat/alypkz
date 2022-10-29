@@ -123,7 +123,19 @@ class UserUpgraded
                             }
 
 
-                            if($needed_upgrade){
+                            if($next_status->id > 2){
+                                $status_condition_count = UserProgram::where('inviter_list','like','%,'.$item_user_program->user_id.',%')
+                                    ->where('status_id', '>=' ,$item_user_program->status_id)
+                                    ->count();
+
+                                if($status_condition_count >= 2) $status_condition = true;
+                                else $status_condition = false;
+
+                            }
+                            else $status_condition = true;
+
+
+                            if($needed_upgrade && $status_condition){
                                 Hierarchy::moveNextStatus($item_referral,$next_status->id,$item_user_program->program_id);
                                 $item_user_program = UserProgram::where('user_id',$item_referral)->first();
                                 $item_status = Status::find($item_user_program->status_id);

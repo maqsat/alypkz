@@ -244,11 +244,11 @@ class UserActivated
                                 if($item_user_program->is_binary == 1){
                                     $needed_upgrade = true;
 
-                                    if($next_status->id == 5 && $item_user_program->package_id <= 2){
+                                    if($next_status->id == 5 && $item_user_program->package_id >= 2){
                                         $needed_upgrade = false;
                                     }
 
-                                    if($next_status->id == 7 && $item_user_program->package_id <= 3){
+                                    if($next_status->id == 7 && $item_user_program->package_id >= 3){
                                         $needed_upgrade = false;
                                     }
 
@@ -259,7 +259,7 @@ class UserActivated
 
                                     if($next_status->id > 2){
                                         $status_condition_count = UserProgram::where('inviter_list','like','%,'.$item_user_program->user_id.',%')
-                                            ->where('status_id', $item_user_program->status_id)
+                                            ->where('status_id', '>=' ,$item_user_program->status_id)
                                             ->count();
 
                                         if($status_condition_count >= 2) $status_condition = true;
