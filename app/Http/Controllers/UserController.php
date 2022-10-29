@@ -1109,11 +1109,20 @@ class UserController extends Controller
     public function commission($id)
     {
         $user  = User::find($id);
-        $list = Processing::whereInUser($id)->where(function ($query) {
+        $list1 = Processing::whereInUser($id)->where(function ($query) {
             $query
                 ->where('sum','!=','0')
                 ->orWhere('pv', '!=', '0');
-        })->orderBy('created_at','desc')->paginate(100);
+        })->orderBy('id','asc')->get();
+
+
+        $list2 = Processing::whereCardNumber($id)->where(function ($query) {
+            $query
+                ->where('sum','!=','0');
+        })->orderBy('created_at','desc')->get();
+
+
+        $list = $list1->merge($list2);
 
         return view('user.commission', compact('list', 'user'));
     }

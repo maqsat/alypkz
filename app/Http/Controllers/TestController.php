@@ -29,22 +29,10 @@ class TestController extends Controller
 
     public function tester()
     {
-        $next_status = 3;
-        $item_user_program = 10;
-        $status_id = 2;
-        if($next_status > 2){
-            $status_condition_count = UserProgram::where('inviter_list','like','%,'.$item_user_program.',%')
-                ->where('status_id', '>=' ,$status_id)
-                ->take(10)
-                ->get();
-dd($status_condition_count);
-            if($status_condition_count >= 2) $status_condition = true;
-            else $status_condition = false;
 
-        }
-        else $status_condition = true;
+        $ll = Processing::whereInUser(378)->whereIn('status',['matching_bonus'])->get();
 
-        dd($status_condition);
+        dd($ll);
     }
 
     public function setBots()

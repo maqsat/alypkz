@@ -317,6 +317,28 @@ class UserActivated
                                 $temp_sum = 0;
 
                                 Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
+
+                                /*start set  invite_bonus  */
+                                if($item_package == 1 or $item_package == 2 or $item_package == 3){
+
+                                    $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
+                                    $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
+
+                                    foreach ($inviter_list_for_matching as $key_referral => $item_matching){
+
+                                        if($item_matching != ""){
+
+                                            $item_matching_user_program = UserProgram::where('user_id',$item_matching)->first();
+                                            if($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)
+
+                                                if($key_referral == 2  && $item_matching_user_program->package_id != 3) break;
+
+                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                        }
+                                    }
+                                }
+                                /*end set  invite_bonus  */
+
                             }
                             else {
                                 Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
