@@ -26,6 +26,12 @@ class Hierarchy {
 
     public $sponsor_id;
 
+    public function registrationFee($package_id)
+    {
+        if($package_id == 6) return 20;
+        else return 10;
+    }
+
 
     /**
      * @param $user_id

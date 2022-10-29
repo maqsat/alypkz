@@ -33,7 +33,7 @@
                                         <label  class="m-t-10" for="position">Пакет:</label>
                                         <div class="input-group">
                                             <select class="custom-select form-control required" id="package_id" name="package_id" onchange="getStatus(this)">
-                                                <option value="0">Только регистрация - ${{ env('REGISTRATION_FEE') }} / 0 PV</option>
+                                                <option value="0">Только регистрация - ${{ \App\Facades\Hierarchy::registrationFee($item->id) }} / 0 PV</option>
                                                 @foreach(\App\Models\Package::where('status',1)->get() as $item)
                                                     <option value="{{ $item->id }}" @if(old('package_id', $user->package_id) == $item->id) selected @endif>{{ $item->title }} - ${{ $item->cost }}+${{ env('REGISTRATION_FEE') }}(${{ $item->cost+env('REGISTRATION_FEE') }}) / {{ $item->pv  }} PV</option>
                                                 @endforeach

@@ -117,7 +117,7 @@ class UserActivated
 
 
         /*set register sum */
-        Balance::changeBalance($id,$package_cost+env('REGISTRATION_FEE'),'register',$event->user->id,$event->user->program_id,$package_id,0);
+        Balance::changeBalance($id,$package_cost+Hierarchy::registrationFee($package->id),'register',$event->user->id,$event->user->program_id,$package_id,0);
 
         UserProgram::insert(
             [
@@ -252,6 +252,9 @@ class UserActivated
                                         $needed_upgrade = false;
                                     }
 
+                                    if($item_user_program->package_id == 5 or $item_user_program->package_id == 6){
+                                        $needed_upgrade = false;
+                                    }
 
                                     if($needed_upgrade){
                                         Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
@@ -276,33 +279,35 @@ class UserActivated
                     /*start set  turnover_bonus  */
                     if($item_user_program->is_binary == 1){
 
-                        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
-                        $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
+                        if($item_user_program->package_id != 5){
+                            $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
+                            $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
 
-                        if($small_branch_position == 1){
-                            $to_enrollment_pv = $left_pv - $credited_pv;
-                        }
-                        else
-                            $to_enrollment_pv = $right_pv - $credited_pv;
+                            if($small_branch_position == 1){
+                                $to_enrollment_pv = $left_pv - $credited_pv;
+                            }
+                            else
+                                $to_enrollment_pv = $right_pv - $credited_pv;
 
-                        $sum = $to_enrollment_pv*$item_status->turnover_bonus/100;
+                            $sum = $to_enrollment_pv*$item_status->turnover_bonus/100;
 
-                        /*if($credited_sum < $item_status->week_sum_limit){
-                            $temp_sum = 0;
-                            if($credited_sum + $sum >  $item_status->week_sum_limit){
-                                $temp_sum = $item_status->week_sum_limit-$credited_sum;
-                                $temp_sum = $sum - $temp_sum;
-                                $sum = $sum - $temp_sum;
-                            }*/
+                            /*if($credited_sum < $item_status->week_sum_limit){
+                                $temp_sum = 0;
+                                if($credited_sum + $sum >  $item_status->week_sum_limit){
+                                    $temp_sum = $item_status->week_sum_limit-$credited_sum;
+                                    $temp_sum = $sum - $temp_sum;
+                                    $sum = $sum - $temp_sum;
+                                }*/
 
 
-                        if(true){// если $sum возвращает минусовую сумму
-                            $temp_sum = 0;
+                            if(true){// если $sum возвращает минусовую сумму
+                                $temp_sum = 0;
 
-                            Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
-                        }
-                        else {
-                            Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
+                                Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
+                            }
+                            else {
+                                Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
+                            }
                         }
 
                         /*end set  turnover_bonus  */
@@ -311,19 +316,22 @@ class UserActivated
             }
 
             /*start set  invite_bonus  */
+            if($package_id != 5){
+                dd($package_id);
+                $inviter_list_for_referral = explode(',',trim($inviter_list,','));
+                $inviter_list_for_referral = array_slice($inviter_list_for_referral, 0, 2);
 
-            $inviter_list_for_referral = explode(',',trim($inviter_list,','));
-            $inviter_list_for_referral = array_slice($inviter_list_for_referral, 0, 2);
+                foreach ($inviter_list_for_referral as $key_referral => $item_referral){
 
-            foreach ($inviter_list_for_referral as $key_referral => $item_referral){
-                if($key_referral == 0 && $item_referral != ""){
-                    Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    if($key_referral == 0 && $item_referral != ""){
+                        Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    }
+                    /*
+                    if($key_referral == 1){
+                        Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+
+                    }*/
                 }
-                /*
-                if($key_referral == 1){
-                    Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
-
-                }*/
             }
             /*end set  invite_bonus  */
 

@@ -265,10 +265,10 @@ class HomeController extends Controller
 
         if($request->package_id != 0){
             $package = Package::find($request->package_id);
-            $cost = $package->cost + env('REGISTRATION_FEE');
+            $cost = $package->cost + Hierarchy::registrationFee($package->id);
             $package_id  = $package->id;
         }
-        else $cost = env('REGISTRATION_FEE');
+        else $cost = 0;
 
         if ($request->hasFile('scan')) {
 
@@ -453,10 +453,10 @@ class HomeController extends Controller
 
         if($request->package_id != 0){
             $package = Package::find($request->package_id);
-            $cost = $package->cost + env('REGISTRATION_FEE');
+            $cost = $package->cost + Hierarchy::registrationFee($package->id);
             $package_id  = $package->id;
         }
-        else $cost = env('REGISTRATION_FEE');
+        else $cost = 0;
 
         $order =  Order::updateOrCreate(
             [
@@ -896,7 +896,9 @@ class HomeController extends Controller
         $packages_query = Package::where('status',1);
 
         if(!is_null($current_package)){
-            $packages_query->where('pv','>',$current_package->pv);
+            $packages_query->where('pv','>',$current_package->pv)
+            ->where('id', '!=', 5)
+                ->where('id', '!=', 6);
         }
 
         $packages = $packages_query->get();

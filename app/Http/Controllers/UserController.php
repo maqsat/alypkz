@@ -192,10 +192,10 @@ class UserController extends Controller
 
         if($request->package_id != 0){
             $package = Package::find($request->package_id);
-            $cost = $package->cost + env('REGISTRATION_FEE');
+            $cost = $package->cost + Hierarchy::registrationFee($package->id);
             $package_id  = $package->id;
         }
-        else $cost = env('REGISTRATION_FEE');
+        else $cost = 0;
 
         $order =  Order::updateOrCreate(
             [

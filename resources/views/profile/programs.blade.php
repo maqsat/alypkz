@@ -47,7 +47,7 @@
                                     @else
                                         @foreach($packages as $item)
                                             @php
-                                                if(!is_null($current_package)) {
+                                                if(!is_null($current_package) && $current_package->id != 5 && $current_package->id != 6) {
                                                     $current_package_cost = $current_package->cost;
                                                     $current_package_pv = $current_package->pv;
                                                     $current_package_id = $current_package->id;

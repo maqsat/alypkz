@@ -164,7 +164,7 @@
                                         <div class="input-group">
                                             <select class="custom-select form-control required" id="package_id" name="package_id" onchange="getStatus(this)">
                                                 @foreach(\App\Models\Package::where('status',1)->get() as $item)
-                                                    <option value="{{ $item->id }}" @if(old('package_id') == $item->id) selected @endif>{{ $item->title }} - ${{ $item->cost }} + ${{ env('REGISTRATION_FEE') }} / {{ $item->pv  }} PV</option>
+                                                    <option value="{{ $item->id }}" @if(old('package_id') == $item->id) selected @endif>{{ $item->title }} - ${{ $item->cost }} + ${{ \App\Facades\Hierarchy::registrationFee($item->id) }} / {{ $item->pv  }} PV</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('package_id'))
