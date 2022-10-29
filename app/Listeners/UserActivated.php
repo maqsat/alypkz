@@ -244,11 +244,11 @@ class UserActivated
                                 if($item_user_program->is_binary == 1){
                                     $needed_upgrade = true;
 
-                                    if($next_status->id == 5 && $item_user_program->package_id < 2){
+                                    if($next_status->id == 5 && $item_user_program->package_id <= 2){
                                         $needed_upgrade = false;
                                     }
 
-                                    if($next_status->id == 7 && $item_user_program->package_id < 3){
+                                    if($next_status->id == 7 && $item_user_program->package_id <= 3){
                                         $needed_upgrade = false;
                                     }
 
@@ -256,7 +256,20 @@ class UserActivated
                                         $needed_upgrade = false;
                                     }
 
-                                    if($needed_upgrade){
+
+                                    if($next_status->id > 2){
+                                        $status_condition_count = UserProgram::where('inviter_list','like','%,'.$item_user_program->user_id.',%')
+                                            ->where('status_id', $item_user_program->status_id)
+                                            ->count();
+
+                                        if($status_condition_count >= 2) $status_condition = true;
+                                        else $status_condition = false;
+
+                                    }
+                                    else $status_condition = true;
+
+
+                                    if($needed_upgrade && $status_condition){
                                         Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
                                         $item_user_program = UserProgram::where('user_id',$item)->first();
                                         $item_status = Status::find($item_user_program->status_id);
@@ -317,7 +330,6 @@ class UserActivated
 
             /*start set  invite_bonus  */
             if($package_id != 5){
-                dd($package_id);
                 $inviter_list_for_referral = explode(',',trim($inviter_list,','));
                 $inviter_list_for_referral = array_slice($inviter_list_for_referral, 0, 2);
 
