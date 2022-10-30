@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-xlg-8 col-md-8">
-                                    <h5 class="m-t-30"><small class="text-muted">осталось до </small><span class="pull-right">{{ $next_status->title }} </span></h5>
+                                    <h5 class="m-t-30"><small class="text-muted">осталось до </small><span class="pull-right">{{ $next_status->title }} ({{ $next_status->pv }}PV)</span></h5>
                                     <div class="progress">
                                         <div class="progress-bar bg-warning active progress-bar-striped" role="progressbar" style="width: {{ round($percentage) }}%; height:18px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ round($percentage) }}%</div>
                                     </div>

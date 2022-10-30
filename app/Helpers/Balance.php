@@ -45,8 +45,10 @@ class Balance {
         return $processing->id;
     }
 
-    public function setQV($user_id,$sum,$in_user,$package_id,$position,$status_id, $alias = null)
+    public function setQV($user_id,$sum,$in_user,$package_id,$position,$status_id, $alias = null, $is_binary = null)
     {
+        if(is_null($is_binary)) $is_binary = 0;
+
         Counter::insert(
             [
                 'user_id' => $user_id,
@@ -56,6 +58,7 @@ class Balance {
                 'position' => $position,
                 'status_id' => $status_id,
                 'alias' => $alias,
+                'is_binary' => $is_binary,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 //'created_at' => '2019-07-13 07:55:45',
             ]
