@@ -83,6 +83,16 @@ class Balance {
 
     public function getWeekBalanceByStatusNew($user_id, $statuses)
     {
+        foreach($statuses as $key => $item){
+            if ($item == "invite_bonus"){
+                unset($statuses[$key]);
+            }
+
+            if ($item == "admin_add"){
+                unset($statuses[$key]);
+            }
+        }
+
         $sum = Processing::whereUserId($user_id)->whereIn('status', $statuses)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
         return round($sum, 2);
     }

@@ -35,43 +35,26 @@ class ProcessingController extends Controller
             abort('401');
         }
 
-        if($request->status == 'request') {
-            if(!Gate::allows('admin_processing_status_request')) {
-                abort('401');
+
+        if(isset($request->status)){
+            if(isset($request->date_from) and isset($request->date_to)){
+                $list = Processing::orderBy('created_at','desc')->whereStatus($request->status)
+                    ->whereBetween('created_at', [Carbon::parse(Carbon::parse($request->date_from)), Carbon::parse(Carbon::parse($request->date_to))])
+                    ->paginate(30);
             }
-            $list = Processing::orderBy('created_at','desc')->whereStatus('request')->paginate(30);
-        }
-        elseif($request->status == 'out')
-        {
-            if(!Gate::allows('admin_processing_status_out')) {
-                abort('401');
-            }
-            $list = Processing::orderBy('created_at','desc')->whereStatus('out')->paginate(30);
-        }
-        elseif($request->status == 'cancel')
-        {
-            if(!Gate::allows('admin_processing_status_cancel')) {
-                abort('401');
-            }
-            $list = Processing::orderBy('created_at','desc')->whereStatus('cancel')->paginate(30);
-        }
-        elseif($request->status == 'in')
-        {
-            if(!Gate::allows('admin_processing_status_in')) {
-                abort('401');
-            }
-            $list = Processing::orderBy('created_at','desc')->whereStatus('in')->paginate(30);
-        }
-        elseif($request->status == 'transfered_in')
-        {
-            if(!Gate::allows('admin_processing_status_transfered_in')) {
-                abort('401');
-            }
-            $list = Processing::orderBy('created_at','desc')->whereStatus('transfered_in')->paginate(30);
+            else
+            $list = Processing::orderBy('created_at','desc')->whereStatus($request->status)->paginate(30);
         }
         else
         {
-            $list = Processing::orderBy('created_at','desc')->paginate(30);
+            if(isset($request->date_from) and isset($request->date_to)){
+                $list = Processing::orderBy('created_at','desc')
+                    ->whereBetween('created_at', [Carbon::parse(Carbon::parse($request->date_from)), Carbon::parse(Carbon::parse($request->date_to))])
+                    ->paginate(30);
+            }
+            else
+
+                $list = Processing::orderBy('created_at','desc')->paginate(30);
         }
 
 

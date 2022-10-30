@@ -29,7 +29,7 @@
                     <div class="card">
                         <div class="card-block">
                             <h2>
-                                <img class="ipull-left m-r-20 m-b-10" width="150" alt="user" src="{{ $news->news_image }}" alt="user">
+                                <img class="ipull-left m-r-20 m-b-10" width="150" alt="user" src="/{{ $news->news_image }}" alt="user">
                             </h2>
                             <hr class="m-t-10">
                             <p class="m-t-10">
