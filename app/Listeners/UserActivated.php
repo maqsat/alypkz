@@ -292,9 +292,8 @@ class UserActivated
 
                     /*start set  turnover_bonus  */
 
-                    if($item_user_program->is_binary == 1){
 
-                        if($item_user_program->package_id != 5){
+                    if($item_user_program->package_id != 5){
                         $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
                         $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
 
@@ -317,6 +316,10 @@ class UserActivated
 
                         if(true){// если $sum возвращает минусовую сумму
                             $temp_sum = 0;
+
+                            if($item_user_program->is_binary == 0){
+                                $sum = 0;
+                            }
 
                             Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
 
@@ -346,7 +349,7 @@ class UserActivated
                             Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
                         }
                     }
-                    }
+
                     /*end set  turnover_bonus  */
                 }
             }

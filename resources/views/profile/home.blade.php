@@ -172,6 +172,23 @@
                 </div>
             </div>
 
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Новости</h4>
+                    <div class="row m-t-30">
+                        @foreach($news as $item)
+                        <div class="col-md-3">
+                            <a class="image-popup-vertical-fit" href="/profile-news/{{$item->id}}" title="Caption. Can be aligned to any side and contain any HTML.">
+                                <img src="{{ $item->news_image }}" alt="image" class="img-responsive" />
+                                <h6 class="m-t-10">{{ $item->news_name }}</h6>
+                            </a>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+
             @if(!is_null($package))
 
 

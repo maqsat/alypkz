@@ -30,9 +30,9 @@ class TestController extends Controller
     public function tester()
     {
 
-        $ll = Processing::whereInUser(378)->whereIn('status',['matching_bonus'])->get();
+        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',1)->sum('pv');
 
-        dd($ll);
+        dd($credited_pv);
     }
 
     public function setBots()

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Comment;
+use App\Models\News;
 use App\Models\Office;
 use App\Models\Review;
 use DB;
@@ -144,6 +145,8 @@ class HomeController extends Controller
                 ->take(1)
                 ->get();
 
+            $news = News::orderBy('id','desc')->get();
+
 
             return view('profile.home', compact(
                 'user',
@@ -164,7 +167,8 @@ class HomeController extends Controller
                 'next_status',
                 'move_status',
                 'user_program',
-                'delivery'
+                'delivery',
+                'news'
             ));
         }
         else{
