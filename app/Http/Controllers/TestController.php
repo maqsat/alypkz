@@ -29,10 +29,11 @@ class TestController extends Controller
 
     public function tester()
     {
+        $item_user_program = UserProgram::where('user_id',12)->first();
+        $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
+        $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
 
-        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',1)->sum('pv');
-
-        dd($credited_pv);
+        dd($inviter_list_for_matching);
     }
 
     public function setBots()
