@@ -1113,13 +1113,15 @@ class UserController extends Controller
             $query
                 ->where('sum','!=','0')
                 ->orWhere('pv', '!=', '0');
-        })->orderBy('id','asc')->get();
+        })->whereIn('status',['invite_bonus','turnover_bonus'])
+            ->orderBy('id','asc')->get();
 
 
         $list2 = Processing::whereCardNumber($id)->where(function ($query) {
             $query
                 ->where('sum','!=','0');
-        })->orderBy('created_at','desc')->get();
+        })->whereIn('status',['matching_bonus'])
+            ->orderBy('id','desc')->get();
 
 
         $list = $list1->merge($list2);

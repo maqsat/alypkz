@@ -90,8 +90,8 @@
                                             $package = \App\Models\Package::find($item->package_id);
                                             $user_program = \App\Models\UserProgram::where('user_id',$item->id)->first();
                                             $order = \App\Models\Order::where('user_id', $item->id)->where('type','register')->orderBy('id','desc')->first();
-                                            $commission1 = \App\Models\Processing::whereInUser($item->id)->whereIn('status',['invite_bonus','turnover_bonus','matching_bonus'])->sum('sum');
-                                            $commission2 = \App\Models\Processing::whereCardNumber($item->id)->whereIn('status',['invite_bonus','turnover_bonus','matching_bonus'])->sum('sum');
+                                            $commission1 = \App\Models\Processing::whereInUser($item->id)->whereIn('status',['invite_bonus','turnover_bonus'])->sum('sum');
+                                            $commission2 = \App\Models\Processing::whereCardNumber($item->id)->whereIn('status',['matching_bonus'])->sum('sum');
                                             if(!is_null($package))
                                                 $percentage = ($commission1 + $commission2)*100/$package->cost;
                                             else
