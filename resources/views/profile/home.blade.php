@@ -173,7 +173,7 @@
             </div>
 
             <div class="card">
-                <div class="card-block">
+                <div class="card-block news-block">
                     <h4 class="card-title">Новости</h4>
                     <div class="row m-t-30">
                         @foreach($news as $item)

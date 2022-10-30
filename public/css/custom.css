@@ -63,6 +63,14 @@
     margin-left: 20px;
 }
 
+.news-block .img-responsive {
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    min-height: 287.5px;
+    object-fit: cover;
+}
+
 .progress_before{
     position: absolute;
     right: 30px;
