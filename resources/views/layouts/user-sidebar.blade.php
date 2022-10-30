@@ -27,7 +27,8 @@
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="/invitations">Лично приглашенные</a></li>
                             <li><a href="/tree/{{ Auth::user()->id }}">Мое дерево</a></li>
-                            <li><a href="/hierarchy" target="_blank">Иерархия</a></li>
+                            <li><a href="/hierarchy" target="_blank">Иерархия(личники)</a></li>
+                            <li><a href="/hierarchy_binar" target="_blank">Иерархия(бинар)</a></li>
                             <li><a href="/team">Моя команда</a></li>
                             {{--<li><a href="/team?upgrade=1">Апгрейд команды</a></li>--}}
                             <li><a href="/team?move=1">Прогресс команды</a></li>

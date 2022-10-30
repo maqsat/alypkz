@@ -126,6 +126,104 @@ class Hierarchy {
         else  $this->sponsor_id = $inviter_id;
     }
 
+    //Дерево Иерархия
+    public function getHierarchyTree($id)
+    {
+
+        $items = User::where('inviter_id',$id)->where('status',1)->get();
+        $render = '';
+
+        if(count($items) > 0){
+
+            $render = '<ul  class="" id="child'.$id.'">';
+            foreach ($items as $item) {
+                $render .= '<li>
+                        <a href="javascript:void(0);">
+                            <div class="member-view-box">
+                                <div class="member-image">
+                                    <img src="'.$item->photo.'" alt="" class="bg-orange">
+                                </div>
+                                <div class="member-details">
+                                    <h6>'.$item->name.'</h6>
+                                    <p>'.\App\Facades\Hierarchy::getStatusName($item->id).'</p>
+                                    <p>id: '.$item->id.' | <i class="mdi mdi-account-multiple-plus"></i> '.\App\Facades\Hierarchy::inviterCount($item->id) .' | <i class="mdi mdi-sitemap"></i> '.\App\Facades\Hierarchy::teamCount($item->id) .'</p>
+                                </div>
+                            </div>
+                        </a>';
+
+                $innerItem = User::where('inviter_id',$id)->where('status',1)->get();
+                if (count($innerItem) > 0) {
+                    $render .= $this->getHierarchyTree($item->id);
+                }
+                $render .= '</li>';
+            }
+
+            $render .= '</ul>';
+        }
+
+        return $render;
+
+    }
+
+    //Дерево Иерархия
+    public function getHierarchyBinarTree($id)
+    {
+
+        $items = User::where('sponsor_id',$id)->where('status',1)->get();
+        $render = '';
+
+        if(count($items) > 0){
+
+            $render = '<ul  class="" id="child'.$id.'">';
+            foreach ($items as $item) {
+                $render .= '<li>
+                        <a href="javascript:void(0);">
+                            <div class="member-view-box">
+                                <div class="member-image">
+                                    <img src="'.$item->photo.'" alt="" class="bg-orange">
+                                </div>
+                                <div class="member-details">
+                                    <h6>'.$item->name.'</h6>
+                                    <p>'.\App\Facades\Hierarchy::getStatusName($item->id).'</p>
+                                    <p>id: '.$item->id.' | <i class="mdi mdi-account-multiple-plus"></i> '.\App\Facades\Hierarchy::inviterCount($item->id) .' | <i class="mdi mdi-sitemap"></i> '.\App\Facades\Hierarchy::teamCount($item->id) .'</p>
+                                </div>
+                            </div>
+                        </a>';
+
+                $innerItem = User::where('sponsor_id',$id)->where('status',1)->get();
+                if (count($innerItem) > 0) {
+                    $render .= $this->getHierarchyBinarTree($item->id);
+                }
+                $render .= '</li>';
+            }
+
+            $render .= '</ul>';
+        }
+
+        return $render;
+
+    }
+
+    //Название статуса
+    public function getStatusName($id)
+    {
+        $user_program = UserProgram::where('user_id',$id)->first();
+        $status = Status::find($user_program->status_id);
+
+        return $status->title;
+    }
+
+    //Количество в команде команды
+    public function inviterCount($user_id)
+    {
+        return User::where('inviter_id',$user_id)->count();
+    }
+
+    public function teamCount($user_id)
+    {
+        return UserProgram::where('list','like','%,'.$user_id.',%')->count();
+    }
+
     /**
      * @param $sponsor_id
      * @param $str

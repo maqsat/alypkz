@@ -51,6 +51,7 @@ Route::get('faq', 'WebController@faq');
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('invitations', 'HomeController@invitations')->name('invitations');
 Route::get('hierarchy', 'HomeController@hierarchy')->name('hierarchy');
+Route::get('hierarchy_binar', 'HomeController@hierarchyBinar')->name('hierarchy_binar');
 Route::get('hierarchy/{id}', 'HomeController@hierarchyTree')->name('hierarchyTree');
 Route::get('tree/{id}', 'HomeController@tree')->name('tree');
 Route::get('team', 'HomeController@team')->name('team');
