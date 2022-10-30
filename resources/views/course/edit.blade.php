@@ -6,6 +6,7 @@
 
     <div class="page-wrapper" style="background: #f2f7f8;">
 
+        <div class="container-fluid">
         <div class="row page-titles">
             <div class="col-md-6 col-8 align-self-center">
                 <h3 class="text-themecolor m-b-0 m-t-0">Изменить курс</h3>
@@ -43,10 +44,10 @@
                             <div class="form-group">
                                 <label class="col-md-12">Описание</label>
                                 <div class="col-md-12">
-                                    <input type="text"  name="description" class="form-control form-control-line" value="{{$course->description}}">
-                                    @if ($errors->has('description'))
+                                    <input type="text"  name="description" class="form-control form-control-line" value="{{$course->desc}}">
+                                    @if ($errors->has('desc'))
                                         <div class="alert alert-danger">
-                                            {{ $errors->first('description') }}
+                                            {{ $errors->first('desc') }}
                                         </div>
                                     @endif
                                 </div>
@@ -70,6 +71,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
 
     </div>

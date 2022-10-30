@@ -130,6 +130,7 @@
                             @if(Gate::allows('admin_news_create'))
                                 <li><a href="/news/create">Добавить новость</a></li>
                             @endif
+                            <li><a href="/course">Все курсы</a></li>
                         @endif
                         {{--@if(Gate::allows('not_cash_bonuses_travel_bonus'))
                         <li><a href="/not_cash_bonuses?type=travel_bonus">Happy Travel</a></li>

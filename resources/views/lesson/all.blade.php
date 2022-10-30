@@ -37,7 +37,7 @@
                                                 <td>{{ $item->title }}</td>
                                                 <td class="actions">
 
-                                                    
+
                                                     <a href="/{{$courses->id}}/lessons/{{$item->id}}/edit" class="btn btn-success"><i class="mdi mdi-grease-pencil"></i></a>
                                                     <form action='/{{$courses->id}}/lessons/{{ $item->id }}' method='post'>
                                                         @csrf
@@ -59,4 +59,8 @@
     </div>
 
 
+@endsection
+
+@section('body-class')
+    fix-header card-no-border fix-sidebar
 @endsection

@@ -26,7 +26,7 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Описание</th>
+                                        <th>Название</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -48,7 +48,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {{ $courses->links() }}
+
                             </div>
 
                         </div>
@@ -59,4 +59,8 @@
     </div>
 
 
+@endsection
+
+@section('body-class')
+    fix-header card-no-border fix-sidebar
 @endsection

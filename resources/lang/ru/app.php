@@ -60,4 +60,9 @@ return [
     'Saturday' => 'Суббота',
     'Sunday' => 'Воскресенье',
     'register_day' => 'День регистрации',
+    'More details' => 'Подробнее',
+    'Courses' => 'Курсы',
+    'Next lessons' => 'Следующие уроки',
+    'Description' => 'Описание',
+    'Duration: 7 min' => 'Продолжительность: 7 min',
 ];

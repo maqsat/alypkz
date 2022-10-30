@@ -39,25 +39,20 @@ class LessonsController extends Controller
     public function store(Request $request,Lessons $lesson)
     {
         $request->validate([
-            'photo' => 'required',
+            'preview' => 'required',
         ]);
-        if ($request->hasFile('path')) {
-            $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->path->getFilename().'.'.$request->path->getClientOriginalExtension();
-            $path = $request->path->storeAs('public/images', $tmp_path);
-            $request->path = str_replace("public", "storage", $path);
 
-        }
-        if ($request->hasFile('photo')) {
-            $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->photo->getFilename().'.'.$request->photo->getClientOriginalExtension();
-            $path = $request->photo->storeAs('public/images', $tmp_path);
-            $request->photo = str_replace("public", "storage", $path);
+        if ($request->hasFile('preview')) {
+            $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->preview->getFilename().'.'.$request->preview->getClientOriginalExtension();
+            $path = $request->preview->storeAs('public/images', $tmp_path);
+            $request->preview = str_replace("public", "storage", $path);
 
         }
         $lesson::create([
             'course_id' => $request->course_id,
             'title' => $request->title,
-            'path' => $request->path,
-            'photo'=> $request->photo,
+            'video' => $request->video,
+            'preview'=> $request->preview,
 
         ]);
         $course = Course::where('id',$request->course_id)->first();
@@ -96,22 +91,21 @@ class LessonsController extends Controller
      */
     public function update(Request $request,$course_id,$id)
     {
+
+        if ($request->hasFile('preview')) {
+            $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->preview->getFilename().'.'.$request->preview->getClientOriginalExtension();
+            $path = $request->preview->storeAs('public/images', $tmp_path);
+            $request->preview = str_replace("public", "storage", $path);
+
+        }
+
         $array=[
             'course_id' => $request->course_id,
-            'title' => $request->title
+            'title' => $request->title,
+            'video' => $request->video,
+            'preview'=> $request->preview,
         ];
-        if ($request->hasFile('path')) {
-            $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->path->getFilename().'.'.$request->path->getClientOriginalExtension();
-            $path = $request->path->storeAs('public/images', $tmp_path);
-            $request->path = str_replace("public", "storage", $path);
-            $array['path'] = $request->path;
-        }
-        if ($request->hasFile('photo')) {
-            $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->photo->getFilename().'.'.$request->photo->getClientOriginalExtension();
-            $path = $request->photo->storeAs('public/images', $tmp_path);
-            $request->photo = str_replace("public", "storage", $path);
-            $array['photo'] = $request->photo;
-        }
+
         $lessons = Lessons::where('id',$id)->first();
         $lessons->update($array);
         return redirect('/'.$course_id.'/lessons');

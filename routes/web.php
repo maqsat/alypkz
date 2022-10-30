@@ -196,7 +196,11 @@ Route::get('/faqgetadmin','FaqController@alladminfaq')->middleware("admin");
 Route::get('/faqgetguest','FaqController@allguestfaq')->middleware("admin");
 
 
-/*Мобильный*/
+
+Route::get('/edu', 'EduController@index');
+Route::get('/edu/{id}', 'EduController@show');
+Route::get('/edu/lesson/{id}', 'EduController@lesson');
+
 Route::resource('/recommendations', 'RecommendationController');
 Route::resource('/course', 'CourseController');
 Route::resource('/{course_id}/lessons', 'MobileApp\LessonsController');

@@ -14,7 +14,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate(10);
+        $courses = Course::all();
         return view("course.all",compact('courses'));
     }
 
@@ -36,20 +36,22 @@ class CourseController extends Controller
      */
     public function store(Request $request,Course $course)
     {
+
         if ($request->hasFile('preview')) {
             $tmp_path = date('Y')."/".date('m')."/".date('d')."/".$request->preview->getFilename().'.'.$request->preview->getClientOriginalExtension();
             $path = $request->preview->storeAs('public/images', $tmp_path);
             $request->preview = str_replace("public", "storage", $path);
 
         }
+
         $course::create([
             'title' => $request->title,
-            'description' => $request->description,
+            'desc' => $request->desc,
             'preview' => $request->preview,
             'total_time' => $request->total_time1.":".$request->total_time2.":00"
 
         ]);
-        return redirect('/course/create');
+        return redirect('/course');
     }
 
     /**
@@ -86,7 +88,7 @@ class CourseController extends Controller
     {
         $array=[
             'title' => $request->title,
-            'description' => $request->description
+            'desc' => $request->description
         ];
 
 

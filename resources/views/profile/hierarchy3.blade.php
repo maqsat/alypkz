@@ -35,7 +35,9 @@
 
 @endsection
 
-
+@section('body-class')
+    fix-header card-no-border fix-sidebar
+@endsection
 
 @push('styles')
     <link rel="stylesheet" href="/user-tree-view/dist/style.css">

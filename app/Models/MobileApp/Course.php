@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $table = 'courses';
-    protected $fillable = ['title','description','preview','lessons_quantity','total_time'];
+    protected $fillable = ['title','desc','preview','lessons_quantity','total_time'];
 
     public  function lessons(){
         return $this->hasMany('App\Models\MobileApp\Lessons','course_id');

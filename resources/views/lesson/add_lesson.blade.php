@@ -6,6 +6,7 @@
 
     <div class="page-wrapper" style="background: #f2f7f8;">
 
+        <div class="container-fluid">
         <div class="row page-titles">
             <div class="col-md-6 col-8 align-self-center">
                 <h3 class="text-themecolor m-b-0 m-t-0">Добавить урок</h3>
@@ -34,19 +35,21 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Видео</label>
-                                <input type="file" name="path" class="form-control form-control-line">
-                                @if ($errors->has('preview'))
-                                    <div class="alert alert-danger">
-                                        {{ $errors->first('preview') }}
-                                    </div>
-                                @endif
+                                <div class="col-md-12">
+                                    <input type="text"  name="video" class="form-control form-control-line">
+                                    @if ($errors->has('video'))
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('video') }}
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Фото</label>
-                                <input type="file" name="photo" class="form-control form-control-line">
-                                @if ($errors->has('photo'))
+                                <input type="file" name="preview" class="form-control form-control-line">
+                                @if ($errors->has('preview'))
                                     <div class="alert alert-danger">
-                                        {{ $errors->first('photo') }}
+                                        {{ $errors->first('preview') }}
                                     </div>
                                 @endif
                             </div>
@@ -60,6 +63,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
 
     </div>

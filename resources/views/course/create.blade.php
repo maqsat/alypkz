@@ -5,6 +5,7 @@
 @section('in_content')
 
     <div class="page-wrapper" style="background: #f2f7f8;">
+        <div class="container-fluid">
 
         <div class="row page-titles">
             <div class="col-md-6 col-8 align-self-center">
@@ -42,10 +43,10 @@
                             <div class="form-group">
                                 <label class="col-md-12">Описание</label>
                                 <div class="col-md-12">
-                                    <input type="text"  name="description" class="form-control form-control-line">
-                                    @if ($errors->has('description'))
+                                    <input type="text"  name="desc" class="form-control form-control-line">
+                                    @if ($errors->has('desc'))
                                         <div class="alert alert-danger">
-                                            {{ $errors->first('description') }}
+                                            {{ $errors->first('desc') }}
                                         </div>
                                     @endif
                                 </div>
@@ -61,7 +62,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Общее время курсов</label>
-                                <input type="text" name="total_time1" class="form-control form-control-line" placeholder="часы">
+                                <input type="number" name="total_time1" class="form-control form-control-line" placeholder="часы">
                                 @if ($errors->has('total_time'))
                                     <div class="alert alert-danger">
                                         {{ $errors->first('total_time') }}
@@ -70,7 +71,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Общее время курсов</label>
-                                <input type="text" name="total_time2" class="form-control form-control-line" placeholder="минуты">
+                                <input type="number" name="total_time2" class="form-control form-control-line" placeholder="минуты">
                                 @if ($errors->has('total_time'))
                                     <div class="alert alert-danger">
                                         {{ $errors->first('total_time') }}
@@ -88,7 +89,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
     </div>
 @endsection
 

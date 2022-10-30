@@ -84,6 +84,7 @@
                             <li><a href="/faq-profile">База знаний</a></li>
                             <li><a href="/">Наследник</a></li>
                             <li><a href="/profile-news">Новости</a></li>
+                            <li><a href="/edu">Обучение</a></li>
                         </ul>
                     </li>
                     {{--<li>
