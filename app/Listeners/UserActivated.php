@@ -117,7 +117,7 @@ class UserActivated
 
 
         /*set register sum */
-        Balance::changeBalance($id,$package_cost+env('REGISTRATION_FEE'),'register',$event->user->id,$event->user->program_id,$package_id,0);
+        Balance::changeBalance($id,$package_cost+Hierarchy::registrationFee($package->id),'register',$event->user->id,$event->user->program_id,$package_id,0);
 
         UserProgram::insert(
             [
@@ -212,12 +212,13 @@ class UserActivated
                         if(!is_null($current_user_second) && strpos($list, ','.$current_user_second->id.',') !== false) $position = 2;
                     }
 
-                    if($item_user_program->is_binary == 1 or $this_user->inviter_id == $item_user_program->user_id){
+                    /*if($item_user_program->is_binary == 1 or $this_user->inviter_id == $item_user_program->user_id){
                         Balance::setQV($item,$package->pv,$id,$package->id,$position,$item_status->id);
                     }
                     else{
                         Balance::setQV($item,0,$id,$package->id,$position,$item_status->id);
-                    }
+                    }*/
+                    Balance::setQV($item,$package->pv,$id,$package->id,$position,$item_status->id, '',$item_user_program->is_binary);
 
                     //start check small branch definition
                     $left_user = User::whereSponsorId($item)->wherePosition(1)->whereStatus(1)->first();
@@ -244,16 +245,32 @@ class UserActivated
                                 if($item_user_program->is_binary == 1){
                                     $needed_upgrade = true;
 
-                                    if($next_status->id == 5 && $item_user_program->package_id < 2){
+                                    if($next_status->id == 5 && $item_user_program->package_id >= 2){
                                         $needed_upgrade = false;
                                     }
 
-                                    if($next_status->id == 7 && $item_user_program->package_id < 3){
+                                    if($next_status->id == 7 && $item_user_program->package_id >= 3){
+                                        $needed_upgrade = false;
+                                    }
+
+                                    if($item_user_program->package_id == 5 or $item_user_program->package_id == 6){
                                         $needed_upgrade = false;
                                     }
 
 
-                                    if($needed_upgrade){
+                                    if($next_status->id > 2){
+                                        $status_condition_count = UserProgram::where('inviter_list','like','%,'.$item_user_program->user_id.',%')
+                                            ->where('status_id', '>=' ,$item_user_program->status_id)
+                                            ->count();
+
+                                        if($status_condition_count >= 2) $status_condition = true;
+                                        else $status_condition = false;
+
+                                    }
+                                    else $status_condition = true;
+
+
+                                    if($needed_upgrade && $status_condition){
                                         Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
                                         $item_user_program = UserProgram::where('user_id',$item)->first();
                                         $item_status = Status::find($item_user_program->status_id);
@@ -274,8 +291,9 @@ class UserActivated
                     //end check next status conditions and move
 
                     /*start set  turnover_bonus  */
-                    if($item_user_program->is_binary == 1){
 
+
+                    if($item_user_program->package_id != 5){
                         $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
                         $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
 
@@ -299,31 +317,73 @@ class UserActivated
                         if(true){// если $sum возвращает минусовую сумму
                             $temp_sum = 0;
 
+                            if($item_user_program->is_binary == 0){
+                                $sum = 0;
+                            }
+
                             Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
+
+                            /*start set  invite_bonus  */
+                            if($item_package->id == 1 or $item_package->id == 2 or $item_package->id == 3){
+
+                                $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
+                                $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
+
+                                foreach ($inviter_list_for_matching as $key_referral => $item_matching){
+
+                                    if($item_matching != ""){
+
+                                        $item_matching_user_program = UserProgram::where('user_id',$item_matching)->first();
+
+
+                                        if($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3 or $item_matching_user_program->status_id >= 2){
+
+                                            if($key_referral == 0  && $item_matching_user_program->status_id >= 2){
+                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+
+                                            }
+
+                                            if($key_referral == 1  && ($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
+                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+
+                                            }
+
+                                            if($key_referral == 2  && $item_matching_user_program->package_id == 3){
+                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            /*end set  invite_bonus  */
+
                         }
                         else {
                             Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
                         }
-
-                        /*end set  turnover_bonus  */
                     }
+
+                    /*end set  turnover_bonus  */
                 }
             }
 
             /*start set  invite_bonus  */
+            if($package_id != 5){
+                $inviter_list_for_referral = explode(',',trim($inviter_list,','));
+                $inviter_list_for_referral = array_slice($inviter_list_for_referral, 0, 2);
 
-            $inviter_list_for_referral = explode(',',trim($inviter_list,','));
-            $inviter_list_for_referral = array_slice($inviter_list_for_referral, 0, 2);
+                foreach ($inviter_list_for_referral as $key_referral => $item_referral){
 
-            foreach ($inviter_list_for_referral as $key_referral => $item_referral){
-                if($key_referral == 0 && $item_referral != ""){
-                    Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    if($key_referral == 0 && $item_referral != ""){
+                        Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    }
+                    /*
+                    if($key_referral == 1){
+                        Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+
+                    }*/
                 }
-                /*
-                if($key_referral == 1){
-                    Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
-
-                }*/
             }
             /*end set  invite_bonus  */
 
