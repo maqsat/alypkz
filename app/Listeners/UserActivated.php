@@ -304,18 +304,16 @@ class UserActivated
                             $to_enrollment_pv = $right_pv - $credited_pv;
 
                         $sum = $to_enrollment_pv*$item_status->turnover_bonus/100;
-
-                        /*if($credited_sum < $item_status->week_sum_limit){
+                        echo 'sum->'.$credited_sum.'<br>';
+                        echo 'sum->'.$item_status->week_sum_limit.'<br>';
+                        if($credited_sum < $item_status->week_sum_limit){
                             $temp_sum = 0;
                             if($credited_sum + $sum >  $item_status->week_sum_limit){
                                 $temp_sum = $item_status->week_sum_limit-$credited_sum;
                                 $temp_sum = $sum - $temp_sum;
                                 $sum = $sum - $temp_sum;
-                            }*/
-
-
-                        if(true){// если $sum возвращает минусовую сумму
-                            $temp_sum = 0;
+                            }
+                            echo 'sum->'.$sum.'<br>';
 
                             if($item_user_program->is_binary == 0){
                                 $sum = 0;
@@ -323,7 +321,7 @@ class UserActivated
 
                             Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
 
-                            /*start set  invite_bonus  */
+                            /*start set  matching_bonus  */
                             if($item_package->id == 1 or $item_package->id == 2 or $item_package->id == 3){
 
                                 $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
@@ -356,7 +354,7 @@ class UserActivated
                                     }
                                 }
                             }
-                            /*end set  invite_bonus  */
+                            /*end set  matching_bonus  */
 
                         }
                         else {

@@ -517,8 +517,8 @@ class HomeController extends Controller
 
         $list = Processing::whereUserId(Auth::user()->id)->where(function ($query) {
             $query
-                ->where('sum','!=','0')
-                ->orWhere('pv', '!=', '0');
+                ->where('sum','!=','0');
+                //->orWhere('pv', '!=', '0');
         })->orderBy('id','desc')->paginate(30);
 
 

@@ -29,11 +29,14 @@ class TestController extends Controller
 
     public function tester()
     {
-        $item_user_program = UserProgram::where('user_id',12)->first();
-        $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
-        $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
+        $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',1)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
+        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',1)->sum('pv');
 
-        dd($inviter_list_for_matching);
+        if($credited_sum < 250){
+            //dd(4);
+        }
+        dd($credited_pv);
+
     }
 
     public function setBots()
