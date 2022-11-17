@@ -213,6 +213,14 @@ class Hierarchy {
         return $status->title;
     }
 
+    public function getPackageName($id)
+    {
+        $user_program = UserProgram::where('user_id',$id)->first();
+        $status = Package::find($user_program->package_id);
+
+        return $status->title;
+    }
+
     //Количество в команде команды
     public function inviterCount($user_id)
     {

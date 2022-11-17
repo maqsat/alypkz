@@ -20,7 +20,7 @@
                                     </div>
                                     <div class="member-details">
                                         <h6>{{ $user->name }}</h6>
-                                        <p>{{ \App\Facades\Hierarchy::getStatusName($user->id) }}</p>
+                                        <p>{{ \App\Facades\Hierarchy::getStatusName($user->id) }} | {{ \App\Facades\Hierarchy::getPackageName($user->id) }}</p>
                                         <p>id: {{ $user->id }} | <i class="mdi mdi-account-multiple-plus"></i> {{ \App\Facades\Hierarchy::inviterCount($user->id) }} | <i class="mdi mdi-sitemap"></i> {{ \App\Facades\Hierarchy::teamCount($user->id) }}</p>
                                     </div>
                                 </div>
