@@ -184,7 +184,7 @@ class Hierarchy {
                                 </div>
                                 <div class="member-details">
                                     <h6>'.$item->name.'</h6>
-                                    <p>'.\App\Facades\Hierarchy::getStatusName($item->id).'</p>
+                                    <p>'.\App\Facades\Hierarchy::getStatusName($item->id) .'|'. \App\Facades\Hierarchy::getPackageName($item->id) .' </p>
                                     <p>id: '.$item->id.' | <i class="mdi mdi-account-multiple-plus"></i> '.\App\Facades\Hierarchy::inviterCount($item->id) .' | <i class="mdi mdi-sitemap"></i> '.\App\Facades\Hierarchy::teamCount($item->id) .'</p>
                                 </div>
                             </div>
