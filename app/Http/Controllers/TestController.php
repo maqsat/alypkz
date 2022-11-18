@@ -29,13 +29,19 @@ class TestController extends Controller
 
     public function tester()
     {
-        $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',1)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
-        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',1)->sum('pv');
+        $first_subscriber = UserProgram::join('users','user_programs.user_id','=','users.id')
+            ->where('users.inviter_id',210)
+            ->where('users.status',1)
+            ->where('users.id', '!=', 438)
+            ->first();
 
-        if($credited_sum < 250){
-            //dd(4);
-        }
-        dd($credited_pv);
+        $first_subscriber_seted = Processing::where('status','turnover_bonus')->where('user_id',210)->first();
+
+
+        $first_subscriber_seted->pv = $first_subscriber_seted->pv - Package::find($first_subscriber->package_id)->pv;
+        $first_subscriber_seted->save();
+
+        echo $first_subscriber_seted->pv;
 
     }
 

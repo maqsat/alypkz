@@ -135,7 +135,21 @@ class UserActivated
             ->where('users.inviter_id',$this_user->inviter_id)
             ->where('users.status',1)
             ->count();
-        if($sponsor_subscribers == 2) UserProgram::whereUserId($this_user->inviter_id)->update(['is_binary' => 1]);
+        if($sponsor_subscribers == 2) {
+            UserProgram::whereUserId($this_user->inviter_id)->update(['is_binary' => 1]);
+
+            $first_subscriber = UserProgram::join('users','user_programs.user_id','=','users.id')
+                ->where('users.inviter_id',$this_user->inviter_id)
+                ->where('users.status',1)
+                ->where('users.id', '!=', $event->user->id)
+                ->first();
+
+            $first_subscriber_seted = Processing::where('status','turnover_bonus')->where('user_id',$this_user->inviter_id)->first();
+
+            $first_subscriber_seted->pv = $first_subscriber_seted->pv - Package::find($first_subscriber->package_id)->pv;
+            $first_subscriber_seted->save();
+
+        }
         /*end activate sponsor binary*/
 
         if (Auth::check())
@@ -304,8 +318,7 @@ class UserActivated
                             $to_enrollment_pv = $right_pv - $credited_pv;
 
                         $sum = $to_enrollment_pv*$item_status->turnover_bonus/100;
-                        echo 'sum->'.$credited_sum.'<br>';
-                        echo 'sum->'.$item_status->week_sum_limit.'<br>';
+
                         if($credited_sum < $item_status->week_sum_limit){
                             $temp_sum = 0;
                             if($credited_sum + $sum >  $item_status->week_sum_limit){
@@ -313,7 +326,7 @@ class UserActivated
                                 $temp_sum = $sum - $temp_sum;
                                 $sum = $sum - $temp_sum;
                             }
-                            echo 'sum->'.$sum.'<br>';
+
 
                             if($item_user_program->is_binary == 0){
                                 $sum = 0;
