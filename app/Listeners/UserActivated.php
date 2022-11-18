@@ -349,7 +349,7 @@ class UserActivated
 
                                         if($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3 or $item_matching_user_program->status_id >= 2){
 
-                                            if($key_referral == 0  && $item_matching_user_program->status_id >= 2){
+                                            if($key_referral == 0  && ($item_matching_user_program->status_id >= 2 or $item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
                                                 Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
                                             }
