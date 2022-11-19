@@ -31,9 +31,6 @@ class ProcessingController extends Controller
      */
     public function index(Request $request)
     {
-        if(!Gate::allows('admin_processing_view')) {
-            abort('401');
-        }
 
 
         if(isset($request->status)){

@@ -65,18 +65,14 @@
                                         <th>#</th>
                                         <th>Логин</th>
                                         <th>Спонсор</th>
-                                        @if(Gate::allows('admin_column_pv'))
                                         <th>PV</th>
-                                        @endif
                                         <th>Позиция</th>
                                         <th>Акт/ия</th>
                                         <th>Статус</th>
                                         <th>Регистрация</th>
                                         <th>Баланс</th>
                                         <th>Пакет</th>
-                                        @if(Gate::allows('admin_actions_user'))
                                         <th>Действие</th>
-                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -120,14 +116,12 @@
                                                 <b>Наставник</b>: {{ is_null($sponsor) ? '' : $sponsor->name }}<br>
                                                 <b>Спонсор</b>: {{ is_null($inviter) ? '' : $inviter->name }}
                                             </td>
-                                            @if(Gate::allows('admin_column_pv'))
                                             <td>
                                                 @if($item->status == 1)
-                                                <b>СЛ</b>: pv {{ Hierarchy::pvCounter($item->id,1) }} | <i class="mdi mdi-account"></i>{{ Hierarchy::userCount($item->id,1) }}<br>
-                                                <b>СП</b>: pv {{ Hierarchy::pvCounter($item->id,2) }} | <i class="mdi mdi-account"></i>{{ Hierarchy::userCount($item->id,2) }}
+                                                    <b>СЛ</b>: pv {{ Hierarchy::pvCounter($item->id,1) }} | <i class="mdi mdi-account"></i>{{ Hierarchy::userCount($item->id,1) }}<br>
+                                                    <b>СП</b>: pv {{ Hierarchy::pvCounter($item->id,2) }} | <i class="mdi mdi-account"></i>{{ Hierarchy::userCount($item->id,2) }}
                                                 @endif
                                             </td>
-                                            @endif
                                             <td>@if($item->status == 1) @if($item->position == 1) Слева @else Справа @endif  @endif от наставника</td>
                                             @if($item->status == 1)
                                                 <td class="actions">
@@ -136,7 +130,6 @@
                                                         <a href="{{asset($order->scan)}}" target="_blank" class="btn btn-xs btn-primary"><i class="mdi mdi-account-search"></i></a>
                                                     @endif
                                                 </td>
-
                                             @else
                                                 <td class="actions">
                                                     @if(Gate::allows('admin_activation_user'))
@@ -157,35 +150,21 @@
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>${{ number_format(Balance::getBalance($item->id), 0, '', ' ') }}({{ number_format(Balance::getWeekBalance($item->id), 0, '', ' ') }})</td>
                                             <td>{{ is_null($package) ? '' : $package->title }}</td>
-                                            @if(Gate::allows('admin_actions_user'))
                                             <td class="actions">
-                                                @if(Gate::allows('admin_user_processing'))
                                                 <a href="/user/{{ $item->id }}/processing" target="_blank" class="btn  btn-xs btn-info"  title="Финансы"><i class="mdi mdi-cash-multiple"></i></a>
-                                                @endif
                                                 {{--@if(Gate::allows('admin_user_program'))
                                                 <a href="/user/{{ $item->id }}/program" target="_blank" class="btn  btn-xs btn-success"  title="Пакет, статус, офис"><i class="mdi mdi-account-settings-variant"></i></a>
                                                 @endif--}}
-                                                @if(Gate::allows('admin_review_add_user'))
                                                 <a href="{{ route('admin_review_add', [ 'id' => $item->id ]) }}" target="_blank" class="btn btn-xs btn-warning"  title="Добавить отзыв"><i class="mdi mdi-star"></i></a>
-                                                @endif
-                                                @if(Gate::allows('admin_transfer_user'))
                                                 <a href="/user/{{ $item->id }}/transfer" target="_blank" class="btn  btn-xs btn-warning"  title="Перевод"><i class="mdi mdi-sitemap"></i></a>
-                                                @endif
-                                                @if(Gate::allows('admin_go_under_user'))
                                                 <a href="/user/{{ $item->id }}" target="_blank" class="btn  btn-xs btn-info"   title="Зайти под"><i class="mdi mdi-eye"></i></a>
-                                                @endif
-                                                @if(Gate::allows('admin_user_edit'))
                                                 <a href="/user/{{ $item->id }}/edit" class="btn  btn-xs btn-success"  title="Изменить"><i class="mdi mdi-grease-pencil" ></i></a>
-                                                @endif
-                                                @if(Gate::allows('admin_user_destroy'))
                                                 <form action="{{url('user', [$item->id])}}" method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
                                                     <button type="submit" class="btn  btn-xs btn-danger" onclick="return deleteAlert();" title="Удалить"><i class="mdi mdi-delete"></i></button>
                                                 </form>
-                                                @endif
                                             </td>
-                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>

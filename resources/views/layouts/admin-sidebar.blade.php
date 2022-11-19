@@ -5,7 +5,8 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-small-cap">Меню администратора</li>
-                @if(Gate::allows('admin_menu_item_users'))
+
+                @if(Auth::user()->role_id == 1)
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <i class="mdi mdi-account"></i><span class="hide-menu">Пользователи</span>
@@ -30,8 +31,6 @@
                         @endif--}}
                     </ul>
                 </li>
-                @endif
-                @if(Gate::allows('admin_menu_item_settings'))
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Настройки</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -67,8 +66,6 @@
                         @endif--}}
                     </ul>
                 </li>
-                @endif
-                @if(Gate::allows('admin_menu_item_income') || Gate::allows('admin_overview_access'))
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Доходы</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -77,8 +74,6 @@
                         <li><a href="/status-counts">Разбивка по статусам</a></li>
                     </ul>
                 </li>
-                @endif
-                @if(Gate::allows('admin_menu_item_processing'))
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-export"></i><span class="hide-menu">Бухгалтер</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -96,8 +91,6 @@
                         @endif
                     </ul>
                 </li>
-                @endif
-                @if(Gate::allows('admin_menu_item_shop'))
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-shopping"></i><span class="hide-menu">Магазин</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -109,16 +102,6 @@
                         @endif
                     </ul>
                 </li>
-                @endif
-                {{--<li>
-                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-help"></i><span class="hide-menu">FAQ</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="/faqgetguest">FAQ для гостя</a></li>
-                        <li><a href="/faqgetadmin">FAQ для админа</a></li>
-                        <li><a href="/faqadmin/create">Добавить FAQ</a></li>
-                    </ul>
-                </li>--}}
-                @if(Gate::allows('admin_menu_item_additional'))
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="hide-menu">Дополнительно</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -146,38 +129,80 @@
                         @endif
                     </ul>
                 </li>
-                @endif
-                {{--<li>
-                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Курс</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="/course">Все курсы</a></li>
-                        <li><a href="/course/create">Добавить курс</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Рекомендации</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="/recommendations">Все рекомендации</a></li>
-                        <li><a href="/recommendations/create">Добавить рекомендацию</a></li>
-                    </ul>
-                </li>--}}
                 <li class="nav-devider"></li>
-                @if(Gate::allows('admin_menu_item_profile'))
-                    <li>
-                        <a href="/delivery" aria-expanded="false">
-                            <i class="mdi mdi-truck-delivery"></i>
-                            <span class="hide-menu">Доставка</span>
-                        </a>
-                    </li>
-                @endif
+                <li>
+                    <a href="/delivery" aria-expanded="false">
+                        <i class="mdi mdi-truck-delivery"></i>
+                        <span class="hide-menu">Доставка</span>
+                    </a>
+                </li>
                 <li class="nav-small-cap">{{ __('app.menu') }}</li>
-                @if(Gate::allows('admin_menu_item_profile'))
                 <li>
                     <a href="/home" aria-expanded="false">
                         <i class="mdi mdi-account"></i>
                         <span class="hide-menu">Профиль</span>
                     </a>
                 </li>
+                {{--<li>
+                <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Курс</span></a>
+                <ul aria-expanded="false" class="collapse">
+                    <li><a href="/course">Все курсы</a></li>
+                    <li><a href="/course/create">Добавить курс</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Рекомендации</span></a>
+                <ul aria-expanded="false" class="collapse">
+                    <li><a href="/recommendations">Все рекомендации</a></li>
+                    <li><a href="/recommendations/create">Добавить рекомендацию</a></li>
+                </ul>
+            </li>--}}
+                {{--<li>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-help"></i><span class="hide-menu">FAQ</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="/faqgetguest">FAQ для гостя</a></li>
+                            <li><a href="/faqgetadmin">FAQ для админа</a></li>
+                            <li><a href="/faqadmin/create">Добавить FAQ</a></li>
+                        </ul>
+                    </li>--}}
+                @elseif(Auth::user()->role_id == 2)
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false">
+                            <i class="mdi mdi-account"></i><span class="hide-menu">Пользователи</span>
+                            @if(\App\User::whereNotNull('program_id')->whereStatus('0')->count() > 0)
+                                <div class="notify">
+                                    <span class="heartbit"></span>
+                                    <span class="point"></span>
+                                </div>
+                            @endif
+                        </a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="/user?non_activate=1">Неактивированные</a></li>
+                            <li><a href="/user">Все пользователи</a></li>
+                            <li><a href="/user?upgrade_list=1">История Upgrade</a></li>
+                            <li><a href="/user?upgrade_request=1">Заявки на Upgrade</a></li>
+                            {{--@if(Gate::allows('admin_user_create'))
+                            <li><a href="/user/create">Добавить</a></li>
+                            @endif--}}
+                        </ul>
+                    </li>
+                @elseif(Auth::user()->role_id == 3)
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-export"></i><span class="hide-menu">Бухгалтер</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="/processing">Все движения</a></li>
+                            <li><a href="/processing?status=out">Выведено</a></li>
+                            <li><a href="/processing?status=step">Комиссионные</a></li>
+                            <li><a href="/processing?status=request">Запросы на вывод(Ручная)</a></li>
+                        </ul>
+                    </li>
+                @else
+                    <li>
+                        <a href="/delivery" aria-expanded="false">
+                            <i class="mdi mdi-truck-delivery"></i>
+                            <span class="hide-menu">Доставка</span>
+                        </a>
+                    </li>
                 @endif
                 <li>
                     <a href="{{ url('/logout') }}" aria-expanded="false" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -188,6 +213,7 @@
                         {{ csrf_field() }}
                     </form>
                 </li>
+
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

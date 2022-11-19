@@ -58,12 +58,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if(!Gate::allows('admin_user_view')) {
-            abort('401');
-            //return redirect('processing?status=request');
-        }
+        if(Auth::user()->role_id == 3) return redirect('/processing');
+        if(Auth::user()->role_id == 4) return redirect('/delivery');
 
-        //if(Auth::user()->role_id == 2) return redirect('processing?status=request');
 
 
         if(isset($request->s)){

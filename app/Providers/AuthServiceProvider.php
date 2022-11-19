@@ -48,19 +48,19 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('admin_reviews_access', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,2]);
         });
 
         Gate::define('admin_reviews_edit', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,2]);
         });
 
         Gate::define('admin_reviews_add', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,2]);
         });
 
         Gate::define('admin_reviews_status', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,2]);
         });
 
         Gate::define('admin_comments_access', function ($user) {
@@ -93,47 +93,47 @@ class AuthServiceProvider extends ServiceProvider
 
         // Auth gates for: UserController
         Gate::define('admin_user_activation', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
-        });
-
-        Gate::define('admin_user_deactivation', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
-        });
-
-        Gate::define('admin_user_success_basket', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
-        });
-
-        Gate::define('admin_user_cancel_basket', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
-        });
-
-        Gate::define('admin_user_upgrade', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
-        });
-
-        Gate::define('admin_user_deactivation_upgrade', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
-        });
-
-        Gate::define('admin_user_transfer', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
-        });
-
-        Gate::define('admin_user_program', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
-        });
-
-        Gate::define('admin_user_processing', function ($user) {
             return $user->admin && in_array($user->role_id, [0,2]);
         });
 
+        Gate::define('admin_user_deactivation', function ($user) {
+            return $user->admin && in_array($user->role_id, [0,2]);
+        });
+
+        Gate::define('admin_user_success_basket', function ($user) {
+            return $user->admin && in_array($user->role_id, [0,2]);
+        });
+
+        Gate::define('admin_user_cancel_basket', function ($user) {
+            return $user->admin && in_array($user->role_id, [0,2]);
+        });
+
+        Gate::define('admin_user_upgrade', function ($user) {
+            return $user->admin && in_array($user->role_id, [0,2]);
+        });
+
+        Gate::define('admin_user_deactivation_upgrade', function ($user) {
+            return $user->admin && in_array($user->role_id, [0,2]);
+        });
+
+        Gate::define('admin_user_transfer', function ($user) {
+            return $user->admin && in_array($user->role_id, [0,2]);
+        });
+
+        Gate::define('admin_user_program', function ($user) {
+            return $user->admin && in_array($user->role_id, [0,2]);
+        });
+
+        Gate::define('admin_user_processing', function ($user) {
+            return $user->admin && in_array($user->role_id, [0,2,3]);
+        });
+
         Gate::define('admin_user_add_bonus', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,2,3]);
         });
 
         Gate::define('admin_user_view', function ($user) {
-            return $user->admin && in_array($user->role_id, [0,1,2]);
+            return $user->admin && in_array($user->role_id, [0,2,3]);
         });
 
         Gate::define('admin_user_upgrade', function ($user) {
@@ -145,7 +145,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('admin_user_edit', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,2]);
         });
 
         Gate::define('admin_user_destroy', function ($user) {
@@ -318,7 +318,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('admin_processing_status_update', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,3]);
         });
 
         Gate::define('admin_processing_created', function ($user) {
@@ -389,7 +389,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('admin_review_add_user', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,2]);
         });
 
         Gate::define('admin_go_under_user', function ($user) {
