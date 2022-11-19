@@ -301,81 +301,79 @@ class UserActivated
                                 }
                             }
                         }
-                    }
-                    //end check next status conditions and move
 
-                    /*start set  turnover_bonus  */
+                        /*start set  turnover_bonus  */
+                        if($item_user_program->package_id != 5){
+                            $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
+                            $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
 
-
-                    if($item_user_program->package_id != 5){
-                        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
-                        $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
-
-                        if($small_branch_position == 1){
-                            $to_enrollment_pv = $left_pv - $credited_pv;
-                        }
-                        else
-                            $to_enrollment_pv = $right_pv - $credited_pv;
-
-                        $sum = $to_enrollment_pv*$item_status->turnover_bonus/100;
-
-                        if($credited_sum < $item_status->week_sum_limit){
-                            $temp_sum = 0;
-                            if($credited_sum + $sum >  $item_status->week_sum_limit){
-                                $temp_sum = $item_status->week_sum_limit-$credited_sum;
-                                $temp_sum = $sum - $temp_sum;
-                                $sum = $sum - $temp_sum;
+                            if($small_branch_position == 1){
+                                $to_enrollment_pv = $left_pv - $credited_pv;
                             }
+                            else
+                                $to_enrollment_pv = $right_pv - $credited_pv;
+
+                            $sum = $to_enrollment_pv*$item_status->turnover_bonus/100;
+
+                            if($credited_sum < $item_status->week_sum_limit){
+                                $temp_sum = 0;
+                                if($credited_sum + $sum >  $item_status->week_sum_limit){
+                                    $temp_sum = $item_status->week_sum_limit-$credited_sum;
+                                    $temp_sum = $sum - $temp_sum;
+                                    $sum = $sum - $temp_sum;
+                                }
 
 
-                            if($item_user_program->is_binary == 0){
-                                $sum = 0;
-                            }
+                                if($item_user_program->is_binary == 0){
+                                    $sum = 0;
+                                }
 
-                            Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
+                                Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
 
-                            /*start set  matching_bonus  */
-                            if($item_package->id == 1 or $item_package->id == 2 or $item_package->id == 3){
+                                /*start set  matching_bonus  */
+                                if($item_package->id == 1 or $item_package->id == 2 or $item_package->id == 3){
 
-                                $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
-                                $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
+                                    $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
+                                    $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
 
-                                foreach ($inviter_list_for_matching as $key_referral => $item_matching){
+                                    foreach ($inviter_list_for_matching as $key_referral => $item_matching){
 
-                                    if($item_matching != ""){
+                                        if($item_matching != ""){
 
-                                        $item_matching_user_program = UserProgram::where('user_id',$item_matching)->first();
+                                            $item_matching_user_program = UserProgram::where('user_id',$item_matching)->first();
 
 
-                                        if($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3 or $item_matching_user_program->status_id >= 2){
+                                            if($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3 or $item_matching_user_program->status_id >= 2){
 
-                                            if($key_referral == 0  && ($item_matching_user_program->status_id >= 2 or $item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
-                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                                if($key_referral == 0  && ($item_matching_user_program->status_id >= 2 or $item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
+                                                    Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
-                                            }
+                                                }
 
-                                            if($key_referral == 1  && ($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
-                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                                if($key_referral == 1  && ($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
+                                                    Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
-                                            }
+                                                }
 
-                                            if($key_referral == 2  && $item_matching_user_program->package_id == 3){
-                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                                if($key_referral == 2  && $item_matching_user_program->package_id == 3){
+                                                    Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
+                                                }
                                             }
                                         }
                                     }
                                 }
+                                /*end set  matching_bonus  */
+
                             }
-                            /*end set  matching_bonus  */
-
+                            else {
+                                Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
+                            }
                         }
-                        else {
-                            Balance::changeBalance($item,0,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$sum);
-                        }
+                        /*end set  turnover_bonus  */
                     }
+                    //end check next status conditions and move
 
-                    /*end set  turnover_bonus  */
                 }
             }
 

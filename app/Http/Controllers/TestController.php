@@ -29,19 +29,25 @@ class TestController extends Controller
 
     public function tester()
     {
-        $first_subscriber = UserProgram::join('users','user_programs.user_id','=','users.id')
-            ->where('users.inviter_id',210)
-            ->where('users.status',1)
-            ->where('users.id', '!=', 438)
-            ->first();
+        $left_pv = Hierarchy::pvCounter(434,1);
+        $right_pv = Hierarchy::pvCounter(434,2);
 
-        $first_subscriber_seted = Processing::where('status','turnover_bonus')->where('user_id',210)->first();
+        if($left_pv > $right_pv) $small_branch_position = 2;
+        else $small_branch_position = 1;
+
+        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',434)->sum('pv');
+        $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',434)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
+
+        if($small_branch_position == 1){
+            $to_enrollment_pv = $left_pv - $credited_pv;
+        }
+        else
+            $to_enrollment_pv = $right_pv - $credited_pv;
 
 
-        $first_subscriber_seted->pv = $first_subscriber_seted->pv - Package::find($first_subscriber->package_id)->pv;
-        $first_subscriber_seted->save();
+        $sum = $to_enrollment_pv*10/100;
 
-        echo $first_subscriber_seted->pv;
+        echo $sum;
 
     }
 
