@@ -398,28 +398,33 @@ class Hierarchy {
      */
     public function setQS()
     {
-        $user_programs = UserProgram::where(DB::raw("WEEKDAY(user_programs.created_at)"),Carbon::now()->format('N')-1)->get();
+        $inviters = DB::select('SELECT COUNT(inviter_id) as count, id, name, inviter_id, created_at, is_quick_start
+                            FROM users
+                            WHERE created_at >= (curdate() - INTERVAL 15 DAY)  AND status = 1 AND is_quick_start IS NULL
+                            GROUP BY inviter_id
+                            ORDER BY COUNT(inviter_id) DESC;');
 
-        foreach ($user_programs as $item){
+        foreach ($inviters as $item){
 
-            $users = User::join('user_programs','users.id','=','user_programs.user_id')
-                ->where('users.inviter_id',$item->user_id)
-                ->where('users.status',1)
-                ->whereBetween('users.created_at', [Carbon::now()->subDay(8), Carbon::now()])
-                ->get();
+            if($item->count >= 5){
 
-            if(count($users) >= 2){
+                $users = User::join('user_programs','users.id','=','user_programs.user_id')
+                    ->where('users.inviter_id',$item->inviter_id)
+                    ->where('users.status',1)
+                    ->whereBetween('users.created_at', [Carbon::now()->subDay(16), Carbon::now()])
+                    ->get();
+
                 foreach ($users as $innerItem){
-                    if($item->package_id != 0){
-                        if($innerItem->package_id != 0){
-                            $package = Package::find($innerItem->package_id);
-                            $sum = $package->pv*20/100*env('COURSE');
-                            $check = Processing::where('user_id',$item->user_id)->where('in_user',$innerItem->user_id)->where('status','quickstart_bonus')->first();
-                            if(is_null($check)){
-                                echo $item->user_id."<br>";
-                                Balance::changeBalance($item->user_id,$sum,'quickstart_bonus',$innerItem->user_id,1,$package->id,$item->status_id,$package->pv);
-                            }
-                        }
+
+                    if($innerItem->package_id == 1 or $innerItem->package_id == 2 or $innerItem->package_id == 3){
+                        $package = Package::find($innerItem->package_id);
+
+                        User::whereId($innerItem->user_id)->update([
+                            'is_quick_start' => 1,
+                        ]);
+
+                        $sum = $package->cost*$package->invite_bonus/100;
+                        Balance::changeBalance($item->inviter_id,$sum,'quickstart_bonus',$innerItem->user_id,1,$package->id,1,$package->pv);
                     }
                 }
             }

@@ -48,9 +48,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if (Auth::user()->admin == 1 && Auth::user()->role_id != 0) {
-            return redirect('/user');
-        }
+
         //check KazPost order status
         $orders = Order::where('user_id',Auth::user()->id)->where('status',0)->where('uuid','!=',null)->where('uuid','!=',0)->get();
 

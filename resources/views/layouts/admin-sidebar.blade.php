@@ -137,12 +137,7 @@
                     </a>
                 </li>
                 <li class="nav-small-cap">{{ __('app.menu') }}</li>
-                <li>
-                    <a href="/home" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">Профиль</span>
-                    </a>
-                </li>
+
                 {{--<li>
                 <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Курс</span></a>
                 <ul aria-expanded="false" class="collapse">
@@ -204,6 +199,12 @@
                         </a>
                     </li>
                 @endif
+                <li>
+                    <a href="/home" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">Профиль</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ url('/logout') }}" aria-expanded="false" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="mdi mdi-logout"></i>

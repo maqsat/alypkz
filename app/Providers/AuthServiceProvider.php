@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
 
         // Auth gates for: AdminController
         Gate::define('admin_access', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,1,2,3,4]);
         });
 
         Gate::define('not_cash_bonuses_access', function ($user) {
