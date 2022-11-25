@@ -397,7 +397,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('admin_activation_user', function ($user) {
-            return $user->admin && in_array($user->role_id, [0]);
+            return $user->admin && in_array($user->role_id, [0,2,1]);
         });
 
         Gate::define('admin_column_pv', function ($user) {

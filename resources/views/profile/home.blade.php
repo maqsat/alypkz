@@ -14,6 +14,14 @@
                     </div>
                 @endif
 
+                @if(Auth::user()->id == 500 or Auth::user()->id == 1000 or Auth::user()->id == 2000 or Auth::user()->id == 3000 or Auth::user()->id == 4000 or Auth::user()->id == 5000)
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                        <h3 class="text-success"><i class="fa fa-check-circle"></i> Поздравляю вы стали {{ Auth::user()->id }} участником команды Алып групп</h3>
+                    </div>
+                @endif
+
+
                 @if($next_status->id == 5 && $user_program->package_id < 2)
                     <div class="alert alert-warning">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
