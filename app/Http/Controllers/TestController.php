@@ -29,7 +29,16 @@ class TestController extends Controller
 
     public function tester()
     {
+        $item_user_program = 1;
+        $small_branch_position = 1;
 
+        $small_branch_user = User::where('sponsor_id',$item_user_program)->where('position',$small_branch_position)->first();
+
+        $status_condition_count = UserProgram::where('list','like','%,'.$small_branch_user->id.','.$item_user_program.',%')
+            ->where('status_id', '>=' ,2)
+            ->count();
+
+        dd($status_condition_count);
 
     }
 

@@ -226,12 +226,6 @@ class UserActivated
                         if(!is_null($current_user_second) && strpos($list, ','.$current_user_second->id.',') !== false) $position = 2;
                     }
 
-                    /*if($item_user_program->is_binary == 1 or $this_user->inviter_id == $item_user_program->user_id){
-                        Balance::setQV($item,$package->pv,$id,$package->id,$position,$item_status->id);
-                    }
-                    else{
-                        Balance::setQV($item,0,$id,$package->id,$position,$item_status->id);
-                    }*/
                     Balance::setQV($item,$package->pv,$id,$package->id,$position,$item_status->id, '',$item_user_program->is_binary);
 
                     //start check small branch definition
@@ -259,32 +253,157 @@ class UserActivated
                                 if($item_user_program->is_binary == 1){
                                     $needed_upgrade = true;
 
-                                    if($next_status->id == 5 && $item_user_program->package_id >= 2){
-                                        $needed_upgrade = false;
+                                    if($next_status->id == 2){
+                                        if (!in_array($item_user_program->package_id, [1,2,3])) $needed_upgrade = false;
                                     }
 
-                                    if($next_status->id == 7 && $item_user_program->package_id >= 3){
-                                        $needed_upgrade = false;
+                                    if($next_status->id == 3){
+                                        if (!in_array($item_user_program->package_id, [1,2,3])) $needed_upgrade = false;
+                                        else{
+                                            $small_branch_user = User::where('sponsor_id',$item_user_program)->where('position',$small_branch_position)->first();
+
+                                            $status_condition_count = UserProgram::where('list','like','%,'.$small_branch_user->id.','.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,2)
+                                                ->count();
+
+                                            if($status_condition_count == 0) $needed_upgrade = false;
+                                        }
                                     }
 
-                                    if($item_user_program->package_id == 5 or $item_user_program->package_id == 6){
-                                        $needed_upgrade = false;
+                                    if($next_status->id == 4){
+                                        if (!in_array($item_user_program->package_id, [1,2,3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count2 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,2)
+                                                ->count();
+
+                                            $status_condition_count3 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,3)
+                                                ->count();
+
+                                            if($status_condition_count2+$status_condition_count3 < 2) $needed_upgrade = false;
+
+                                        }
+                                    }
+
+                                    if($next_status->id == 5){
+                                        if (!in_array($item_user_program->package_id, [1,2,3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,4)
+                                                ->count();
+
+                                            if($status_condition_count == 0) $needed_upgrade = false;
+                                        }
+                                    }
+
+                                    if($next_status->id == 6){
+                                        if (!in_array($item_user_program->package_id, [2,3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count2 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,4)
+                                                ->count();
+
+                                            $status_condition_count3 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,5)
+                                                ->count();
+
+                                            if($status_condition_count2+$status_condition_count3 < 2) $needed_upgrade = false;
+                                        }
+                                    }
+
+                                    if($next_status->id == 7){
+                                        if (!in_array($item_user_program->package_id, [2,3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,6)
+                                                ->count();
+
+                                            if($status_condition_count == 0) $needed_upgrade = false;
+                                        }
+                                    }
+
+                                    if($next_status->id == 8){
+                                        if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count2 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,6)
+                                                ->count();
+
+                                            $status_condition_count3 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,7)
+                                                ->count();
+
+                                            if($status_condition_count2+$status_condition_count3 < 2) $needed_upgrade = false;
+                                        }
+                                    }
+
+                                    if($next_status->id == 9){
+                                        if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,8)
+                                                ->count();
+
+                                            if($status_condition_count == 0) $needed_upgrade = false;
+                                        }
+
+                                    }
+
+                                    if($next_status->id == 10){
+                                        if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,8)
+                                                ->count();
+
+                                            if($status_condition_count <= 2) $needed_upgrade = false;
+                                        }
+                                    }
+
+                                    if($next_status->id == 11){
+                                        if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count2 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,8)
+                                                ->count();
+
+                                            $status_condition_count3 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,9)
+                                                ->count();
+
+                                            if($status_condition_count2+$status_condition_count3 < 2) $needed_upgrade = false;
+                                        }
+                                    }
+
+                                    if($next_status->id == 12){
+                                        if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count2 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,9)
+                                                ->count();
+
+                                            $status_condition_count3 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,10)
+                                                ->count();
+
+                                            if($status_condition_count2+$status_condition_count3 < 2) $needed_upgrade = false;
+                                        }
+                                    }
+
+                                    if($next_status->id == 13){
+                                        if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
+                                        else{
+                                            $status_condition_count = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                                ->where('status_id', '>=' ,11)
+                                                ->count();
+
+                                            if($status_condition_count <= 2) $needed_upgrade = false;
+                                        }
                                     }
 
 
-                                    if($next_status->id > 2){
-                                        $status_condition_count = UserProgram::where('inviter_list','like','%,'.$item_user_program->user_id.',%')
-                                            ->where('status_id', '>=' ,$item_user_program->status_id)
-                                            ->count();
-
-                                        if($status_condition_count >= 2) $status_condition = true;
-                                        else $status_condition = false;
-
-                                    }
-                                    else $status_condition = true;
-
-
-                                    if($needed_upgrade && $status_condition){
+                                    if($needed_upgrade){
                                         Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
                                         $item_user_program = UserProgram::where('user_id',$item)->first();
                                         $item_status = Status::find($item_user_program->status_id);
@@ -303,7 +422,7 @@ class UserActivated
                         }
 
                         /*start set  turnover_bonus  */
-                        if($item_user_program->package_id != 5){
+                        if($item_user_program->package_id != 4){
                             $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
                             $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
 
@@ -313,7 +432,7 @@ class UserActivated
                             else
                                 $to_enrollment_pv = $right_pv - $credited_pv;
 
-                            $sum = $to_enrollment_pv*$item_status->turnover_bonus/100;
+                            $sum = $to_enrollment_pv*$item_package->turnover_bonus/100;
 
                             if($credited_sum < $item_status->week_sum_limit){
                                 $temp_sum = 0;
@@ -323,10 +442,6 @@ class UserActivated
                                     $sum = $sum - $temp_sum;
                                 }
 
-
-                                if($item_user_program->is_binary == 0){
-                                    $sum = 0;
-                                }
 
                                 Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
 
@@ -378,21 +493,13 @@ class UserActivated
             }
 
             /*start set  invite_bonus  */
-            if($package_id != 5){
-                $inviter_list_for_referral = explode(',',trim($inviter_list,','));
-                $inviter_list_for_referral = array_slice($inviter_list_for_referral, 0, 2);
+            if($package_id != 4){
 
-                foreach ($inviter_list_for_referral as $key_referral => $item_referral){
+                $inviter = User::find($event->user->inviter_id);
+                $inviter_package = Package::find($inviter->package_id);
 
-                    if($key_referral == 0 && $item_referral != ""){
-                        Balance::changeBalance($item_referral,$package->cost*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
-                    }
-                    /*
-                    if($key_referral == 1){
-                        Balance::changeBalance($item_referral,$package->cost*$package->vip_invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                Balance::changeBalance($inviter->id,$package->cost*$inviter_package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
 
-                    }*/
-                }
             }
             /*end set  invite_bonus  */
 
