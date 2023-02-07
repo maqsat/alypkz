@@ -37,12 +37,7 @@
                                     <div class="input-group">
                                         <input type="hidden" value="1" name="program_id">
                                         <input type="hidden" value="1" name="withdrawal_method">
-
-                                        <select class="form-control form-control-line select2" name="type" id="type" onchange="myFunction()">
-                                            <option value="1">Реферальный бонус</option>
-                                            <option value="2">Бинарный бонус + ЛКБ</option>
-                                        </select>
-                                        <input type="number"  name="sum" id="sum" class="form-control" placeholder="Выводимая сумма PV" max="{{ Balance::getBalanceNew(Auth::user()->id, ['invite_bonus', 'admin_add']) }}" required onkeyup="myFunction()">
+                                        <input type="number"  name="sum" id="sum" class="form-control" placeholder="Выводимая сумма PV" max="{{ Balance::getBalance(Auth::user()->id) }}" required>
                                         <input type="text"  name="login" class="form-control" placeholder="Номер телефона и карты Kaspi" required>
                                         <span class="input-group-btn">
                                             <button class="btn btn-info" type="submit">Вывести</button>
@@ -62,11 +57,7 @@
                                     <div class="input-group">
                                         <input type="hidden" value="1" name="program_id">
                                         <input type="hidden" value="2" name="withdrawal_method">
-                                        <select class="form-control form-control-line select2" name="type" id="type2" onchange="myFunction2()">
-                                            <option value="1">Реферальный бонус</option>
-                                            <option value="2">Бинарный бонус + ЛКБ</option>
-                                        </select>
-                                        <input type="number"  name="sum" id="sum2"  class="form-control" placeholder="Выводимая сумма" max="{{ Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus','matching_bonus']) }}"  onkeyup="myFunction2()" required>
+                                        <input type="number"  name="sum" id="sum2"  class="form-control" placeholder="Выводимая сумма" max="{{ Balance::getBalance(Auth::user()->id) }}" required>
                                         <input type="text"  name="login" class="form-control" placeholder="Номер расчетного счёта" required>
                                         <input type="text"  name="iin" class="form-control" placeholder="ИИН" required>
                                         <span class="input-group-btn">
@@ -86,33 +77,3 @@
         </div>
     </div>
 </div>
-<script>
-    function myFunction() {
-        if(document.getElementById("type").value == 1) {
-            var x = 1;
-            document.getElementById("sum").max = {{ Balance::getBalanceNew(Auth::user()->id, ['invite_bonus', 'admin_add']) }};
-            document.getElementById("demo").innerHTML = "Сумма PV*1$: " + document.getElementById("sum").value * x + "$";
-        }
-        else {
-            var x = 0.8;
-            document.getElementById("sum").max = {{ Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus','matching_bonus']) }};
-            document.getElementById("demo").innerHTML = "Сумма PV*0,8$: " + document.getElementById("sum").value * x + "$";
-        }
-
-    }
-
-    function myFunction2() {
-        if(document.getElementById("type2").value == 1) {
-            var x = 1;
-            document.getElementById("sum2").max = {{ Balance::getBalanceNew(Auth::user()->id, ['invite_bonus', 'admin_add']) }};
-            document.getElementById("demo2").innerHTML = "Сумма PV*1$: " + document.getElementById("sum2").value * x + "$";
-        }
-        else {
-            var x = 0.8;
-            document.getElementById("sum2").max = {{ Balance::getBalanceNew(Auth::user()->id, ['turnover_bonus','matching_bonus']) }};
-            document.getElementById("demo2").innerHTML = "Сумма PV*0,8$: " + document.getElementById("sum2").value * x + "$";
-        }
-
-
-    }
-</script>

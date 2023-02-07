@@ -406,25 +406,34 @@ class Hierarchy {
 
         foreach ($inviters as $item){
 
-            if($item->count >= 5){
+
+            if($item->count >= 5 && is_null(User::find($item->inviter_id)->is_quick_start)){
 
                 $users = User::join('user_programs','users.id','=','user_programs.user_id')
                     ->where('users.inviter_id',$item->inviter_id)
                     ->where('users.status',1)
                     ->whereBetween('users.created_at', [Carbon::now()->subDay(16), Carbon::now()])
+                    ->orderBy('users.created_at')
                     ->get();
 
-                foreach ($users as $innerItem){
+                if($users[0]->created_at->addDay(15)->lt(Carbon::now())){
+                    User::whereId($item->inviter_id)->update([
+                        'is_quick_start' => 1,
+                    ]);
+                }
+                else{
+                    foreach ($users as $innerItem){
 
-                    if($innerItem->package_id == 1 or $innerItem->package_id == 2 or $innerItem->package_id == 3){
-                        $package = Package::find($innerItem->package_id);
+                        //if($innerItem->package_id == 1 or $innerItem->package_id == 2 or $innerItem->package_id == 3){
+                            $package = Package::find($innerItem->package_id);
 
-                        User::whereId($innerItem->user_id)->update([
-                            'is_quick_start' => 1,
-                        ]);
+                            User::whereId($innerItem->user_id)->update([
+                                'is_quick_start' => 1,
+                            ]);
 
-                        $sum = $package->cost*$package->invite_bonus/100;
-                        Balance::changeBalance($item->inviter_id,$sum,'quickstart_bonus',$innerItem->user_id,1,$package->id,1,$package->pv);
+                            $sum = $package->cost*$package->invite_bonus/100;
+                            Balance::changeBalance($item->inviter_id,$sum,'quickstart_bonus',$innerItem->user_id,1,$package->id,1,$package->pv);
+                        //}
                     }
                 }
             }

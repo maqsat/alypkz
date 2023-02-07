@@ -114,7 +114,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="swiper-slide">
+<!--                            <div class="swiper-slide">
                                 <div class="cofounder-img">
                                     <img src="/alyp_group/img/img-section4-5.jpg" alt="">
                                 </div>
@@ -132,7 +132,7 @@
                                         <li>2022 – запустил Alyp group</li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="swiper-slide">
                                 <div class="cofounder-img">
                                     <img src="/alyp_group/img/img-section4-6.jpg" alt="">

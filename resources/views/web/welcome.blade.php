@@ -202,7 +202,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="swiper-slide">
+<!--                        <div class="swiper-slide">
                             <div class="section4-img">
                                 <img src="/alyp_group/img/img-section4-5.jpg" alt="">
                             </div>
@@ -216,7 +216,7 @@
                                     </svg>
                                 </a>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

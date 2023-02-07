@@ -138,7 +138,7 @@ class UserActivated
         if($sponsor_subscribers == 2) {
             UserProgram::whereUserId($this_user->inviter_id)->update(['is_binary' => 1]);
 
-            $first_subscriber = UserProgram::join('users','user_programs.user_id','=','users.id')
+            /*$first_subscriber = UserProgram::join('users','user_programs.user_id','=','users.id')
                 ->where('users.inviter_id',$this_user->inviter_id)
                 ->where('users.status',1)
                 ->where('users.id', '!=', $event->user->id)
@@ -147,7 +147,7 @@ class UserActivated
             $first_subscriber_seted = Processing::where('status','turnover_bonus')->where('user_id',$this_user->inviter_id)->first();
 
             $first_subscriber_seted->pv = $first_subscriber_seted->pv - Package::find($first_subscriber->package_id)->pv;
-            $first_subscriber_seted->save();
+            $first_subscriber_seted->save();*/
 
         }
         /*end activate sponsor binary*/
@@ -260,11 +260,15 @@ class UserActivated
                                     if($next_status->id == 3){
                                         if (!in_array($item_user_program->package_id, [1,2,3])) $needed_upgrade = false;
                                         else{
-                                            $small_branch_user = User::where('sponsor_id',$item_user_program)->where('position',$small_branch_position)->first();
+                                            $small_branch_user = User::where('sponsor_id',$item_user_program->user_id)->where('position',$small_branch_position)->first();
 
-                                            $status_condition_count = UserProgram::where('list','like','%,'.$small_branch_user->id.','.$item_user_program->user_id.',%')
+                                            $status_condition_count1 = UserProgram::where('list','like','%,'.$small_branch_user->id.','.$item_user_program->user_id.',%')
                                                 ->where('status_id', '>=' ,2)
                                                 ->count();
+
+                                            $status_condition_count2 = UserProgram::where('user_id', $small_branch_user->id)->count();
+
+                                            $status_condition_count = $status_condition_count1 + $status_condition_count2;
 
                                             if($status_condition_count == 0) $needed_upgrade = false;
                                         }
@@ -446,7 +450,14 @@ class UserActivated
                                 Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
 
                                 /*start set  matching_bonus  */
-                                if($item_package->id == 1 or $item_package->id == 2 or $item_package->id == 3){
+                                $standart_package_is_matching = false;
+
+                                if($item_package->id == 1){
+                                    if($item_status->id >= 4) $standart_package_is_matching = true;
+                                }
+
+
+                                if($standart_package_is_matching or $item_package->id == 2 or $item_package->id == 3){
 
                                     $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
                                     $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
@@ -458,22 +469,19 @@ class UserActivated
                                             $item_matching_user_program = UserProgram::where('user_id',$item_matching)->first();
 
 
-                                            if($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3 or $item_matching_user_program->status_id >= 2){
+                                            if($key_referral == 0  && ($standart_package_is_matching or $item_package->id == 2 or $item_package->id == 3)){
+                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
-                                                if($key_referral == 0  && ($item_matching_user_program->status_id >= 2 or $item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
-                                                    Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                            }
 
-                                                }
+                                            if($key_referral == 1  && ($item_package->id == 2 or $item_package->id == 3)){
+                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
-                                                if($key_referral == 1  && ($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
-                                                    Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                            }
 
-                                                }
+                                            if($key_referral == 2  && $item_package->id == 3){
+                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
-                                                if($key_referral == 2  && $item_matching_user_program->package_id == 3){
-                                                    Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
-
-                                                }
                                             }
                                         }
                                     }

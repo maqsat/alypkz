@@ -1,48 +1,49 @@
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-4">
+    <div class="col-lg-3 col-md-3">
         <div class="card">
-            <div class="card-block">
-                <h4 class="card-title">Доступная сумма</h4>
-                <div class="d-flex flex-row">
-                    <div class="p-10 p-l-0 b-r">
-                        <h6 class="font-light">Реферальный бонус</h6><b>{{ Balance::getBalanceNew($id, ['invite_bonus', 'admin_add']) }} PV /
-                            <span class="text-danger">0% </span></b></div>
-                    <div class="p-10 b-r">
-                        <h6 class="font-light">Бинарный бонус + ЛКБ</h6><b>{{ Balance::getBalanceNew($id, ['turnover_bonus','matching_bonus']) }} PV / <span class="text-danger">0,8% </span></b>
-                    </div>
+            <div class="d-flex flex-row">
+                <div class="p-10 bg-success-custom">
+                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
+                <div class="align-self-center m-l-20">
+                    <h3 class="m-b-0 text-info-custom">{{ number_format($balance, 0, '', ' ') }}$</h3>
+                    <h6 class="text-muted m-b-0">Доступная для вывода сумма</h6>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Column -->
-    <!-- Column -->
-    <div class="col-lg-4">
+    <div class="col-lg-3 col-md-3">
         <div class="card">
-            <div class="card-block">
-                <h4 class="card-title">Еженедельная  выплата</h4>
-                <div class="d-flex flex-row">
-                    <div class="p-10 p-l-0 b-r">
-                        <h6 class="font-light">Реферальный бонус</h6><b>{{ Balance::getWeekBalanceByStatusNew($id, ['invite_bonus', 'admin_add']) }} PV</b></div>
-                    <div class="p-10 b-r">
-                        <h6 class="font-light">Бинарный бонус + ЛКБ</h6><b>{{ Balance::getWeekBalanceByStatusNew($id, ['turnover_bonus','matching_bonus']) }} PV</b>
-                    </div>
+            <div class="d-flex flex-row">
+                <div class="p-10 bg-primary">
+                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
+                <div class="align-self-center m-l-20">
+                    <h3 class="m-b-0 text-primary">{{ number_format($week, 0, '', ' ') }}$</h3>
+                    <h6 class="text-muted m-b-0">Еженедельная  выплата</h6>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Column -->
-    <!-- Column -->
-    <div class="col-lg-4">
+    <div class="col-lg-3 col-md-3">
         <div class="card">
-            <div class="card-block">
-                <h4 class="card-title">Выведено</h4>
-                <div class="d-flex flex-row">
-                    <div class="p-10 p-l-0 b-r">
-                        <h6 class="font-light">Реферальный бонус</h6><b>{{ Balance::getBalanceOutNew($id, ['invite_bonus', 'admin_add']) }} PV</b></div>
-                    <div class="p-10 b-r">
-                        <h6 class="font-light">Бинарный бонус + ЛКБ</h6><b>{{ Balance::getBalanceOutNew($id, ['turnover_bonus','matching_bonus']) }} PV</b>
-                    </div>
+            <div class="d-flex flex-row">
+                <div class="p-10 bg-success">
+                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
+                <div class="align-self-center m-l-20">
+                    <h3 class="m-b-0 text-success">{{ number_format($out, 0, '', ' ') }}$</h3>
+                    <h6 class="text-muted m-b-0">Выведено  за все время</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3">
+        <div class="card">
+            <div class="d-flex flex-row">
+                <div class="p-10 bg-inverse">
+                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
+                <div class="align-self-center m-l-20">
+                    <h3 class="m-b-0">100 $</h3>
+                    <h6 class="text-muted m-b-0">Кешбек</h6>
                 </div>
             </div>
         </div>
