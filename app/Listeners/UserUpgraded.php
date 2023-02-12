@@ -84,7 +84,9 @@ class UserUpgraded
         foreach ($list as $key => $item){
             if($key == 0 && $item != ""){
                 Balance::changeBalance($item,$event->order->amount*$package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                Balance::changeBalance($id,$event->order->amount*0.4,'cashback',$id,$program->id,$package->id,'',$package->pv);
 
+            }
                 //start check small branch definition
                 $left_pv = Hierarchy::pvCounter($item,1);
                 $right_pv = Hierarchy::pvCounter($item,2);
@@ -268,6 +270,7 @@ class UserUpgraded
                                     $item_user_program = UserProgram::where('user_id',$item)->first();
                                     $item_status = Status::find($item_user_program->status_id);
                                     Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
+                                    Balance::changeBalance($item,$item_status->cashback_bonus,'cashback',$id,$program->id,$item_user_program->package_id,$item_status->id);
 
 
                                     Notification::create([
@@ -281,8 +284,6 @@ class UserUpgraded
                         }
                     }
                 }
-
-            }
         }
         /*end set  invite_bonus  */
 

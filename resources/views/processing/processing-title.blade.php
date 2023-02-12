@@ -1,7 +1,7 @@
 @if($item->status == 'invite_bonus')
     Реферальный бонус
 @elseif($item->status == 'cashback')
-    Кэшбек
+    Воучер/Кэшбек
 @elseif($item->status == 'turnover_bonus')
     Бонус за бинар
 @elseif($item->status == 'status_bonus')

@@ -412,6 +412,7 @@ class UserActivated
                                         $item_user_program = UserProgram::where('user_id',$item)->first();
                                         $item_status = Status::find($item_user_program->status_id);
                                         Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
+                                        Balance::changeBalance($item,$item_status->cashback_bonus,'cashback',$id,$program->id,$item_user_program->package_id,$item_status->id);
 
 
                                         Notification::create([
@@ -448,7 +449,7 @@ class UserActivated
 
 
                                 Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
-
+                                Balance::changeBalance($item,$sum*0.2,'cashback',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
                                 /*start set  matching_bonus  */
                                 $standart_package_is_matching = false;
 
@@ -507,6 +508,7 @@ class UserActivated
                 $inviter_package = Package::find($inviter->package_id);
 
                 Balance::changeBalance($inviter->id,$package->cost*$inviter_package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                Balance::changeBalance($id,$package->cost*0.4,'cashback',$id,$program->id,$package->id,'',$package->pv);
 
             }
             /*end set  invite_bonus  */

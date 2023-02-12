@@ -492,6 +492,7 @@ class HomeController extends Controller
 
         $week = Balance::getWeekBalance(Auth::user()->id);
         $revitalization = 0;
+        $cashback = Balance::getCashbackBalance(Auth::user()->id);
         //$activation = Hierarchy::activationCheck();
 
 
@@ -521,7 +522,7 @@ class HomeController extends Controller
 
 
         $id = Auth::user()->id;
-        return view('profile.processing.processing', compact('id','list', 'balance', 'revitalization', 'out','week','all'));
+        return view('profile.processing.processing', compact('id','list', 'balance', 'revitalization', 'out','week','all', 'cashback'));
     }
 
     public function profile(Request $request)

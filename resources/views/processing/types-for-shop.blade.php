@@ -13,8 +13,8 @@
                             <h4 class="m-b-20">Выберите удобный вид оплаты</h4>
                             <!-- Row -->
                             <div class="row img-for-pay">
-                                <div class="col-lg-3 col-md-6  img-responsive">
-                                    <!-- Card -->
+<!--                                <div class="col-lg-3 col-md-6  img-responsive">
+                                    &lt;!&ndash; Card &ndash;&gt;
                                     <div class="card">
                                         <div class="card-block">
                                             <h4 class="card-title">Оплатить с основного баланса - ${{ $balance }}</h4>
@@ -22,15 +22,20 @@
                                             <a href="/pay-prepare?type=balance&@if(!is_null($basket))basket={{ $basket->id }} @endif" class="btn btn-info m-t-10">Оплатить ${{ $all_cost }}</a>
                                         </div>
                                     </div>
-                                    <!-- Card -->
-                                </div>
+                                    &lt;!&ndash; Card &ndash;&gt;
+                                </div>-->
                                 <div class="col-lg-3 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
                                         <div class="card-block">
-                                            <h4 class="card-title">Оплатить с баланса повторной покупки - ${{ $revitalization }}</h4>
-                                            <p class="card-text">Баллы распределяются по активационному бонусу</p>
-                                            <a href="/pay-prepare?type=revitalization&@if(!is_null($basket))basket={{ $basket->id }}@endif" class="btn btn-info m-t-10">Оплатить ${{ $all_cost }}</a>
+                                            <h4 class="card-title">Баланс кешбек - ${{ $cashback }}</h4>
+                                            <p class="card-text">40% от суммы можно оплатить с баланса кешбек</p>
+                                            <div class="m-b-30">
+                                                <label>Потратить кешбек </label>
+                                                <input type="checkbox" class="js-switch"  id="js-switch" data-color="#55ce63" data-secondary-color="#f62d51" /></div>
+                                                <div class="inner">
+
+                                                </div>
                                         </div>
                                     </div>
                                     <!-- Card -->
@@ -44,13 +49,15 @@
                                         <div class="card-block">
                                             <h4 class="card-title">Скан квитанции</h4>
                                             <p class="card-text">Прикрепите Скан квитанции к форме</p>
-                                            <a href="/pay-prepare?type=manual&@if(!is_null($basket))basket={{ $basket->id }} @endif" class="btn btn-success m-t-10">Оплатить ${{ $all_cost }}</a>
+                                            <div class="inner-link">
+                                                <a href="/pay-prepare?type=manual&@if(!is_null($basket))basket={{ $basket->id }} @endif" class="btn btn-success m-t-10">Оплатить ${{ $all_cost }}</a>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Card -->
                                 </div>
-                                <div class="col-lg-2 col-md-6  img-responsive">
-                                    <!-- Card -->
+<!--                                <div class="col-lg-2 col-md-6  img-responsive">
+                                    &lt;!&ndash; Card &ndash;&gt;
                                     <div class="card">
                                         <img class="card-img-top img-responsive" src="/nrg/paypost.png" alt="Card image cap">
                                         <div class="card-block">
@@ -59,8 +66,8 @@
                                             <a href="/pay-prepare?type=paypost&@if(!is_null($basket))basket={{ $basket->id }}@endif" class="btn btn-success m-t-10">Оплатить ${{ $all_cost }}</a>
                                         </div>
                                     </div>
-                                    <!-- Card -->
-                                </div>
+                                    &lt;!&ndash; Card &ndash;&gt;
+                                </div>-->
                                 {{--<div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
@@ -73,8 +80,8 @@
                                     </div>
                                     <!-- Card -->
                                 </div>--}}
-                                <div class="col-lg-2 col-md-6  img-responsive">
-                                    <!-- Card -->
+<!--                                <div class="col-lg-2 col-md-6  img-responsive">
+                                    &lt;!&ndash; Card &ndash;&gt;
                                     <div class="card">
                                         <img class="card-img-top img-responsive" src="https://makoli.com/wp-content/uploads/payeer-logo.png" alt="Card image cap">
                                         <div class="card-block">
@@ -83,8 +90,8 @@
                                             <a href="/pay-prepare?type=payeer&@if(!is_null($basket))basket={{ $basket->id }}@endif" class="btn btn-success m-t-10">Оплатить ${{ $all_cost }}</a>
                                         </div>
                                     </div>
-                                    <!-- Card -->
-                                </div>
+                                    &lt;!&ndash; Card &ndash;&gt;
+                                </div>-->
                                 {{--<div class="col-lg-2 col-md-6  img-responsive">
                                     <!-- Card -->
                                     <div class="card">
@@ -131,6 +138,7 @@
 
     <script src="/monster_admin/main/js/toastr.js"></script>
     <script src="/monster_admin/assets/plugins/toast-master/js/jquery.toast.js"></script>
+    <script src="/monster_admin/assets/plugins/switchery/dist/switchery.min.js"></script>
 
     @if (session('status'))
         <script>
@@ -143,11 +151,50 @@
                 hideAfter: 60000,
                 stack: 6
             });
+
         </script>
     @endif
+
+    <script>
+        jQuery(document).ready(function() {
+            // Switchery
+            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+            $('.js-switch').each(function() {
+                new Switchery($(this)[0], $(this).data());
+            });
+        });
+
+        $('.js-switch').change(function () {
+            var yes = document.getElementById("js-switch");
+            var cost = {{ $all_cost }};
+            var cashback = {{ $cashback }};
+
+            if(cost*0.4 > cashback){
+                var new_cost = cost - cashback;
+                var spent_cashback = cashback;
+            }
+            else{
+                var new_cost = cost - cost*0.4;
+                var spent_cashback = cost*0.4;
+            }
+
+
+            if (yes.checked == true){
+                $( ".inner" ).html( "<p> C кешбека будет оплачено: " + spent_cashback + "$ <br> C денгами будет оплачено: "+ new_cost +"$ </p>" );
+                $( ".inner-link" ).html( "<a href=\"/pay-prepare?type=manual&cashback=1&@if(!is_null($basket))basket={{ $basket->id }} @endif\" class=\"btn btn-success m-t-10\">Оплатить $" +new_cost +"</a>" );
+            }
+            else{
+                $( ".inner-link" ).html( '<a href="/pay-prepare?type=manual&@if(!is_null($basket))basket={{ $basket->id }} @endif" class="btn btn-success m-t-10">Оплатить ${{ $all_cost }}</a>' );
+                $( ".inner" ).html("");
+            }
+
+        });
+
+    </script>
 @endpush
 
 
 @push('styles')
     <link href="/monster_admin/assets/plugins/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <link href="/monster_admin/assets/plugins/switchery/dist/switchery.min.css" rel="stylesheet" />
 @endpush

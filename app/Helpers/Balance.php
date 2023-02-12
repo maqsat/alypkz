@@ -199,16 +199,18 @@ class Balance {
     }
 
 
-
-
-
-
     public function getBalanceByStatus($status)
     {
         $sum = Processing::where('status', $status)->sum('sum');
         return round($sum, 2);
     }
 
+
+    public function getCashbackBalance($user_id)
+    {
+        $sum = Processing::whereUserId($user_id)->whereIn('status', ['cashback'])->sum('sum') - Processing::whereUserId($user_id)->whereIn('status', ['cashback_out'])->sum('sum');
+        return round($sum, 2);
+    }
 
 
 

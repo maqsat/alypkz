@@ -35,7 +35,7 @@ class PayController extends Controller
         elseif (isset($request->basket)){
 
             $balance = Balance::getBalance(Auth::user()->id);
-            $revitalization = Balance::revitalizationBalance(Auth::user()->id);
+            $cashback = Balance::getCashbackBalance(Auth::user()->id);
 
             $basket = Basket::find($request->basket);
             $all_cost = DB::table('basket_good')
@@ -43,7 +43,7 @@ class PayController extends Controller
                 ->where(['basket_id' => $basket->id])
                 ->sum(DB::raw('basket_good.quantity*products.partner_cost'));//['products.*','basket_good.quantity']
 
-            return view('processing.types-for-shop',compact('basket','all_cost','revitalization','balance'));
+            return view('processing.types-for-shop',compact('basket','all_cost','cashback','balance'));
         }
         else {
 
@@ -97,36 +97,35 @@ class PayController extends Controller
                 ->join('products','basket_good.good_id','=','products.id')
                 ->where(['basket_id' => $request->basket])
                 ->sum(DB::raw('basket_good.quantity*products.partner_cost'));//['products.*','basket_good.quantity']
+            $spent_cashback = 0;
 
-            if($request->type == 'revitalization'){
-                $order =  Order::updateOrCreate(
-                    [
-                        'type' => 'shop',
-                        'status' => 0,
-                        'payment' => $request->type,
-                        'uuid' => 0,
-                        'user_id' => Auth::user()->id,
-                        'basket_id' => $request->basket,
-                        'not_original' => 1
-                    ],
-                    ['amount' => $cost, 'package_id' => 0]
-                );
+            if(isset($request->cashback)){
+                $cashback = Balance::getCashbackBalance(Auth::user()->id);
 
+                if($cost*0.4 > $cashback){
+                    $new_cost = $cost - $cashback;
+                    $spent_cashback = $cashback;
+                }
+                else{
+                    $new_cost = $cost - $cost*0.4;
+                    $spent_cashback = $cost*0.4;
+                }
+
+                $cost = $new_cost;
             }
-            else{
 
-                $order =  Order::updateOrCreate(
-                    [
-                        'type' => 'shop',
-                        'status' => 0,
-                        'payment' => $request->type,
-                        'uuid' => 0,
-                        'user_id' => Auth::user()->id,
-                        'basket_id' => $request->basket
-                    ],
-                    ['amount' => $cost, 'package_id' => 0]
-                );
-            }
+
+
+            $order =  Order::updateOrCreate(
+                [
+                    'type' => 'shop',
+                    'status' => 0,
+                    'payment' => $request->type,
+                    'uuid' => 0,
+                    'user_id' => Auth::user()->id,
+                    'basket_id' => $request->basket
+                ],
+                ['amount' => $cost, 'package_id' => 0, 'cashback' => $spent_cashback]);
 
         }
         else{

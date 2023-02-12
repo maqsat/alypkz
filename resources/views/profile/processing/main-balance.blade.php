@@ -42,7 +42,7 @@
                 <div class="p-10 bg-inverse">
                     <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                 <div class="align-self-center m-l-20">
-                    <h3 class="m-b-0">100 $</h3>
+                    <h3 class="m-b-0">{{ number_format($cashback, 0, '', ' ') }} $</h3>
                     <h6 class="text-muted m-b-0">Кешбек</h6>
                 </div>
             </div>

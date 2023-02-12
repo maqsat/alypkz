@@ -602,14 +602,37 @@ class UserController extends Controller
             ->where('status' ,4)
             ->first();
 
-        Balance::changeBalance($basket->user_id,$order->amount*0.05,'cashback',$basket->user_id,1,$user_program->package_id,$user_program->status_id,$sum_pv);
+        Balance::changeBalance($basket->user_id,-$order->cashback,'cashback',$basket->user_id,1,$user_program->package_id,$user_program->status_id,$sum_pv);
 
-        if($sum_pv > 0) {
+        if(true) {//$sum_pv > 0
             $data = [];
             $data['pv'] = $sum_pv;
             $data['user_id'] = $basket->user_id;
 
             //event(new ShopTurnover($data = $data));
+
+            $inviter_list = Hierarchy::getInviterList($basket->user_id,'').',';
+            $inviter_list = explode(',',trim($inviter_list,','));
+            $inviter_list = array_slice($inviter_list, 0, 5);
+
+            foreach ($inviter_list as $key => $item){
+                if($key == 0 && in_array($item, [1,2,3])){
+                    Balance::changeBalance($basket->user_id,$order->amount*0.15,'cashback',$basket->user_id,1,$user_program->package_id,$user_program->status_id,$sum_pv);
+                }
+                if($key == 1 && in_array($item, [1,2,3])){
+                    Balance::changeBalance($basket->user_id,$order->amount*0.1,'cashback',$basket->user_id,1,$user_program->package_id,$user_program->status_id,$sum_pv);
+                }
+                if($key == 2 && in_array($item, [2,3])){
+                    Balance::changeBalance($basket->user_id,$order->amount*0.08,'cashback',$basket->user_id,1,$user_program->package_id,$user_program->status_id,$sum_pv);
+                }
+                if($key == 3 && in_array($item, [2,3])){
+                    Balance::changeBalance($basket->user_id,$order->amount*0.05,'cashback',$basket->user_id,1,$user_program->package_id,$user_program->status_id,$sum_pv);
+                }
+                if($key == 3 && in_array($item, [3])){
+                    Balance::changeBalance($basket->user_id,$order->amount*0.02,'cashback',$basket->user_id,1,$user_program->package_id,$user_program->status_id,$sum_pv);
+                }
+            }
+
 
             $user = User::find($basket->user_id);
 
@@ -1087,6 +1110,7 @@ class UserController extends Controller
         $all = Balance::getIncomeBalance($id);
         $out = Balance::getBalanceOut($id);
         $week = Balance::getWeekBalance($id);
+        $cashback = Balance::getCashbackBalance($id);
 
         $list = Processing::whereUserId($id)->where(function ($query) {
             $query
@@ -1099,7 +1123,7 @@ class UserController extends Controller
 
 
 
-        return view('user.processing', compact('id','list', 'balance', 'all', 'out','week','user', 'users'));
+        return view('user.processing', compact('id','list', 'balance', 'all', 'out','week','user', 'users', 'cashback'));
     }
 
 

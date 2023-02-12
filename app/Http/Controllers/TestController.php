@@ -29,7 +29,7 @@ class TestController extends Controller
 
     public function tester()
     {
-        Hierarchy::setQS();
+
     }
 
     public function setBots()
