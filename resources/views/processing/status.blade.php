@@ -37,7 +37,7 @@
                                     <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>ЛКБ</td>
+                                        <td>Матчинг</td>
                                         <td>{{ number_format(round(\App\Facades\Balance::getBalanceByStatus('matching_bonus')), 0, '', ' ')  }}$</td>
                                         <td><a href="">Подробнее</a></td>
                                     </tr>
@@ -51,6 +51,18 @@
                                         <td>3</td>
                                         <td>Реферальный бонус</td>
                                         <td>{{ number_format(round(\App\Facades\Balance::getBalanceByStatus('invite_bonus')), 0, '', ' ')  }}$</td>
+                                        <td><a href="">Подробнее</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Кешбек/Воучер</td>
+                                        <td>{{ number_format(round(\App\Facades\Balance::getBalanceByStatus('cashback')), 0, '', ' ')  }}$</td>
+                                        <td><a href="">Подробнее</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Статусный бонус</td>
+                                        <td>{{ number_format(round(\App\Facades\Balance::getBalanceByStatus('status_bonus')), 0, '', ' ')  }}$</td>
                                         <td><a href="">Подробнее</a></td>
                                     </tr>
                                     </tbody>

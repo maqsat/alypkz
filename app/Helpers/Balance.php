@@ -169,7 +169,7 @@ class Balance {
 
     public function getBalanceAllUsers()
     {
-        $sum = Processing::whereIn('status', ['invite_bonus', 'admin_add', 'turnover_bonus','matching_bonus'])->sum('sum') - Processing::whereIn('status', ['out'])->sum('sum');
+        $sum = Processing::whereIn('status', ['invite_bonus', 'admin_add', 'turnover_bonus','matching_bonus','status_bonus'])->sum('sum') - Processing::whereIn('status', ['out'])->sum('sum');
         return round($sum, 2);
     }
 

@@ -292,8 +292,9 @@ class ProcessingController extends Controller
         $commission = Balance::getBalanceAllUsers();
         $out = Balance::getBalanceOutAllUsers();
         $shop = Processing::where('status', 'shop')->sum('sum');
+        $cashback = Processing::where('status', 'cashback')->sum('sum');
 
-        return view('processing.overview',compact('register','commission','out','shop', 'upgrade'));
+        return view('processing.overview',compact('register','commission','out','shop', 'upgrade','cashback'));
     }
 
     public function status()

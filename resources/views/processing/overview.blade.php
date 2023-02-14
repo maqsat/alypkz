@@ -93,6 +93,22 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="card">
                         <div class="card-block">
+                            <h4 class="card-title">Кешбек/Воучер</h4>
+                            <div class="text-right">
+                                <h1 class="font-light"><sup><i class="ti-arrow-down text-danger"></i></sup> ${{ number_format($cashback, 0, '', ' ') }}</h1>
+                            </div>
+                            <span class="text-danger">60%</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 60%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <!-- Column -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-block">
                             <h4 class="card-title">Выведено</h4>
                             <div class="text-right">
                                 <h1 class="font-light"><sup><i class="ti-arrow-up text-danger"></i></sup> ${{ number_format($out, 0, '', ' ') }}</h1>
