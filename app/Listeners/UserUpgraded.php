@@ -269,7 +269,7 @@ class UserUpgraded
                                     Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
                                     $item_user_program = UserProgram::where('user_id',$item)->first();
                                     $item_status = Status::find($item_user_program->status_id);
-                                    Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
+                                    //Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
                                     Balance::changeBalance($item,$item_status->cashback_bonus,'cashback',$id,$program->id,$item_user_program->package_id,$item_status->id);
 
 

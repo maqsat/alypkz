@@ -138,17 +138,6 @@ class UserActivated
         if($sponsor_subscribers == 2) {
             UserProgram::whereUserId($this_user->inviter_id)->update(['is_binary' => 1]);
 
-            /*$first_subscriber = UserProgram::join('users','user_programs.user_id','=','users.id')
-                ->where('users.inviter_id',$this_user->inviter_id)
-                ->where('users.status',1)
-                ->where('users.id', '!=', $event->user->id)
-                ->first();
-
-            $first_subscriber_seted = Processing::where('status','turnover_bonus')->where('user_id',$this_user->inviter_id)->first();
-
-            $first_subscriber_seted->pv = $first_subscriber_seted->pv - Package::find($first_subscriber->package_id)->pv;
-            $first_subscriber_seted->save();*/
-
         }
         /*end activate sponsor binary*/
 
@@ -167,37 +156,6 @@ class UserActivated
 
         if($package_id != 0){
             $sponsors_list = explode(',',trim($list,','));
-
-            /*start set  matching_bonus  */
-            /*$inviter_list_for_lkb = explode(',',trim($inviter_list,','));
-            $inviter_list_for_lkb = array_slice($inviter_list_for_lkb, 0, 7);
-            $old_max_status_percentage = 0;
-
-            foreach ($inviter_list_for_lkb as $key_matching => $item_matching){
-
-                $matching_user_program = UserProgram::where('user_id',$item_matching)->first();
-
-                if(!is_null($matching_user_program)){
-                    $new_max_status_percentage = Status::find($matching_user_program->status_id)->matching_bonus;
-
-                    if($matching_user_program->package_id == 2 and $new_max_status_percentage < 5) {
-                        $new_max_status_percentage = 5;
-                    }
-
-                    if($matching_user_program->package_id == 3 and $new_max_status_percentage < 10) {
-                        $new_max_status_percentage = 10;
-                    }
-
-                    if($new_max_status_percentage > $old_max_status_percentage){
-
-                        $current_max_status_percentage = $new_max_status_percentage - $old_max_status_percentage;
-                        $old_max_status_percentage = $new_max_status_percentage;
-
-                        Balance::changeBalance($item_matching,$package->cost*$current_max_status_percentage/100,'matching_bonus',$id,$program->id,$package->id,'',$package->pv,'',$key_matching);
-                    }
-                }
-            }*/
-            /*end set  matching_bonus  */
 
 
             foreach ($sponsors_list as $key => $item){
@@ -411,7 +369,7 @@ class UserActivated
                                         Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
                                         $item_user_program = UserProgram::where('user_id',$item)->first();
                                         $item_status = Status::find($item_user_program->status_id);
-                                        Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
+                                        //Balance::changeBalance($item,$item_status->status_bonus,'status_bonus',$id,$program->id,$item_user_program->package_id,$item_status->id);
                                         Balance::changeBalance($item,$item_status->cashback_bonus,'cashback',$id,$program->id,$item_user_program->package_id,$item_status->id);
 
 
