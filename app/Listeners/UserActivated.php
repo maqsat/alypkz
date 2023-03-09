@@ -408,40 +408,32 @@ class UserActivated
 
                                 Balance::changeBalance($item,$sum,'turnover_bonus',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
                                 Balance::changeBalance($item,$sum*0.2,'cashback',$id,$program->id,$package->id,$item_status->id,$to_enrollment_pv,$temp_sum);
+
+
                                 /*start set  matching_bonus  */
-                                $standart_package_is_matching = false;
+                                $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
+                                $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
 
-                                if($item_package->id == 1){
-                                    if($item_status->id >= 4) $standart_package_is_matching = true;
-                                }
+                                foreach ($inviter_list_for_matching as $key_referral => $item_matching){
 
+                                    if($item_matching != ""){
 
-                                if($standart_package_is_matching or $item_package->id == 2 or $item_package->id == 3){
-
-                                    $inviter_list_for_matching = explode(',',trim($item_user_program->inviter_list,','));
-                                    $inviter_list_for_matching = array_slice($inviter_list_for_matching, 0, 3);
-
-                                    foreach ($inviter_list_for_matching as $key_referral => $item_matching){
-
-                                        if($item_matching != ""){
-
-                                            $item_matching_user_program = UserProgram::where('user_id',$item_matching)->first();
+                                        $item_matching_user_program = UserProgram::where('user_id',$item_matching)->first();
 
 
-                                            if($key_referral == 0  && ($standart_package_is_matching or $item_package->id == 2 or $item_package->id == 3)){
-                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                        if($key_referral == 0  && ($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
+                                            Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
-                                            }
+                                        }
 
-                                            if($key_referral == 1  && ($item_package->id == 2 or $item_package->id == 3)){
-                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                        if($key_referral == 1  && ($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
+                                            Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
-                                            }
+                                        }
 
-                                            if($key_referral == 2  && $item_package->id == 3){
-                                                Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                        if($key_referral == 2  && $item_matching_user_program->package_id == 3){
+                                            Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
-                                            }
                                         }
                                     }
                                 }
