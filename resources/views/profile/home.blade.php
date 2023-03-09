@@ -60,7 +60,7 @@
                 <div class="col-lg-4 col-xlg-3 col-md-5">
                     <div class="card">
                         <div class="card  not-margin">
-                            <center class="m-t-30"> <img src="{{Auth::user()->photo}}" class="img-circle" width="150"/>
+                            <center class="m-t-30"> <img src="{{Auth::user()->photo}}" class="img-circle  profile-img" width="150"/>
                                 <h4 class="card-title m-t-10">{{ $user->name }}</h4>
                             </center>
                         </div>
