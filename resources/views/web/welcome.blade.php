@@ -127,7 +127,7 @@
             <div class="section-body">
                 <div class="swiper ownersSwiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
+<!--                        <div class="swiper-slide">
                             <div class="section4-img">
                                 <img src="/alyp_group/img/img-section4-1.jpg" alt="">
                             </div>
@@ -141,7 +141,7 @@
                                     </svg>
                                 </a>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="swiper-slide">
                             <div class="section4-img">
                                 <img src="/alyp_group/img/img-section4-2.jpg" alt="">
@@ -157,7 +157,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="swiper-slide">
+<!--                        <div class="swiper-slide">
                             <div class="section4-img">
                                 <img src="/alyp_group/img/img-section4-3.jpg" alt="">
                             </div>
@@ -171,7 +171,7 @@
                                     </svg>
                                 </a>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="swiper-slide">
                             <div class="section4-img">
                                 <img src="/alyp_group/img/img-section4-4.jpg" alt="">

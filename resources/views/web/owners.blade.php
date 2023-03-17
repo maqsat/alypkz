@@ -15,7 +15,7 @@
         </div>
     </section>
 
-    <section class="page section-green">
+<!--    <section class="page section-green">
         <div class="container">
             <div class="owner-block">
                 <div class="owner-text-block">
@@ -41,7 +41,7 @@
         </div>
         <img src="/alyp_group/img/icons/ill-section-green-elem1.png" alt="" class="section-green-ill1">
         <img src="/alyp_group/img/icons/ill-section-green-elem2.png" alt="" class="section-green-ill2">
-    </section>
+    </section>-->
 
     <section class="page section-cofounder">
         <div class="container">
@@ -175,7 +175,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="swiper-slide">
+<!--                            <div class="swiper-slide">
                                 <div class="cofounder-img">
                                     <img src="/alyp_group/img/img-section4-3.jpg" alt="">
                                 </div>
@@ -193,7 +193,7 @@
                                         <li>2022 – учредитель Alyp Group</li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="swiper-button-next-2">
