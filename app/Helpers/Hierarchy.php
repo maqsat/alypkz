@@ -399,7 +399,7 @@ class Hierarchy {
     {
         $inviters = DB::select('SELECT COUNT(inviter_id) as count, id, name, inviter_id, created_at, is_qs_user
                             FROM users
-                            WHERE created_at >= (curdate() - INTERVAL 60 DAY)  AND status = 1 AND is_qs_user IS NULL
+                            WHERE created_at >= (curdate() - INTERVAL 15 DAY)  AND status = 1 AND is_qs_user IS NULL
                             GROUP BY inviter_id
                             ORDER BY COUNT(inviter_id) DESC
                             LIMIT 10;');
@@ -412,11 +412,11 @@ class Hierarchy {
                 $users = User::join('user_programs','users.id','=','user_programs.user_id')
                     ->where('users.inviter_id',$item->inviter_id)
                     ->where('users.status',1)
-                    ->whereBetween('users.created_at', [Carbon::now()->subDay(60), Carbon::now()])
+                    ->whereBetween('users.created_at', [Carbon::now()->subDay(15), Carbon::now()])
                     ->orderBy('users.created_at')
                     ->get();
 
-                if($users[0]->created_at->addDay(60)->lt(Carbon::now())){
+                if($users[0]->created_at->addDay(15)->lt(Carbon::now())){
                     User::whereId($item->inviter_id)->update([
                         'is_qs_inviter' => 1,
                     ]);
