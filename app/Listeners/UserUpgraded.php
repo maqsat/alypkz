@@ -52,7 +52,12 @@ class UserUpgraded
         $package_cost = $package->cost;
         $program = Program::find($this_user->program_id);
 
+        /*start check*/
+        if($package->id == $event->order->package_id) dd("Пакет уже апгрейден");
+        /*end check*/
+
         Balance::changeBalance($id,$event->order->amount,'register',$this_user->id,$this_user->program_id,$package_id,0);
+
 
         UserProgram::where('user_id',$id)
             ->update([
