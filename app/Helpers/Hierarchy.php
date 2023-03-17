@@ -397,16 +397,17 @@ class Hierarchy {
      */
     public function setQS()
     {
-        $inviters = DB::select('SELECT COUNT(inviter_id) as count, id, name, inviter_id, created_at, is_quick_start
+        $inviters = DB::select('SELECT COUNT(inviter_id) as count, id, name, inviter_id, created_at, is_qs_user
                             FROM users
-                            WHERE created_at >= (curdate() - INTERVAL 60 DAY)  AND status = 1 AND is_quick_start IS NULL
+                            WHERE created_at >= (curdate() - INTERVAL 60 DAY)  AND status = 1 AND is_qs_user IS NULL
                             GROUP BY inviter_id
-                            ORDER BY COUNT(inviter_id) DESC;');
+                            ORDER BY COUNT(inviter_id) DESC
+                            LIMIT 10;');
 
         foreach ($inviters as $item){
 
 
-            if($item->count >= 5 && is_null(User::find($item->inviter_id)->is_quick_start)){
+            if($item->count >= 5 && is_null(User::find($item->inviter_id)->is_qs_user)){
 
                 $users = User::join('user_programs','users.id','=','user_programs.user_id')
                     ->where('users.inviter_id',$item->inviter_id)
@@ -417,7 +418,7 @@ class Hierarchy {
 
                 if($users[0]->created_at->addDay(60)->lt(Carbon::now())){
                     User::whereId($item->inviter_id)->update([
-                        'is_quick_start' => 1,
+                        'is_qs_inviter' => 1,
                     ]);
                 }
                 else{
@@ -427,7 +428,7 @@ class Hierarchy {
                             $package = Package::find($innerItem->package_id);
 
                             User::whereId($innerItem->user_id)->update([
-                                'is_quick_start' => 1,
+                                'is_qs_user' => 1,
                             ]);
 
                             $sum = $package->cost*$package->invite_bonus/100;
