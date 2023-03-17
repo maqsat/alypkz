@@ -29,23 +29,7 @@ class TestController extends Controller
 
     public function tester()
     {
-        $sum = 0;
-        $count = 0;
-        $first_users = User::where('inviter_id',65)->get();
-
-        foreach ($first_users as $item){
-            $sum +=  Balance::getIncomeBalanceByStatus($item->id,['turnover_bonus']);
-
-            $first_users_inner = User::where('inviter_id',$item->id)->get();
-            $count++;
-            foreach ($first_users_inner as $inner_item){
-                $sum +=  Balance::getIncomeBalanceByStatus($inner_item->id,['turnover_bonus']);
-                $count++;
-            }
-
-        }
-        echo $sum."<br>";
-        echo $count."<br>";
+        Hierarchy::setQS();
 
     }
 
