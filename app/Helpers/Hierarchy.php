@@ -399,32 +399,39 @@ class Hierarchy {
     {
         $inviters = DB::select('SELECT COUNT(inviter_id) as count, id, name, inviter_id, created_at, is_qs_user
                             FROM users
-                            WHERE created_at >= (curdate() - INTERVAL 15 DAY)  AND status = 1 AND is_qs_user IS NULL
+                            WHERE is_qs_user IS NULL
                             GROUP BY inviter_id
-                            ORDER BY COUNT(inviter_id) DESC
-                            LIMIT 10;');
+                            HAVING COUNT(inviter_id) > 4;');
+
 
         foreach ($inviters as $item){
 
 
-            if($item->count >= 5 && is_null(User::find($item->inviter_id)->is_qs_user)){
+            if($item->count >= 5 && is_null(User::find($item->inviter_id)->is_qs_inviter)){
 
                 $users = User::join('user_programs','users.id','=','user_programs.user_id')
                     ->where('users.inviter_id',$item->inviter_id)
                     ->where('users.status',1)
-                    ->whereBetween('users.created_at', [Carbon::now()->subDay(15), Carbon::now()])
+                    //->whereBetween('users.created_at', [Carbon::now()->subDay(15), Carbon::now()])
                     ->orderBy('users.created_at')
                     ->get();
 
-                if($users[0]->created_at->addDay(15)->lt(Carbon::now())){
-                    User::whereId($item->inviter_id)->update([
-                        'is_qs_inviter' => 1,
-                    ]);
-                }
-                else{
-                    foreach ($users as $innerItem){
+                if (count($users) > 4){
 
-                        //if($innerItem->package_id == 1 or $innerItem->package_id == 2 or $innerItem->package_id == 3){
+                    if($users[0]->created_at->addDay(15)->lt(Carbon::parse($users[4]->created_at))){
+                        User::whereId($item->inviter_id)->update([
+                            'is_qs_inviter' => 1,
+                        ]);
+                    }
+                    else{
+                        echo $item->inviter_id."<br>";
+                        User::whereId($item->inviter_id)->update([
+                            'is_qs_inviter' => 1,
+                        ]);
+
+                        foreach ($users as $innerItem){
+
+                            //if($innerItem->package_id == 1 or $innerItem->package_id == 2 or $innerItem->package_id == 3){
                             $package = Package::find($innerItem->package_id);
 
                             User::whereId($innerItem->user_id)->update([
@@ -433,8 +440,10 @@ class Hierarchy {
 
                             $sum = $package->cost*$package->invite_bonus/100;
                             Balance::changeBalance($item->inviter_id,$sum,'quickstart_bonus',$innerItem->user_id,1,$package->id,1,$package->pv);
-                        //}
+                            //}
+                        }
                     }
+
                 }
             }
         }
