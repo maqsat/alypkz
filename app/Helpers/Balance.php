@@ -194,7 +194,7 @@ class Balance {
 
     public function getBalanceOut($user_id)
     {
-        $sum = Processing::whereUserId($user_id)->whereIn('status', ['out','shop'])->sum('sum');
+        $sum = Processing::whereUserId($user_id)->whereIn('status', ['out','shop', 'remove'])->sum('sum');
         return round($sum, 2);
     }
 
