@@ -85,6 +85,7 @@
                             <li><a href="/">Наследник</a></li>
                             <li><a href="/profile-news">Новости</a></li>
                             <li><a href="/edu">Обучение</a></li>
+                            <li><a href="/reg_doc.pdf" target="_blank">Обучение</a></li>
                         </ul>
                     </li>
                     {{--<li>
