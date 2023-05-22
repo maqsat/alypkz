@@ -197,9 +197,14 @@
                                         <div class="input-group">
                                             <input type="file" id="input-file-now"  name="scan" />
                                         </div>
-                                        <label for="checkbox-signup">  Регистрируясь на сайте вы подтверждаете, что ознакомились с <a href="/reg_doc.pdf"  target="_blank">Договором оферты</a>. </label>
-                                        <div class="input-group">
-                                            <input type="checkbox" id="terms" name="terms" class="required" checked>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="checkbox checkbox-primary pull-left m-t-10">
+                                                <input type="checkbox" id="terms" name="terms" class="required" checked>
+                                                <label for="checkbox-signup">  Регистрируясь на сайте вы подтверждаете, что ознакомились с <a href="/reg_doc.pdf"  target="_blank">Договором оферты</a>. </label>
+                                                <div class="error-message"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
