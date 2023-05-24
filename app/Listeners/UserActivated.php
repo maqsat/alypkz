@@ -60,7 +60,6 @@ class UserActivated
         if($check_this_user_sponsor_id_program == 0) dd("Спонсор не активирован -> $this_user->sponsor_id");
         /*end sponsor check*/
 
-
         /*start init and activate*/
         /*set sponsor if sponsor not found*/
         if(is_null($this_user->sponsor_id)){
@@ -81,6 +80,12 @@ class UserActivated
             }
         }
         /*end set sponsor if sponsor not found*/
+
+        /*start sponsor position check*/
+        $checker = User::where('sponsor_id',$this_user->sponsor_id)->where('position',$this_user->position)->where('status',1)->count();
+        if($checker > 0) dd('status', 'Позиция занята, проверьте, есть не активированный партнер в этой позиции',$this_user->sponsor_id );
+        /*end sponsor position check*/
+
 
         if(!is_null($event->user->status_id) && $event->user->status_id != 0  && $status_id < $event->user->status_id){
             $status_id = $event->user->status_id;

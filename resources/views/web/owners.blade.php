@@ -133,7 +133,7 @@
                                     </ul>
                                 </div>
                             </div>-->
-                            <div class="swiper-slide">
+<!--                            <div class="swiper-slide">
                                 <div class="cofounder-img">
                                     <img src="/alyp_group/img/img-section4-6.jpg" alt="">
                                 </div>
@@ -152,8 +152,8 @@
                                         <li>Награжден медалью «Батыр шапағаты» имени Бауржан Момышулы</li>
                                     </ul>
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
+                            </div>-->
+<!--                            <div class="swiper-slide">
                                 <div class="cofounder-img">
                                     <img src="/alyp_group/img/img-section4-7.jpg" alt="">
                                 </div>
@@ -174,7 +174,7 @@
                                         <li>Учредитель Alyp Group Limited</li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div>-->
 <!--                            <div class="swiper-slide">
                                 <div class="cofounder-img">
                                     <img src="/alyp_group/img/img-section4-3.jpg" alt="">

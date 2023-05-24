@@ -29,7 +29,150 @@ class TestController extends Controller
 
     public function tester()
     {
-        Hierarchy::setQS();
+        dd($sponsor_data = Hierarchy::getSponsorId(1));
+    }
+
+    public function afterHack()
+    {
+        $deleted_users  = [
+            [
+                'id'        => 770,
+                'name'      => 'Сабалакова Венера Жолдаскалиева',
+                'number'        => "+77752503882",
+                'email'         => "venera1982@mail.ru",
+                'inviter_id'    => 708,
+                'sponsor_id'    => 710,
+                'created_at'    => "2023-05-22 07:39:39",
+                'package_id'    => 1,
+                'gender'        => 1,
+                'birthday'      => "04.04.20",
+                'address'       => "address",
+                'password'      => '$2y$10$VEeAZGJdX3ge9FEP3gDXn.6bxBlluFu49n2dTVfDSvKn35uBEoCxe',
+                'country_id'    => 1,
+                'city_id'       => 1,
+                'position'      => 1,
+                'program_id'    => 1,
+            ],
+            [
+                'id'        => 771,
+                'name'      => 'Сабалакова Венера 2',
+                'number'        => "+77752503882",
+                'email'         => "venera1982@bk.ru",
+                'inviter_id'    => 770,
+                'sponsor_id'    => 770,
+                'created_at'    => "2023-05-21 07:39:39",
+                'package_id'    => 2,
+                'gender'        => 1,
+                'birthday'      => "04.04.20",
+                'address'       => "address",
+                'password'      => '$2y$10$VEeAZGJdX3ge9FEP3gDXn.6bxBlluFu49n2dTVfDSvKn35uBEoCxe',
+                'country_id'    => 1,
+                'city_id'       => 1,
+                'position'      => 1,
+                'program_id'    => 1,
+            ],
+            [
+                'id'        => 772,
+                'name'      => 'Айтжанова Гульчатай Жулдугуловна',
+                'number'        => "87774692482",
+                'email'         => "gulchatai87@gmail.com",
+                'inviter_id'    => 759,
+                'sponsor_id'    => 759,
+                'created_at'    => "2023-05-22 07:39:39",
+                'package_id'    => 3,
+                'gender'        => 1,
+                'birthday'      => "04.04.20",
+                'address'       => "address",
+                'password'      => '$2y$10$VEeAZGJdX3ge9FEP3gDXn.6bxBlluFu49n2dTVfDSvKn35uBEoCxe',
+                'country_id'    => 1,
+                'city_id'       => 1,
+                'position'      => 1,
+                'program_id'    => 1,
+            ],
+            [
+                'id'        => 773,
+                'name'      => 'Айтжан Гулнур Тулепбергенкызы',
+                'number'        => "87083281828",
+                'email'         => "aitzhangulnur00@gmail.com",
+                'inviter_id'    => 688,
+                'sponsor_id'    => 756,
+                'created_at'    => "2023-05-22 07:39:39",
+                'package_id'    => 2,
+                'gender'        => 1,
+                'birthday'      => "04.04.20",
+                'address'       => "address",
+                'password'      => '$2y$10$VEeAZGJdX3ge9FEP3gDXn.6bxBlluFu49n2dTVfDSvKn35uBEoCxe',
+                'country_id'    => 1,
+                'city_id'       => 1,
+                'position'      => 1,
+                'program_id'    => 1,
+            ],
+            [
+                'id'        => 774,
+                'name'      => 'Нұржанұлы Дамир',
+                'number'        => "87053975133",
+                'email'         => "nurzhan11@mail.ru",
+                'inviter_id'    => 691,
+                'sponsor_id'    => 755,
+                'created_at'    => "2023-05-23 07:39:39",
+                'package_id'    => 2,
+                'gender'        => 1,
+                'birthday'      => "04.04.20",
+                'address'       => "address",
+                'password'      => '$2y$10$VEeAZGJdX3ge9FEP3gDXn.6bxBlluFu49n2dTVfDSvKn35uBEoCxe',
+                'country_id'    => 1,
+                'city_id'       => 1,
+                'position'      => 1,
+                'program_id'    => 1,
+            ],
+            [
+                'id'        => 775,
+                'name'      => 'Кушербаева Бактылы Магзумовна',
+                'number'        => "87774269175",
+                'email'         => "kuserbaevabaktyly@gmail.com",
+                'inviter_id'    => 691,
+                'sponsor_id'    => 774,
+                'created_at'    => "2023-05-21 07:39:39",
+                'package_id'    => 1,
+                'gender'        => 1,
+                'birthday'      => "04.04.20",
+                'address'       => "address",
+                'password'      => '$2y$10$VEeAZGJdX3ge9FEP3gDXn.6bxBlluFu49n2dTVfDSvKn35uBEoCxe',
+                'country_id'    => 1,
+                'city_id'       => 1,
+                'position'      => 1,
+                'program_id'    => 1,
+            ]
+        ];
+
+        //dd($deleted_users);
+
+        foreach ($deleted_users as $item){
+
+            User::create([
+                'id'            => $item['id'],
+                'name'          => $item['name'],
+                'number'        => $item['number'],
+                'email'         => $item['email'],
+                'inviter_id'    => $item['inviter_id'],
+                'sponsor_id'    => $item['sponsor_id'],
+                'created_at'    => $item['created_at'],
+                'package_id'    => $item['package_id'],
+                'gender'        => 1,
+                'birthday'      => "04.04.20",
+                'address'       => "address",
+                'password'      => '$2y$10$VEeAZGJdX3ge9FEP3gDXn.6bxBlluFu49n2dTVfDSvKn35uBEoCxe',
+                'country_id'    => 1,
+                'city_id'       => 1,
+                'position'      => 1,
+                'program_id'    => 1,
+            ]);
+        }
+
+        //Апгрейд пользователя Умиртаева Анель Абзаловна ( 7 )
+        //Апгрейд пользователя Макутова Клара Казиевна ( 736 )
+        //Апгрейд пользователя Айтуғанқызы Аида ( 691 )
+        //Апгрейд пользователя Жунисова Айнагуль Бектибайқызы ( 12 )
 
     }
 

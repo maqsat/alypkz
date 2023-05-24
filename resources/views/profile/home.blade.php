@@ -232,8 +232,10 @@
                                                 Трекинг номер: @if(!is_null($order))
                                                                     {{ $order->trucking }}
                                                                 @endif <br>
+                                                @if(!is_null($order))
                                                 @php $courier = \App\User::find($order->courier_id); @endphp
                                                 Ответственный: @if(!is_null($courier)) {{ $courier->name }} @endif
+                                                @endif
 
                                             </td>
                                             <td>{{ $item->number }}</td>
