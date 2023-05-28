@@ -123,7 +123,7 @@
                     <ul class="menu-list">
                         <li>
                             <div class="menu-list-item">
-                                <a href="/alyp_group/" class="menu-list-link text-medium1">
+                                <a href="/" class="menu-list-link text-medium1">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_59_415)">
                                             <path d="M8.62505 15.9591C11.7069 19.0425 15.6119 21.0077 17.9343 18.6952L18.4976 18.1319C19.2486 17.3822 19.1441 16.1398 18.2717 15.5341C17.7225 15.1515 17.1324 14.7407 16.4801 14.2819C15.8053 13.8075 14.8806 13.8823 14.2947 14.4626L13.658 15.0951C12.8688 14.5953 12.0881 13.9529 11.3625 13.2286L11.3596 13.2258C10.6354 12.5016 9.99305 11.7194 9.49329 10.9302L10.1258 10.2935C10.7074 9.70898 10.7794 8.78283 10.3065 8.10798C9.84623 7.45572 9.4354 6.86559 9.05422 6.31639C8.44858 5.4453 7.20622 5.34082 6.45657 6.0905L5.89327 6.65381C3.58221 8.97625 5.54598 12.8785 8.62787 15.9633" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -140,7 +140,7 @@
                         </li>
                         <li>
                             <div class="menu-list-item">
-                                <a href="/alyp_group/" class="menu-list-link text-medium1">
+                                <a href="/" class="menu-list-link text-medium1">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M3 6.782C3 7.373 3.293 7.926 3.782 8.257L9.763 12.31C11.118 13.228 12.896 13.228 14.251 12.31L20.217 8.266C20.707 7.936 21 7.383 21 6.792V6.782C21 5.798 20.202 5 19.218 5H4.782C3.798 5 3 5.798 3 6.782V6.782Z" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M3 7V17C3 18.105 3.895 19 5 19H19C20.105 19 21 18.105 21 17V7" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -153,7 +153,7 @@
                         </li>
                         <li>
                             <div class="menu-list-item">
-                                <a href="/alyp_group/" class="menu-list-link text-medium1">
+                                <a href="/" class="menu-list-link text-medium1">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_56_327)">
                                             <path d="M9.68396 11.3135H14.315" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -167,7 +167,7 @@
                                         </defs>
                                     </svg>
                                 </a>
-                                <a href="/alyp_group/" class="menu-list-link text-medium1">
+                                <a href="/" class="menu-list-link text-medium1">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.496 3H16.505C18.987 3 21 5.012 21 7.496V16.505C21 18.987 18.988 21 16.504 21H7.496C5.013 21 3 18.988 3 16.504V7.496C3 5.013 5.012 3 7.496 3V3Z" stroke="#9F9F9F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.496 3H16.505C18.987 3 21 5.012 21 7.496V16.505C21 18.987 18.988 21 16.504 21H7.496C5.013 21 3 18.988 3 16.504V7.496C3 5.013 5.012 3 7.496 3V3Z" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -177,7 +177,7 @@
                                         <path d="M14.5456 9.45432C15.9515 10.8602 15.9515 13.1396 14.5456 14.5455C13.1397 15.9514 10.8603 15.9514 9.45444 14.5455C8.04855 13.1396 8.04855 10.8602 9.45444 9.45432C10.8603 8.04843 13.1397 8.04843 14.5456 9.45432" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </a>
-                                <a href="/alyp_group/" class="menu-list-link text-medium1">
+                                <a href="/" class="menu-list-link text-medium1">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_56_338)">
                                             <path d="M18.204 5.76205C16.558 4.11505 14.369 3.20705 12.037 3.20605C7.23002 3.20605 3.31902 7.11505 3.31802 11.9201C3.31602 13.4491 3.71702 14.9521 4.48102 16.2771L3.24402 20.7931L7.86602 19.5811C9.14502 20.2771 10.577 20.6421 12.033 20.6421H12.037C16.842 20.6421 20.753 16.7321 20.755 11.9271C20.756 9.59905 19.85 7.41005 18.204 5.76205Z" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -194,7 +194,7 @@
                                         </defs>
                                     </svg>
                                 </a>
-                                <a href="/alyp_group/" class="menu-list-link text-medium1">
+                                <a href="/" class="menu-list-link text-medium1">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.5 3H16.504C18.987 3 21 5.013 21 7.496V16.505C21 18.987 18.987 21 16.504 21H7.496C5.013 21 3 18.987 3 16.504V7.5C3 5.015 5.015 3 7.5 3V3Z" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M10.0939 15.4911L9.28194 12.8171C9.28094 12.8161 6.95594 12.0911 6.95594 12.0911C6.68994 12.0081 6.67694 11.6351 6.93794 11.5351L15.7889 8.12106C16.1159 7.99506 16.4529 8.28206 16.3809 8.62506L14.8939 15.6331C14.8069 16.0441 14.3239 16.2271 13.9869 15.9771L11.8749 14.4171L10.6299 15.6291C10.4549 15.7971 10.1649 15.7221 10.0939 15.4911V15.4911Z" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

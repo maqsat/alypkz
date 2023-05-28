@@ -30,34 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div class="page-body president">
-                <div class="academy-header">
-                    <h3 class="academy-title">Президент бизнес-академии</h3>
-                </div>
-                <div class="academy-block">
-                    <div class="academy-img-block">
-                        <div class="academy-img">
-                            <img src="/alyp_group/img/img-section4-6.jpg" alt="">
-                        </div>
-                    </div>
-                    <div class="academy-text-block">
-                        <div class="president-name">
-                            <h3>Камиев Асылбек Аймуратович, бизнесмен, бизнес тренер, инфо-продюсер</h3>
-                        </div>
-                        <div class="president-info about-tab-content-1">
-                            <ul>
-                                <li>Имеет опыт в МЛМ-бизнесе с 2010 года</li>
-                                <li>Успешно прошел курс «Онлайн Продюсер» Бакытбая Сабырбекова</li>
-                                <li>Прошел обучение у бизнес-тренера Женис Есенгельдина, на темы: «Бизнес-модель», «32 дневный бизнес-практикум»,  «Финансовая грамотность»</li>
-                                <li>Директор компании Gosauda</li>
-                                <li>Глава совета директоров компании IMG</li>
-                                <li>Учредитель компании Alyp Group</li>
-                                <li>Награжден медалью «Батыр шапағаты» имени Бауржан Момышулы</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </section>
 
