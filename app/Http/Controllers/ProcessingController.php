@@ -58,21 +58,34 @@ class ProcessingController extends Controller
         if(isset($request->date_from) and isset($request->date_to)){
 
             session()->flashInput($request->input());
+            $register = Processing::where('status', 'register')
+                ->whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])
+                ->sum('sum');
+            $upgrade = Processing::where('status', 'upgrade')
+                ->whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])
+                ->sum('sum');
+            $commission =  Processing::whereIn('status', ['invite_bonus', 'admin_add', 'turnover_bonus','matching_bonus','status_bonus'])->whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])->sum('sum') - Processing::whereIn('status', ['out','shop', 'remove'])->whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])->sum('sum');
 
-
-            $invite = Balance::getBalanceOutAllUserNew(['invite_bonus', 'admin_add'], Carbon::parse($request->date_from), Carbon::parse($request->date_to));
-            $other = Balance::getBalanceOutAllUserNew(['turnover_bonus','matching_bonus'], Carbon::parse($request->date_from), Carbon::parse($request->date_to));
+            $out = Balance::getBalanceOutAllUsers(Carbon::parse($request->date_from), Carbon::parse($request->date_to));
+            $shop = Processing::where('status', 'shop')->whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])->sum('sum');
+            $cashback = Processing::where('status', 'cashback')->whereBetween('created_at', [Carbon::parse($request->date_from), Carbon::parse($request->date_to)])->sum('sum');
 
 
         }
         else{
-            $invite = Balance::getBalanceOutAllUserNew(['invite_bonus', 'admin_add']);
-            $other = Balance::getBalanceOutAllUserNew(['turnover_bonus','matching_bonus']);
+            $register = Processing::where('status', 'register')->sum('sum');
+            $upgrade = Processing::where('status', 'upgrade')->sum('sum');
+            $commission = Balance::getBalanceAllUsers();
+            $out = Balance::getBalanceOutAllUsers();
+            $shop = Processing::where('status', 'shop')->sum('sum');
+            $cashback = Processing::where('status', 'cashback')->sum('sum');
+
+
         }
 
 
+        return view('processing.index',compact('list','register','commission','out','shop', 'upgrade','cashback'));
 
-        return view('processing.index', compact('list', 'invite', 'other'));
     }
 
     /**
@@ -295,6 +308,7 @@ class ProcessingController extends Controller
         $cashback = Processing::where('status', 'cashback')->sum('sum');
 
         return view('processing.overview',compact('register','commission','out','shop', 'upgrade','cashback'));
+
     }
 
     public function status()

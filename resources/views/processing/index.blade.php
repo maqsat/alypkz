@@ -57,8 +57,8 @@
                             <div class="p-10 bg-info">
                                 <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                             <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0 text-info">{{ number_format($invite, 0, '', ' ') }}</h3>
-                                <h5 class="text-muted m-b-0">Реферальный</h5></div>
+                                <h3 class="m-b-0 text-info">{{ number_format($register+$upgrade, 0, '', ' ') }}</h3>
+                                <h5 class="text-muted m-b-0">Сумма комиссионных</h5></div>
                         </div>
                     </div>
                 </div>
@@ -70,8 +70,8 @@
                             <div class="p-10 bg-success">
                                 <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                             <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0 text-success">{{ number_format($other, 0, '', ' ') }}</h3>
-                                <h5 class="text-muted m-b-0">ЛКБ+Бинар</h5></div>
+                                <h3 class="m-b-0 text-success">{{ number_format($out+$shop, 0, '', ' ') }}</h3>
+                                <h5 class="text-muted m-b-0">Выведено</h5></div>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                             <div class="p-10 bg-inverse">
                                 <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                             <div class="align-self-center m-l-20">
-                                <h3 class="m-b-0">{{ number_format(\App\Facades\Balance::getBalanceAllUsers(), 0, '', ' ') }}</h3>
+                                <h3 class="m-b-0">{{ number_format($commission, 0, '', ' ') }}</h3>
                                 <h5 class="text-muted m-b-0">Комиссионные на балансах</h5></div>
                         </div>
                     </div>
