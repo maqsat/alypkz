@@ -869,6 +869,7 @@ class UserController extends Controller
 
     public function transfer($id)
     {
+        dd('Перенос команды отключен');
         if(!Gate::allows('admin_user_transfer')) {
             abort('401');
         }
@@ -1190,7 +1191,7 @@ class UserController extends Controller
             $in_user = User::find($request->in_user);
             $position_user = $in_user->position;
 
-            Balance::setQV($id, $sum, $request->in_user, $user->package_id, $position_user, is_null($user->status_id) ? 0 : $user->status_id);
+            Balance::setQV($id, $sum, $request->in_user, $user->package_id, $position_user, is_null($user->status_id) ? 0 : $user->status_id,$request->description );
 
             /*$in_user_program_list = explode(',', trim(UserProgram::where('user_id', $request->in_user)->first()->list, ','));
             for ($i = 0; $i < count($in_user_program_list); $i++) {

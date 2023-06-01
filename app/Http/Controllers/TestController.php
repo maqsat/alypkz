@@ -29,7 +29,7 @@ class TestController extends Controller
 
     public function tester()
     {
-        dd($sponsor_data = Hierarchy::getSponsorId(1));
+        dd(Hierarchy::pvCounter($item,$small_branch_position));
     }
 
     public function afterHack()
