@@ -134,7 +134,7 @@
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    +7 (777) 000 00 00
+                                    +7 707 143 6633
                                 </a>
                             </div>
                         </li>
@@ -147,7 +147,7 @@
                                         <path d="M3.58606 18.4139L9.72606 12.2739" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M14.281 12.2808L20.411 18.4108" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
-                                    alypgroup.kz@mail.com
+                                    alypgroup.biz@mail.com
                                 </a>
                             </div>
                         </li>
