@@ -9,9 +9,12 @@ use App\Models\Tag;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Auth;
+use illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -213,14 +216,19 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product,$id)
     {
         if(!Gate::allows('admin_product_destroy')) {
             abort('401');
         }
 
-        //
+        Product::find($id)->delete();
+
+
+        return redirect()->back()->with('status', 'Успешно удлено');
     }
+
+
     public function orders(Request $request){
         if(!Gate::allows('admin_orders_access')) {
             abort('401');

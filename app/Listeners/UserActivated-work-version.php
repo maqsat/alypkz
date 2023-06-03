@@ -215,6 +215,8 @@ class UserActivated
 
                                 if($item_user_program->is_binary == 1){
                                     $needed_upgrade = true;
+                                    $position1_user = User::where('sponsor_id',$item_user_program->user_id)->where('position',1)->first();
+                                    $position2_user = User::where('sponsor_id',$item_user_program->user_id)->where('position',2)->first();
 
                                     if($next_status->id == 2){
                                         if (!in_array($item_user_program->package_id, [1,2,3])) $needed_upgrade = false;
@@ -240,15 +242,21 @@ class UserActivated
                                     if($next_status->id == 4){
                                         if (!in_array($item_user_program->package_id, [1,2,3])) $needed_upgrade = false;
                                         else{
-                                            $status_condition_count2 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
-                                                ->where('status_id', '>=' ,2)
-                                                ->take(1)
-                                                ->get();
+                                            if(!is_null($position1_user)){
+                                                $status_condition_count2 = UserProgram::where('list','like','%,'.$position1_user->id.','.$item_user_program->user_id.',%')
+                                                    ->where('status_id', '>=' ,2)
+                                                    ->take(1)
+                                                    ->get();
+                                            }
+                                            else $status_condition_count2 = [];
 
-                                            $status_condition_count3 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
-                                                ->where('status_id', '>=' ,3)
-                                                ->take(1)
-                                                ->get();
+                                            if(!is_null($position2_user)){
+                                                $status_condition_count3 = UserProgram::where('list','like','%,'.$position2_user->id.','.$item_user_program->user_id.',%')
+                                                    ->where('status_id', '>=' ,2)
+                                                    ->take(1)
+                                                    ->get();
+                                            }
+                                            else $status_condition_count3 = [];
 
                                             if(count($status_condition_count2)+count($status_condition_count3) < 2) $needed_upgrade = false;
 
@@ -258,11 +266,23 @@ class UserActivated
                                     if($next_status->id == 5){
                                         if (!in_array($item_user_program->package_id, [1,2,3])) $needed_upgrade = false;
                                         else{
-                                            $status_condition_count = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
-                                                ->where('status_id', '>=' ,4)
-                                                ->count();
+                                            if(!is_null($position1_user)){
+                                                $status_condition_count2 = UserProgram::where('list','like','%,'.$position1_user->id.','.$item_user_program->user_id.',%')
+                                                    ->where('status_id', '>=' ,3)
+                                                    ->take(1)
+                                                    ->get();
+                                            }
+                                            else $status_condition_count2 = [];
 
-                                            if($status_condition_count == 0) $needed_upgrade = false;
+                                            if(!is_null($position2_user)){
+                                                $status_condition_count3 = UserProgram::where('list','like','%,'.$position2_user->id.','.$item_user_program->user_id.',%')
+                                                    ->where('status_id', '>=' ,3)
+                                                    ->take(1)
+                                                    ->get();
+                                            }
+                                            else $status_condition_count3 = [];
+
+                                            if(count($status_condition_count2)+count($status_condition_count3) < 2) $needed_upgrade = false;
                                         }
                                     }
 
@@ -271,26 +291,32 @@ class UserActivated
                                         else{
                                             $status_condition_count4 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
                                                 ->where('status_id', '>=' ,4)
-                                                ->take(1)
                                                 ->get();
 
-                                            $status_condition_count6 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
-                                                ->where('status_id', '>=' ,5)
-                                                ->take(1)
-                                                ->get();
-
-                                            if(count($status_condition_count4)+count($status_condition_count6) < 2) $needed_upgrade = false;
+                                            if(count($status_condition_count4) == 0) $needed_upgrade = false;
                                         }
                                     }
 
                                     if($next_status->id == 7){
                                         if (!in_array($item_user_program->package_id, [2,3])) $needed_upgrade = false;
                                         else{
-                                            $status_condition_count = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
-                                                ->where('status_id', '>=' ,6)
-                                                ->count();
+                                            if(!is_null($position1_user)){
+                                                $status_condition_count2 = UserProgram::where('list','like','%,'.$position1_user->id.','.$item_user_program->user_id.',%')
+                                                    ->where('status_id', '>=' ,5)
+                                                    ->take(1)
+                                                    ->get();
+                                            }
+                                            else $status_condition_count2 = [];
 
-                                            if($status_condition_count == 0) $needed_upgrade = false;
+                                            if(!is_null($position2_user)){
+                                                $status_condition_count3 = UserProgram::where('list','like','%,'.$position2_user->id.','.$item_user_program->user_id.',%')
+                                                    ->where('status_id', '>=' ,5)
+                                                    ->take(1)
+                                                    ->get();
+                                            }
+                                            else $status_condition_count3 = [];
+
+                                            if(count($status_condition_count2)+count($status_condition_count3) < 2) $needed_upgrade = false;
                                         }
                                     }
 
@@ -298,12 +324,14 @@ class UserActivated
                                         if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
                                         else{
                                             $status_condition_count6 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
-                                                ->where('status_id', '>=' ,6)
-                                                ->count();
+                                                ->where('status_id', '>=' ,5)
+                                                ->take(1)
+                                                ->get();
 
                                             $status_condition_count7 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
-                                                ->where('status_id', '>=' ,7)
-                                                ->count();
+                                                ->where('status_id', '>=' ,6)
+                                                ->take(1)
+                                                ->get();
 
                                             if(count($status_condition_count6)+count($status_condition_count7) < 2) $needed_upgrade = false;
                                         }
@@ -335,30 +363,34 @@ class UserActivated
                                     if($next_status->id == 11){
                                         if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
                                         else{
-                                            $status_condition_count8 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                            $status_condition_count6 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
                                                 ->where('status_id', '>=' ,8)
-                                                ->count();
+                                                ->take(1)
+                                                ->get();
 
-                                            $status_condition_count9 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                            $status_condition_count7 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
                                                 ->where('status_id', '>=' ,9)
-                                                ->count();
+                                                ->take(1)
+                                                ->get();
 
-                                            if(count($status_condition_count8)+count($status_condition_count9) < 2) $needed_upgrade = false;
+                                            if(count($status_condition_count6)+count($status_condition_count7) < 2) $needed_upgrade = false;
                                         }
                                     }
 
                                     if($next_status->id == 12){
                                         if (!in_array($item_user_program->package_id, [3])) $needed_upgrade = false;
                                         else{
-                                            $status_condition_count9 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                            $status_condition_count6 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
                                                 ->where('status_id', '>=' ,9)
-                                                ->count();
+                                                ->take(1)
+                                                ->get();
 
-                                            $status_condition_count10 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
+                                            $status_condition_count7 = UserProgram::where('list','like','%,'.$item_user_program->user_id.',%')
                                                 ->where('status_id', '>=' ,10)
-                                                ->count();
+                                                ->take(1)
+                                                ->get();
 
-                                            if(count($status_condition_count9)+count($status_condition_count10) < 2) $needed_upgrade = false;
+                                            if(count($status_condition_count6)+count($status_condition_count7) < 2) $needed_upgrade = false;
                                         }
                                     }
 
@@ -369,7 +401,7 @@ class UserActivated
                                                 ->where('status_id', '>=' ,11)
                                                 ->count();
 
-                                            if($status_condition_count < 2) $needed_upgrade = false;
+                                            if($status_condition_count == 0) $needed_upgrade = false;
                                         }
                                     }
 
@@ -477,8 +509,3 @@ class UserActivated
 
     }
 }
-
-
-
-
-

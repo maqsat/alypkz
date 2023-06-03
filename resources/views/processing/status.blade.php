@@ -60,7 +60,7 @@
                                         <td><a href="">Подробнее</a></td>
                                     </tr>
                                     <tr>
-                                        <td>4</td>
+                                        <td>5</td>
                                         <td>Статусный бонус</td>
                                         <td>{{ number_format(round(\App\Facades\Balance::getBalanceByStatus('status_bonus')), 0, '', ' ')  }}$</td>
                                         <td><a href="">Подробнее</a></td>
