@@ -869,7 +869,7 @@ class UserController extends Controller
 
     public function transfer($id)
     {
-        //dd('Перенос команды отключен');
+        dd('Перенос команды отключен');
         if(!Gate::allows('admin_user_transfer')) {
             abort('401');
         }
