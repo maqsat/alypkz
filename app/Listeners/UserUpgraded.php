@@ -318,7 +318,7 @@ class UserUpgraded
                     }
 
                     /*start set  turnover_bonus  */
-                    if($item_user_program->package_id != 4){
+                    if($item_user_program->package_id != 4 && $item_user_program->is_binary == 1){
                         $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
                         $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
 
