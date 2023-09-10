@@ -37,7 +37,7 @@
                                     <div class="input-group">
                                         <input type="hidden" value="1" name="program_id">
                                         <input type="hidden" value="1" name="withdrawal_method">
-                                        <input type="number"  name="sum" id="sum" class="form-control" placeholder="Выводимая сумма PV" max="{{ Balance::getBalance(Auth::user()->id) }}" required>
+                                        <input type="number"  name="sum" id="sum" class="form-control" placeholder="Выводимая сумма PV" max="{{ Balance::getBalance(Auth::user()->id) }}" onkeyup="myFunction()" required>
                                         <input type="text"  name="login" class="form-control" placeholder="Номер телефона и карты Kaspi" required>
                                         <span class="input-group-btn">
                                             <button class="btn btn-info" type="submit">Вывести</button>
@@ -77,3 +77,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    function myFunction() {
+
+        document.getElementById("demo").innerHTML = "Удержание 2%: " + document.getElementById("sum").value * 0.98 + "$";
+    }
+</script>

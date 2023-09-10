@@ -334,7 +334,7 @@ class ProcessingController extends Controller
 
 
         if(Balance::getBalance(Auth::user()->id) < $request->sum) return redirect()->back()->with('status', 'У вас недостаточно средств!');
-        $sum = $request->sum;
+        $sum = $request->sum*0.98;
         $pv = $request->sum;
 
 

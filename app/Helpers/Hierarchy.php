@@ -28,7 +28,7 @@ class Hierarchy {
 
     public function registrationFee($package_id)
     {
-        return 15;
+        return 0;
     }
 
 
@@ -418,29 +418,36 @@ class Hierarchy {
 
                 if (count($users) > 4){
 
-                    if($users[0]->created_at->addDay(15)->lt(Carbon::parse($users[4]->created_at))){
-                        User::whereId($item->inviter_id)->update([
-                            'is_qs_inviter' => 1,
-                        ]);
+                    $counter = 0;
+                    foreach ($users as $users_for_counter){
+                        $counter += Package::find($users_for_counter->package_id)->pv;
                     }
-                    else{
-                        echo $item->inviter_id."<br>";
-                        User::whereId($item->inviter_id)->update([
-                            'is_qs_inviter' => 1,
-                        ]);
 
-                        foreach ($users as $innerItem){
-
-                            //if($innerItem->package_id == 1 or $innerItem->package_id == 2 or $innerItem->package_id == 3){
-                            $package = Package::find($innerItem->package_id);
-
-                            User::whereId($innerItem->user_id)->update([
-                                'is_qs_user' => 1,
+                    if($counter >= 5500){
+                        if($users[0]->created_at->addDay(15)->lt(Carbon::parse($users[4]->created_at))){
+                            User::whereId($item->inviter_id)->update([
+                                'is_qs_inviter' => 1,
+                            ]);
+                        }
+                        else{
+                            echo $item->inviter_id."<br>";
+                            User::whereId($item->inviter_id)->update([
+                                'is_qs_inviter' => 1,
                             ]);
 
-                            $sum = $package->cost*$package->invite_bonus/100;
-                            Balance::changeBalance($item->inviter_id,$sum,'quickstart_bonus',$innerItem->user_id,1,$package->id,1,$package->pv);
-                            //}
+                            foreach ($users as $innerItem){
+
+                                //if($innerItem->package_id == 1 or $innerItem->package_id == 2 or $innerItem->package_id == 3){
+                                $package = Package::find($innerItem->package_id);
+
+                                User::whereId($innerItem->user_id)->update([
+                                    'is_qs_user' => 1,
+                                ]);
+
+                                $sum = $package->cost*$package->invite_bonus/100;
+                                Balance::changeBalance($item->inviter_id,$sum,'quickstart_bonus',$innerItem->user_id,1,$package->id,1,$package->pv);
+                                //}
+                            }
                         }
                     }
 

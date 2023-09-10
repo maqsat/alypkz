@@ -298,7 +298,7 @@ class UserUpgraded
                                 }
 
 
-                                if($needed_upgrade){
+                                //if($needed_upgrade){ //условии убраны
                                     Hierarchy::moveNextStatus($item,$next_status->id,$item_user_program->program_id);
                                     $item_user_program = UserProgram::where('user_id',$item)->first();
                                     $item_status = Status::find($item_user_program->status_id);
@@ -311,7 +311,7 @@ class UserUpgraded
                                         'type'      => 'move_status',
                                         'status_id' => $item_user_program->status_id
                                     ]);
-                                }
+                                //}
 
                             }
                         }
@@ -360,12 +360,12 @@ class UserUpgraded
                                     }
 
                                     if($key_referral == 1  && ($item_matching_user_program->package_id == 2 or $item_matching_user_program->package_id == 3)){
-                                        Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                        Balance::changeBalance($item_matching,$sum*5/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
                                     }
 
                                     if($key_referral == 2  && $item_matching_user_program->package_id == 3){
-                                        Balance::changeBalance($item_matching,$sum*10/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
+                                        Balance::changeBalance($item_matching,$sum*5/100,'matching_bonus',$item,$program->id,$package->id,'',$package->pv,'',$key_referral,$id);
 
                                     }
                                 }

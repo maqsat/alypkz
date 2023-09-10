@@ -30,21 +30,7 @@ class TestController extends Controller
     public function tester()
     {
 
-        $position1_user = User::where('sponsor_id',1)->where('position',1)->first();
-
-        if(!is_null($position1_user)){
-            $status_condition_count2 = UserProgram::where('list','like','%,'.$position1_user->id.',1,%')
-                ->where('status_id', '>=' ,3)
-                ->take(1)
-                ->get();
-
-        }
-        else {
-            $status_condition_count2 = [];
-            dd(count(0));
-};
-        $status_condition_count2 = [];
-        dd(count($status_condition_count2));
+        Hierarchy::setQS();
 
     }
 

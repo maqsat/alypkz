@@ -10,9 +10,9 @@
                 <!-- Logo icon --><b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img src="/unilife/logo.png" alt="homepage" class="dark-logo" />
+                    <img src="/unilife/logo1.png" alt="homepage" class="dark-logo" />
                     <!-- Light Logo icon -->
-                    <img src="/unilife/logo.png" alt="homepage" class="light-logo" />
+                    <img src="/unilife/logo1.png" alt="homepage" class="light-logo" />
                     </b>
                     <!--End Logo icon -->
             </a>
