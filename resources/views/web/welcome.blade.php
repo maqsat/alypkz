@@ -174,11 +174,11 @@
                         </div>-->
                         <div class="swiper-slide">
                             <div class="section4-img">
-                                <img src="/alyp_group/img/img-section4-4.jpg" alt="">
+                                <img src="/alyp_group/img/img-section4-4new.jpeg" alt="">
                             </div>
                             <div class="section4-block">
-                                <h3 class="section4-block-title">Жунисов Еркебулан Толегенович </h3>
-                                <h3 class="section4-block-subtitle">Инвестор, ментор, с сфере МЛМ бизнеса с 2017 года...</h3>
+                                <h3 class="section4-block-title">Асемханов Мухтар Базылханович </h3>
+                                <h3 class="section4-block-subtitle">Серийный предприниматель</h3>
                                 <a href="/owners" class="section4-block-link link-more-detailed">
                                     Подробнее
                                     <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">

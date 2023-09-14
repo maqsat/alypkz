@@ -8,13 +8,13 @@
             <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a>
             <a class="navbar-brand" href="/">
                 <!-- Logo icon --><b>
-                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                    <!-- Dark Logo icon -->
-                    <img src="/unilife/logo1.png" alt="homepage" class="dark-logo" />
-                    <!-- Light Logo icon -->
-                    <img src="/unilife/logo1.png" alt="homepage" class="light-logo" />
-                    </b>
-                    <!--End Logo icon -->
+                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                <!-- Dark Logo icon -->
+                <img src="/unilife/logo.png" alt="homepage" class="dark-logo" />
+                <!-- Light Logo icon -->
+                <img src="/unilife/logo.png" alt="homepage" class="light-logo" />
+                </b>
+                <!--End Logo icon -->
             </a>
         </div>
         <!-- ============================================================== -->
