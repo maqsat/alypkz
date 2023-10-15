@@ -189,7 +189,6 @@ class UserActivated
                         if(!is_null($current_user_second) && strpos($list, ','.$current_user_second->id.',') !== false) $position = 2;
                     }
 
-                    Balance::setQV($item,$package->pv,$id,$package->id,$position,$item_status->id, '',$item_user_program->is_binary);
 
                     //start check small branch definition
                     $left_user = User::whereSponsorId($item)->wherePosition(1)->whereStatus(1)->first();
@@ -395,6 +394,9 @@ class UserActivated
 
                         /*start set  turnover_bonus  */
                         if($item_user_program->package_id != 4 && $item_user_program->is_binary == 1){
+
+                            Balance::setQV($item,$package->pv,$id,$package->id,$position,$item_status->id, '',$item_user_program->is_binary);
+
                             $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
                             $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
 
@@ -468,6 +470,14 @@ class UserActivated
 
                 Balance::changeBalance($inviter->id,$package->cost*$inviter_package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
                 Balance::changeBalance($id,$package->cost*0.4,'cashback',$id,$program->id,$package->id,'',$package->pv);
+
+                $second_level_invite = User::find($inviter->inviter_id);
+
+                if(!is_null($second_level_invite)){
+                    if($second_level_invite->package_id == 1 or $second_level_invite->package_id == 2 or $second_level_invite->package_id == 3){
+                        Balance::changeBalance($inviter->id,$package->cost*5/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                    }
+                }
 
             }
             /*end set  invite_bonus  */

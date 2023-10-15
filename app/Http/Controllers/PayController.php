@@ -102,13 +102,13 @@ class PayController extends Controller
             if(isset($request->cashback)){
                 $cashback = Balance::getCashbackBalance(Auth::user()->id);
 
-                if($cost*0.4 > $cashback){
+                if($cost*0.3 > $cashback){
                     $new_cost = $cost - $cashback;
                     $spent_cashback = $cashback;
                 }
                 else{
-                    $new_cost = $cost - $cost*0.4;
-                    $spent_cashback = $cost*0.4;
+                    $new_cost = $cost - $cost*0.3;
+                    $spent_cashback = $cost*0.3;
                 }
 
                 $cost = $new_cost;

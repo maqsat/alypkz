@@ -29,7 +29,7 @@
                                     <div class="card">
                                         <div class="card-block">
                                             <h4 class="card-title">Баланс кешбек - ${{ $cashback }}</h4>
-                                            <p class="card-text">40% от суммы можно оплатить с баланса кешбек</p>
+                                            <p class="card-text">30% от суммы можно оплатить с баланса кешбек</p>
                                             <div class="m-b-30">
                                                 <label>Потратить кешбек </label>
                                                 <input type="checkbox" class="js-switch"  id="js-switch" data-color="#55ce63" data-secondary-color="#f62d51" /></div>
@@ -169,13 +169,13 @@
             var cost = {{ $all_cost }};
             var cashback = {{ $cashback }};
 
-            if(cost*0.4 > cashback){
+            if(cost*0.3 > cashback){
                 var new_cost = cost - cashback;
                 var spent_cashback = cashback;
             }
             else{
-                var new_cost = cost - cost*0.4;
-                var spent_cashback = cost*0.4;
+                var new_cost = cost - cost*0.3;
+                var spent_cashback = cost*0.3;
             }
 
 

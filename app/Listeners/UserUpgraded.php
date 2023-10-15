@@ -394,6 +394,14 @@ class UserUpgraded
             Balance::changeBalance($inviter->id,$event->order->amount*$inviter_package->invite_bonus/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
             Balance::changeBalance($id,$event->order->amount*0.4,'cashback',$id,$program->id,$package->id,'',$package->pv);
 
+            $second_level_invite = User::find($inviter->inviter_id);
+
+            if(!is_null($second_level_invite)){
+                if($second_level_invite->package_id == 1 or $second_level_invite->package_id == 2 or $second_level_invite->package_id == 3){
+                    Balance::changeBalance($inviter->id,$event->order->amount*5/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                }
+            }
+
         }
         /*end set  invite_bonus  */
 

@@ -30,7 +30,11 @@ class TestController extends Controller
     public function tester()
     {
 
-        Hierarchy::setQS();
+        $item_user_program = UserProgram::where('user_id',892)->first();
+dd($item_user_program);
+        if($item_user_program->package_id != 4 && $item_user_program->is_binary == 1) dd($item_user_program);
+        else dd(0);
+
 
     }
 
