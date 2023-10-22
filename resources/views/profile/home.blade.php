@@ -262,7 +262,7 @@
                 </div>
             </div>
 
-            <div class="row" style="display: none">
+            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-block">

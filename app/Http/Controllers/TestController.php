@@ -30,10 +30,19 @@ class TestController extends Controller
     public function tester()
     {
 
-        $item_user_program = UserProgram::where('user_id',892)->first();
-dd($item_user_program);
-        if($item_user_program->package_id != 4 && $item_user_program->is_binary == 1) dd($item_user_program);
-        else dd(0);
+        $this_user = User::find(897);
+
+        $inviter = User::find($this_user->inviter_id);
+        $inviter_package = Package::find($inviter->package_id);
+
+
+        $second_level_invite = User::find($inviter->inviter_id);
+        dd($second_level_invite);
+        if(!is_null($second_level_invite)){
+            if($second_level_invite->package_id == 1 or $second_level_invite->package_id == 2 or $second_level_invite->package_id == 3){
+                Balance::changeBalance($inviter->id,$package->cost*5/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+            }
+        }
 
 
     }

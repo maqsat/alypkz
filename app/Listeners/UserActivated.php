@@ -475,7 +475,7 @@ class UserActivated
 
                 if(!is_null($second_level_invite)){
                     if($second_level_invite->package_id == 1 or $second_level_invite->package_id == 2 or $second_level_invite->package_id == 3){
-                        Balance::changeBalance($inviter->id,$package->cost*5/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
+                        Balance::changeBalance($second_level_invite->id,$package->cost*5/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
                     }
                 }
 
