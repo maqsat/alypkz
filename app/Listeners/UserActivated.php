@@ -203,6 +203,7 @@ class UserActivated
                     $pv = Hierarchy::pvCounter($item,$small_branch_position);
 
                     $next_status = Status::find($item_status->order+1);
+                    Balance::setQV($item,$package->pv,$id,$package->id,$position,$item_status->id, '',$item_user_program->is_binary);
 
 
                     if(!is_null($left_user) && !is_null($right_user)){
@@ -394,8 +395,6 @@ class UserActivated
 
                         /*start set  turnover_bonus  */
                         if($item_user_program->package_id != 4 && $item_user_program->is_binary == 1){
-
-                            Balance::setQV($item,$package->pv,$id,$package->id,$position,$item_status->id, '',$item_user_program->is_binary);
 
                             $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',$item)->sum('pv');
                             $credited_sum = Processing::where('status','turnover_bonus')->where('user_id',$item)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('sum');
