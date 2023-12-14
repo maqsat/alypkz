@@ -410,7 +410,7 @@ class UserActivated
                                 $to_enrollment_pv = $package->pv;
                             }
 
-                            if ($to_enrollment_pv < 0) $to_enrollment_pv = 0;
+                            //if ($to_enrollment_pv < 0) $to_enrollment_pv = 0;
 
                             $sum = $to_enrollment_pv*$item_package->turnover_bonus/100;
 

@@ -30,11 +30,11 @@ class TestController extends Controller
     public function tester()
     {
 
-        $left_pv = Hierarchy::pvCounter(895,1);
-        $right_pv = Hierarchy::pvCounter(895,2);
+        $left_pv = Hierarchy::pvCounter(880,1);
+        $right_pv = Hierarchy::pvCounter(880,2);
         if($left_pv > $right_pv) $small_branch_position = 2;
         else $small_branch_position = 1;
-        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',865)->sum('pv');
+        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',880)->sum('pv');
 
         if($small_branch_position == 1){
             $to_enrollment_pv = $left_pv - $credited_pv;
@@ -42,7 +42,9 @@ class TestController extends Controller
         else
             $to_enrollment_pv = $right_pv - $credited_pv;
 
-        dd($small_branch_position);
+        echo "left_pv ".$left_pv."  => "."right_pv ".$right_pv."<br>";
+        echo "credited_pv ".$credited_pv."  => "."to_enrollment_pv ".$to_enrollment_pv."<br>";
+        //dd($to_enrollment_pv);
 
 
     }
