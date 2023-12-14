@@ -30,19 +30,19 @@ class TestController extends Controller
     public function tester()
     {
 
-        $this_user = User::find(897);
+        $left_pv = Hierarchy::pvCounter(895,1);
+        $right_pv = Hierarchy::pvCounter(895,2);
+        if($left_pv > $right_pv) $small_branch_position = 2;
+        else $small_branch_position = 1;
+        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',865)->sum('pv');
 
-        $inviter = User::find($this_user->inviter_id);
-        $inviter_package = Package::find($inviter->package_id);
-
-
-        $second_level_invite = User::find($inviter->inviter_id);
-        dd($second_level_invite);
-        if(!is_null($second_level_invite)){
-            if($second_level_invite->package_id == 1 or $second_level_invite->package_id == 2 or $second_level_invite->package_id == 3){
-                Balance::changeBalance($inviter->id,$package->cost*5/100,'invite_bonus',$id,$program->id,$package->id,'',$package->pv);
-            }
+        if($small_branch_position == 1){
+            $to_enrollment_pv = $left_pv - $credited_pv;
         }
+        else
+            $to_enrollment_pv = $right_pv - $credited_pv;
+
+        dd($small_branch_position);
 
 
     }
