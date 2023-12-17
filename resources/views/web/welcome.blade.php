@@ -187,13 +187,13 @@
                                 </a>
                             </div>
                         </div>
-<!--                        <div class="swiper-slide">
+                        <div class="swiper-slide">
                             <div class="section4-img">
-                                <img src="/alyp_group/img/img-section4-7.jpg" alt="">
+                                <img src="/alyp_group/img/img-last-add.png" alt="">
                             </div>
                             <div class="section4-block">
-                                <h3 class="section4-block-title">Утегенов Галымбек Сапарбергенович</h3>
-                                <h3 class="section4-block-subtitle">«Ұлт Жанашыры», Награжден орденом «НАМЫС» имени Б. Момышұлы</h3>
+                                <h3 class="section4-block-title">Тюменбаева Райхан Жылкыбековна</h3>
+                                <h3 class="section4-block-subtitle">Учредитель, Руководитель Производства БАДов</h3>
                                 <a href="/owners" class="section4-block-link link-more-detailed">
                                     Подробнее
                                     <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -201,7 +201,7 @@
                                     </svg>
                                 </a>
                             </div>
-                        </div>-->
+                        </div>
 <!--                        <div class="swiper-slide">
                             <div class="section4-img">
                                 <img src="/alyp_group/img/img-section4-5.jpg" alt="">

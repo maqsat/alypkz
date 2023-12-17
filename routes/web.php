@@ -35,6 +35,8 @@ Route::post('register-validate', 'UserController@registerValidate')->name('valid
 
 Route::get('/', 'WebController@welcome');
 Route::get('product', 'WebController@product');
+Route::get('product_list', 'WebController@productList');
+
 Route::get('owners', 'WebController@owners');
 //Route::get('marketing', 'WebController@marketing');
 Route::get('academy', 'WebController@academy');

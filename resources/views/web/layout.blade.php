@@ -26,9 +26,14 @@
             <ul class="menu-list">
                 <li><a href="/" class="menu-list-link text-medium1">Главная</a></li>
                 <li><a href="/product" class="menu-list-link text-medium1">О продукте</a></li>
+                <li><a href="/pdf/catalog.pdf" class="menu-list-link text-medium1" target="_blank">Продукция</a></li>
                 <li><a href="/owners" class="menu-list-link text-medium1">Об основателе</a></li>
+                <li><a href="/pdf/certs.pdf" class="menu-list-link text-medium1"  target="_blank">Сертификаты</a></li>
+                <li><a href="/pdf/prezentation.pdf" class="menu-list-link text-medium1"  target="_blank">Презентация</a></li>
                 <li><a href="/web-news" class="menu-list-link text-medium1">Новости</a></li>
                 <li><a href="/academy" class="menu-list-link text-medium1">Бизнес академия</a></li>
+
+
 <!--                <li><a href="/marketing" class="menu-list-link text-medium1">Начать бизнес</a></li>-->
             </ul>
             <a href="/login" class="btn-login-adap btn1">
@@ -147,7 +152,7 @@
                                         <path d="M3.58606 18.4139L9.72606 12.2739" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M14.281 12.2808L20.411 18.4108" stroke="#222222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
-                                    alypgroup.biz@mail.com
+                                    alypgroup.biz@mail.ru
                                 </a>
                             </div>
                         </li>

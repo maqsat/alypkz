@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Faq;
 use App\Models\News;
+use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -22,6 +23,13 @@ class WebController extends Controller
     {
         return view('web.products');
     }
+
+    public function productList()
+    {
+        $products = Product::orderBy('id', 'desc')->get();
+        return view('web.product-list', compact('products'));
+    }
+
 
     public function owners()
     {
@@ -98,7 +106,7 @@ class WebController extends Controller
 
     public function cert()
     {
-        return view('page.cert');
+        return view('web.cert');
     }
 
     public function faq()
