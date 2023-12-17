@@ -36,11 +36,20 @@ class TestController extends Controller
         else $small_branch_position = 1;
         $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',880)->sum('pv');
 
+
+
         if($small_branch_position == 1){
             $to_enrollment_pv = $left_pv - $credited_pv;
         }
         else
             $to_enrollment_pv = $right_pv - $credited_pv;
+
+        $package = Package::find(1);
+        if($to_enrollment_pv > $package->pv){
+            $to_enrollment_pv = $package->pv;
+        }
+
+
 
         echo "left_pv ".$left_pv."  => "."right_pv ".$right_pv."<br>";
         echo "credited_pv ".$credited_pv."  => "."to_enrollment_pv ".$to_enrollment_pv."<br>";

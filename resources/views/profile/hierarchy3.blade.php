@@ -22,6 +22,7 @@
                                         <h6>{{ $user->name }}</h6>
                                         <p>{{ \App\Facades\Hierarchy::getStatusName($user->id) }} | {{ \App\Facades\Hierarchy::getPackageName($user->id) }}</p>
                                         <p>id: {{ $user->id }} | <i class="mdi mdi-account-multiple-plus"></i> {{ \App\Facades\Hierarchy::inviterCount($user->id) }} | <i class="mdi mdi-sitemap"></i> {{ \App\Facades\Hierarchy::teamCount($user->id) }}</p>
+                                        <p>PV {{ \App\Facades\Hierarchy::pvCounter($user->id,2) }} | PV {{ \App\Facades\Hierarchy::pvCounter($user->id,1) }}</p>
                                     </div>
                                 </div>
                             </a>
