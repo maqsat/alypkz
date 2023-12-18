@@ -30,11 +30,11 @@ class TestController extends Controller
     public function tester()
     {
 
-        $left_pv = Hierarchy::pvCounter(880,1);
-        $right_pv = Hierarchy::pvCounter(880,2);
+        $left_pv = Hierarchy::pvCounter(1,1);
+        $right_pv = Hierarchy::pvCounter(1,2);
         if($left_pv > $right_pv) $small_branch_position = 2;
         else $small_branch_position = 1;
-        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',880)->sum('pv');
+        $credited_pv = Processing::where('status','turnover_bonus')->where('user_id',1)->sum('pv');
 
 
 
@@ -44,7 +44,7 @@ class TestController extends Controller
         else
             $to_enrollment_pv = $right_pv - $credited_pv;
 
-        $package = Package::find(1);
+        $package = Package::find(3);
         if($to_enrollment_pv > $package->pv){
             $to_enrollment_pv = $package->pv;
         }
