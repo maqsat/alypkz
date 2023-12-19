@@ -395,8 +395,8 @@ class UserController extends Controller
         $program = Program::find(1);
         $this_user = User::find($id);
         $inviter = User::find($this_user->inviter_id);
-        $package = Package::find(1);
-        $package_id = 1;
+        $package = Package::find($this_user->package_id);
+        $package_id = $package->id;
         $status_id = 1;
         $package_cost = 0;
 
